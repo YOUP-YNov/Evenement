@@ -39,7 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Etat.cs" />
     <Compile Include="Models\Evenement.cs" />
+    <Compile Include="Models\EvenementPhoto.cs" />
+    <Compile Include="Models\HashTagEvenement.cs" />
+    <Compile Include="Models\LieuEvenement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
