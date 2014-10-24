@@ -9,13 +9,20 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 {
     public class CategorieController : ApiController
     {
-        // GET api/Categorie
+        /// <summary>
+        /// Retourne la liste des catégories
+        /// </summary>
+        /// <returns>liste des catégories</returns>
         public IEnumerable<object> GetAll()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/Categorie/5
+        /// <summary>
+        /// Retourne la catégorie dont l'id est passé en parémètre
+        /// </summary>
+        /// <param name="id">Id de la catégorie</param>
+        /// <returns>une catégorie</returns>
         public string GetById(int id)
         {
             return "value";
