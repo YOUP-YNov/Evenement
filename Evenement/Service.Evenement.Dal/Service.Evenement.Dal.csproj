@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Etat.cs" />
     <Compile Include="Models\Evenement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
