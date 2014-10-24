@@ -481,15 +481,51 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetAll(System.Int32,System.Int32,System.Object,System.String)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategorieController.GetAll">
             <summary>
-            test yolo hgshjhsskjb qdfsd
+            Retourne la liste des catégories
             </summary>
-            <param name="max_id"></param>
-            <param name="max_result"></param>
-            <param name="categorie"></param>
-            <param name="text_search"></param>
-            <returns></returns>
+            <returns>liste des catégories</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategorieController.GetById(System.Int32)">
+            <summary>
+            Retourne la catégorie dont l'id est passé en parémètre
+            </summary>
+            <param name="id">Id de la catégorie</param>
+            <returns>une catégorie</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetAll(System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.Int32,System.String)">
+            <summary>
+            retourne la liste des evenements
+            </summary>
+            <param name="date_search">parametre optionnel pour la recherche des evenements à une date</param>
+            <param name="max_result">le maximum de résultat </param>
+            <param name="categorie"> l'id de la catégorie</param>
+            <param name="text_search">le text de la recherche</param>
+            <param name="max_id">l'id du derniers evenements</param>
+            <param name="orderby">le nom du trie (date, categorie, disponnible)</param>
+            <returns>la liste des événements</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetByProfil(System.Int32)">
+            <summary>
+            retourne la liste des événements d'un profil 
+            </summary>
+            <param name="id_profil">id du profil</param>
+            <returns>liste d'événements</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetById(System.Int32)">
+            <summary>
+            retourne le détail d'un événement
+            </summary>
+            <param name="id">l'id de l'événement</param>
+            <returns>un événement</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DeleteById(System.Int32,System.Int32)">
+            <summary>
+            supprime un événement
+            </summary>
+            <param name="id">id de l'événement</param>
+            <param name="id_profil">id du profil de l'utilisateur connecté</param>
         </member>
     </members>
 </doc>
