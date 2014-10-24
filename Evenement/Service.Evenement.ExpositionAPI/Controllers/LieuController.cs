@@ -9,13 +9,20 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 {
     public class LieuController : ApiController
     {
-        // GET api/lieu
+        /// <summary>
+        /// récupère la liste de tout les lieux
+        /// </summary>
+        /// <returns>liste de lieux</returns>
         public IEnumerable<object> GetAll()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/lieu/5
+        /// <summary>
+        /// récupère le lieux correspond a l'id passé en parametre
+        /// </summary>
+        /// <param name="id">id du lieu</param>
+        /// <returns>lieu</returns>
         public string GetIById(int id)
         {
             return "value";

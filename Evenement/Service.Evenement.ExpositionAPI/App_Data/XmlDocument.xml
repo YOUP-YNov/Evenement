@@ -491,5 +491,18 @@
             <param name="text_search"></param>
             <returns></returns>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.LieuController.GetAll">
+            <summary>
+            récupère la liste de tout les lieux
+            </summary>
+            <returns>liste de lieux</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.LieuController.GetIById(System.Int32)">
+            <summary>
+            récupère le lieux correspond a l'id passé en parametre
+            </summary>
+            <param name="id">id du lieu</param>
+            <returns>lieu</returns>
+        </member>
     </members>
 </doc>
