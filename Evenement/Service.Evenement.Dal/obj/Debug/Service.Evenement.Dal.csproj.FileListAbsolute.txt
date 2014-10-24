@@ -1,5 +1,0 @@
-C:\Users\Julien\Source\Repos\Evenement\Evenement\Service.Evenement.Dal\bin\Debug\Service.Evenement.Dal.dll
-C:\Users\Julien\Source\Repos\Evenement\Evenement\Service.Evenement.Dal\bin\Debug\Service.Evenement.Dal.pdb
-C:\Users\Julien\Source\Repos\Evenement\Evenement\Service.Evenement.Dal\obj\Debug\Service.Evenement.Dal.csprojResolveAssemblyReference.cache
-C:\Users\Julien\Source\Repos\Evenement\Evenement\Service.Evenement.Dal\obj\Debug\Service.Evenement.Dal.dll
-C:\Users\Julien\Source\Repos\Evenement\Evenement\Service.Evenement.Dal\obj\Debug\Service.Evenement.Dal.pdb
