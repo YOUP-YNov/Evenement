@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
+using Service.Evenement.Dal.Models;
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     public class LieuController : ApiController
@@ -13,9 +13,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// récupère la liste de tout les lieux
         /// </summary>
         /// <returns>liste de lieux</returns>
-        public IEnumerable<object> GetAll()
+        public IEnumerable<LieuEvenement> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            return new LieuEvenement[]{};
         }
 
         /// <summary>
@@ -23,9 +23,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">id du lieu</param>
         /// <returns>lieu</returns>
-        public string GetIById(int id)
+        public LieuEvenement GetIById(int id)
         {
-            return "value";
+            return new LieuEvenement();
         }
     }
 }
