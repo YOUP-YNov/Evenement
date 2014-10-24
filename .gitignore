@@ -5,6 +5,8 @@
 *.suo
 *.force
 *.cache
-
-*.suo
-*.suo
+Evenement/Evenement.v12.suo
+Evenement/Evenement/bin
+Evenement/Evenement/bin/*
+Evenement/Evenement/obj
+Evenement/Evenement/obj/*
