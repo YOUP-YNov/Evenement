@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Service.Evenement.Dal.Models
 {
-    public class Etat
+    public class Categorie
     {
-        public long Etat_id { get; set; }
-        public string Nom { get; set; }
+        public long Categorie_id { get; set; }
+        public string Libelle { get; set; }
     }
 }
