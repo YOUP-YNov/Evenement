@@ -51,12 +51,6 @@
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Service.Evenement.Front\Service.Evenement.Front.csproj">
-      <Project>{F0A65BA3-07D1-45A7-9A69-1410B07C9121}</Project>
-      <Name>Service.Evenement.Front</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
