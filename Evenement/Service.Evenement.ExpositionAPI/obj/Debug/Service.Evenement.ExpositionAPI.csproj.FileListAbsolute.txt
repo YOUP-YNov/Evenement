@@ -82,3 +82,4 @@ C:\Users\Brice\Source\Repos\Evenement\Evenement\Service.Evenement.ExpositionAPI\
 C:\Users\Brice\Source\Repos\Evenement\Evenement\Service.Evenement.ExpositionAPI\obj\Debug\Service.Evenement.ExpositionAPI.csprojResolveAssemblyReference.cache
 C:\Users\Brice\Source\Repos\Evenement\Evenement\Service.Evenement.ExpositionAPI\obj\Debug\Service.Evenement.ExpositionAPI.dll
 C:\Users\Brice\Source\Repos\Evenement\Evenement\Service.Evenement.ExpositionAPI\obj\Debug\Service.Evenement.ExpositionAPI.pdb
+C:\Users\Brice\Source\Repos\Evenement\Evenement\Service.Evenement.ExpositionAPI\bin\XmlDocument.xml
