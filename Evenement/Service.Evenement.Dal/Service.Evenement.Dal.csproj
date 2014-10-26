@@ -39,6 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dal\EventDalService.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EventDalService.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Dao\Evenement.cs" />
     <Compile Include="Dao\EventImage.cs" />
     <Compile Include="Dao\EventLocation.cs" />
@@ -46,11 +51,32 @@
     <Compile Include="Dao\EventStateEnum.cs" />
     <Compile Include="EvenementDalService.cs" />
     <Compile Include="Interface\IEvenementDalService.cs" />
+    <Compile Include="Mappeur\EvenementMappeur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Dal\" />
-    <Folder Include="Mappeur\" />
+    <None Include="app.config" />
+    <None Include="Dal\EventDalService.xsc">
+      <DependentUpon>EventDalService.xsd</DependentUpon>
+    </None>
+    <None Include="Dal\EventDalService.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EventDalService.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Dal\EventDalService.xss">
+      <DependentUpon>EventDalService.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

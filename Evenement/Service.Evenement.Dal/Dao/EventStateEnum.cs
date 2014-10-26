@@ -13,6 +13,7 @@ namespace Service.Evenement.Dal.Dao
         Annuler,
         Signaler,
         Reussi,
-        Desactiver
+        Desactiver,
+        Unspecified
     }
 }
