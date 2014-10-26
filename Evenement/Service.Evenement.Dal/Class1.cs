@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Evenement.Dal.Interface
+namespace Service.Evenement.Dal
 {
-    interface IEvenementDalService : IDisposable
+    public class Class1
     {
-
     }
 }
