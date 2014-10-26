@@ -39,8 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Dao\Evenement.cs" />
+    <Compile Include="Dao\EventImage.cs" />
+    <Compile Include="Dao\EventLocation.cs" />
+    <Compile Include="Dao\EventState.cs" />
+    <Compile Include="EvenementDalService.cs" />
+    <Compile Include="Interface\IEvenementDalService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dal\" />
+    <Folder Include="Mappeur\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
