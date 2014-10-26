@@ -11,7 +11,7 @@ namespace Service.Evenement.Dal.Dao
         /// <summary>
         /// Assigne ou récupère l'id de l'adresse de l'évenement
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le nom de la ville

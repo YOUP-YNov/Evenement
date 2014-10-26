@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Service.Evenement.Dal.Dao
+﻿namespace Service.Evenement.Dal.Dao
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Model d'accès au données représentant un évenement
+    /// </summary>
     public class Evenement
     {
         /// <summary>
         /// Assigne ou récupère l'id de l'évenement.
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Assigne ou récupère l'id de l'organisateur de l'évenement.
         /// </summary>
-        public int OrganisateurId { get; set; }
+        public long OrganisateurId { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la liste des HashTag associé à l'évenement
@@ -41,7 +44,7 @@ namespace Service.Evenement.Dal.Dao
         /// <summary>
         /// Assigne ou récupère l'id de la catégorie de l'évenement
         /// </summary>
-        public int CategorieId { get; set; }
+        public long CategorieId { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la Date à laquelle l'évenement a lieu.

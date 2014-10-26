@@ -43,6 +43,7 @@
     <Compile Include="Dao\EventImage.cs" />
     <Compile Include="Dao\EventLocation.cs" />
     <Compile Include="Dao\EventState.cs" />
+    <Compile Include="Dao\EventStateEnum.cs" />
     <Compile Include="EvenementDalService.cs" />
     <Compile Include="Interface\IEvenementDalService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
