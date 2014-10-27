@@ -7,11 +7,16 @@ using EvenementRow = Service.Evenement.Dal.Dal.EventDalService.EvenementRow;
 using EvenementTable = Service.Evenement.Dal.Dal.EventDalService.EvenementDataTable;
 using LieuEvenementRow = Service.Evenement.Dal.Dal.EventDalService.LieuEvenementRow;
 using LieuEvenementTable = Service.Evenement.Dal.Dal.EventDalService.LieuEvenementDataTable;
-using EvenementDao = Service.Evenement.Dal.Dao.Evenement;
-using EvenementImageDao = Service.Evenement.Dal.Dao.EventImage;
-using EvenementLocationDao = Service.Evenement.Dal.Dao.EventLocation;
-using EvenementStateDao = Service.Evenement.Dal.Dao.EventState;
+using ImageRow = Service.Evenement.Dal.Dal.EventDalService.ImageRow;
+using ImageTable = Service.Evenement.Dal.Dal.EventDalService.ImageDataTable;
+using CategorieRow = Service.Evenement.Dal.Dal.EventDalService.CategorieRow;
+using CategorieTable = Service.Evenement.Dal.Dal.EventDalService.CategorieDataTable;
+using EvenementDao = Service.Evenement.Dal.Dao.EvenementDao;
+using EvenementImageDao = Service.Evenement.Dal.Dao.EventImageDao;
+using EvenementLocationDao = Service.Evenement.Dal.Dao.EventLocationDao;
+using EvenementStateDao = Service.Evenement.Dal.Dao.EventStateDao;
 using EvenementStateEnumDao = Service.Evenement.Dal.Dao.EventStateEnum;
+using Service.Evenement.Dal.Dao;
 
 namespace Service.Evenement.Dal.Mappeur
 {
@@ -44,9 +49,8 @@ namespace Service.Evenement.Dal.Mappeur
             result.EtatEvenement = new EvenementStateDao();
             result.EventAdresse = new EvenementLocationDao();
             result.Galleries = new List<EvenementImageDao>();
-
-            result.CategorieId = EvenementRow.Categorie_id;
-            result.Categorie = new StringBuilder(EvenementRow.Libelle);
+            result.Categorie = new EvenementCategorieDao();
+            result.Categorie = EvenementRow.ToEvenementCategorieDao();
             result.CreateDate = EvenementRow.DateCreation;
             result.DateEvenement = EvenementRow.DateEvenement;
             result.DateFinInscription = EvenementRow.DateFinInscription;
@@ -147,6 +151,87 @@ namespace Service.Evenement.Dal.Mappeur
             result.Nom = param.IsNomNull() ? new StringBuilder() : new StringBuilder(param.Nom);
             result.Pays = new StringBuilder(param.Pays);
             result.Ville = new StringBuilder(param.Ville);
+
+            return result;
+        }
+
+        #endregion
+
+        #region Image
+
+        internal static IEnumerable<EvenementImageDao> ToImageDao ( this ImageTable ImageTable )
+        {
+            if ( ImageTable == null && ImageTable.Rows == null )
+                return null;
+
+            List<EvenementImageDao> result = new List<EvenementImageDao>();
+
+            foreach ( ImageRow EventRow in ImageTable )
+            {
+                EvenementImageDao daoResult = EventRow.ToEvenementImageDao();
+                if ( daoResult != null )
+                    result.Add(daoResult);
+            }
+
+            return result;
+        }
+
+        internal static EvenementImageDao ToEvenementImageDao ( this ImageRow ImageRow )
+        {
+            if ( ImageRow == null )
+                return null;
+
+            EvenementImageDao result = new EvenementImageDao();
+
+            result.Id = ImageRow.EvenementPhoto_id;
+            result.Url = new StringBuilder(ImageRow.Adresse);
+
+            return result;
+        }
+
+        #endregion
+
+        #region Categorie
+
+        internal static EvenementCategorieDao ToEvenementCategorieDao ( this EvenementRow CategorieRow )
+        {
+            if ( CategorieRow == null )
+                return null;
+
+            EvenementCategorieDao result = new EvenementCategorieDao();
+
+            result.Id = CategorieRow.Categorie_id;
+            result.Libelle = new StringBuilder(CategorieRow.Libelle);
+
+            return result;
+        }
+
+        internal static IEnumerable<EvenementCategorieDao> ToCategorieDao ( this CategorieTable CategorieTable )
+        {
+            if ( CategorieTable == null && CategorieTable.Rows == null )
+                return null;
+
+            List<EvenementCategorieDao> result = new List<EvenementCategorieDao>();
+
+            foreach ( CategorieRow EventRow in CategorieTable )
+            {
+                EvenementCategorieDao daoResult = EventRow.ToEvenementCategorieDao();
+                if ( daoResult != null )
+                    result.Add(daoResult);
+            }
+
+            return result;
+        }
+
+        internal static EvenementCategorieDao ToEvenementCategorieDao ( this CategorieRow CategorieRow )
+        {
+            if ( CategorieRow == null )
+                return null;
+
+            EvenementCategorieDao result = new EvenementCategorieDao();
+
+            result.Id = CategorieRow.Categorie_id;
+            result.Libelle = new StringBuilder(CategorieRow.Libelle);
 
             return result;
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service.Evenement.Dal.Dao
 {
-    public class EventLocation
+    public class EventLocationDao
     {
         /// <summary>
         /// Assigne ou récupère l'id de l'adresse de l'évenement

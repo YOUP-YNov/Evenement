@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service.Evenement.Dal.Dao
 {
-    public class EventState
+    public class EventStateDao
     {
         /// <summary>
         /// Assigne ou récupère le libelle de l'état de l'évenement

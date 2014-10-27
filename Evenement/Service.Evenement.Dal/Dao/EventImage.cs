@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service.Evenement.Dal.Dao
 {
-    public class EventImage
+    public class EventImageDao
     {
         /// <summary>
         /// Assigne ou récupère l'url de l'image

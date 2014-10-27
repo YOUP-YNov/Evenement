@@ -39,16 +39,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dal\EventDalService.cs">
+      <DependentUpon>EventDalService.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Dal\EventDalService.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EventDalService.xsd</DependentUpon>
     </Compile>
     <Compile Include="Dao\Evenement.cs" />
+    <Compile Include="Dao\EvenementCategorie.cs" />
     <Compile Include="Dao\EventImage.cs" />
     <Compile Include="Dao\EventLocation.cs" />
     <Compile Include="Dao\EventState.cs" />
     <Compile Include="Dao\EventStateEnum.cs" />
+    <Compile Include="Dao\Request\EvenementDalRequest.cs" />
     <Compile Include="EvenementDalService.cs" />
     <Compile Include="Interface\IEvenementDalService.cs" />
     <Compile Include="Mappeur\EvenementMappeur.cs" />

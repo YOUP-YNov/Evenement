@@ -9,7 +9,7 @@
     /// <summary>
     /// Model d'accès au données représentant un évenement
     /// </summary>
-    public class Evenement
+    public class EvenementDao
     {
         /// <summary>
         /// Assigne ou récupère l'id de l'évenement.
@@ -29,23 +29,18 @@
         /// <summary>
         /// Assigne ou récupère la liste des Images associé à l'évenement
         /// </summary>
-        public IEnumerable<EventImage> Galleries { get; set; }
+        public IEnumerable<EventImageDao> Galleries { get; set; }
 
         /// <summary>
         /// Assigne ou récupère l'adresse de l'évenement
         /// </summary>
-        public EventLocation EventAdresse { get; set; }
+        public EventLocationDao EventAdresse { get; set; }
 
         /// <summary>
-        /// Assigne ou récupère le libelle de la catégorie de l'évenement
+        /// Assigne ou récupère la catégorie de l'évenement
         /// </summary>
-        public StringBuilder Categorie { get; set; }
-
-        /// <summary>
-        /// Assigne ou récupère l'id de la catégorie de l'évenement
-        /// </summary>
-        public long CategorieId { get; set; }
-
+        public EvenementCategorieDao Categorie { get; set; }
+        
         /// <summary>
         /// Assigne ou récupère la Date à laquelle l'évenement a lieu.
         /// </summary>
@@ -90,7 +85,7 @@
         /// <summary>
         /// Assigne ou récupère l'état de l'évenement
         /// </summary>
-        public EventState EtatEvenement { get; set; }
+        public EventStateDao EtatEvenement { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le price a payé pour participé à l'évenement
