@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     public class LieuController : ApiController
@@ -13,9 +14,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// récupère la liste de tout les lieux
         /// </summary>
         /// <returns>liste de lieux</returns>
-        public IEnumerable<LieuEvenement> GetLieux()
+        public IEnumerable<LieuEvenement> GetAll()
         {
-            return new LieuEvenement[]{};
+            return null;
         }
 
         /// <summary>
@@ -25,7 +26,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>lieu</returns>
         public LieuEvenement GetLieu(int id)
         {
-            return new LieuEvenement();
+            return 0;
         }
     }
 }
