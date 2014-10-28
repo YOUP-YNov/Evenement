@@ -481,20 +481,20 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategorieController.GetAll">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategorieController.GetCategories">
             <summary>
             Retourne la liste des catégories
             </summary>
             <returns>liste des catégories</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategorieController.GetById(System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategorieController.GetCategorie(System.Int32)">
             <summary>
             Retourne la catégorie dont l'id est passé en parémètre
             </summary>
             <param name="id">Id de la catégorie</param>
             <returns>une catégorie</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetAll(System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.Int32,System.String)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenements(System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.Int32,System.String)">
             <summary>
             retourne la liste des evenements
             </summary>
@@ -513,21 +513,14 @@
             <param name="id_profil">id du profil</param>
             <returns>liste d'événements</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetById(System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenement(System.Int32)">
             <summary>
             retourne le détail d'un événement
             </summary>
             <param name="id">l'id de l'événement</param>
             <returns>un événement</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DeleteById(System.Int32,System.Int32)">
-            <summary>
-            supprime un événement
-            </summary>
-            <param name="id">id de l'événement</param>
-            <param name="id_profil">id du profil de l'utilisateur connecté</param>
-        </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PutById(System.Int32,System.Nullable{System.Boolean},System.Nullable{System.DateTime},System.Int32,System.String,System.Collections.Generic.List{System.IO.Stream},System.Object)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PutEvenement(System.Int32,System.Nullable{System.Boolean},System.Nullable{System.DateTime},System.Int32,System.String,System.Collections.Generic.List{System.IO.Stream},System.Object)">
             <summary>
             Modification d'une annonce
             </summary>
@@ -539,13 +532,81 @@
             <param name="lstPicture"></param>
             <param name="location"></param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.LieuController.GetAll">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostInscriptionDeinscription(System.Int32,System.Int32)">
+            <summary>
+            Permet l'inscription et la desincription
+            </summary>
+            <param name="idEvenement">id de l'evenement</param>
+            <param name="idProfil">id du profil</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DeleteEvenement(System.Int32,System.Int32)">
+            <summary>
+            supression de l'evenement 
+            </summary>
+            <param name="id">id de l'evenement</param>
+            <param name="id_profil">id du profil</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.CreateEvenement(System.DateTime,System.DateTime,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Object},System.Int32,System.String,System.String,System.Object,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Collections.Generic.List{System.IO.Stream})">
+            <summary>
+            Création d'un evenement 
+            </summary>
+            <param name="end_inscription"> date de fin d'inscription a un evenement</param>
+            <param name="date_event">date de l'evenement</param>
+            <param name="keys_words">liste des mots clés de l'evenement</param>
+            <param name="friends">liste des amis</param>
+            <param name="total_people">nombre de personne max pour l'evenement</param>
+            <param name="description">description de l'evenement</param>
+            <param name="title">titre de l'evenement</param>
+            <param name="location">localisation de l'evenement</param>
+            <param name="prenium">evenement prenium par defaut il ne l est pas</param>
+            <param name="payant">evenement payant par defaut il est gratuit</param>
+            <param name="isPublic">evenement ouvert au public</param>
+            <param name="lstPicture">liste des images</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenementsSignale(System.Int32,System.Int32)">
+            <summary>
+            retourne la liste des evenements signalés ( admnin)
+            </summary>
+            <param name="id_profil">id du profil admin</param>
+            <param name="nb_min_signalement">nb de signalement minimum</param>
+            <returns>liste d'evenement signalé</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PutEvenementEtat(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            permet de modifier l'etat d'un evenement (Admin)
+            </summary>
+            <param name="id_profil">id de profil</param>
+            <param name="id_evenement">id de l'evenement</param>
+            <param name="id_etat">id de l'etat</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenementsEtats(System.Int32,System.Int32)">
+            <summary>
+            Permet de lister l'ensemble de evenements suivant un etat (ADmin)
+            </summary>
+            <param name="id_profil">id du profil</param>
+            <param name="id_etat">id de l'etat</param>
+            <returns></returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.GetEtats">
+            <summary>
+            liste des etats d'un evenement
+            </summary>
+            <returns>liste d'etats</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.GetEtat(System.Int32)">
+            <summary>
+            un etat en particulié 
+            </summary>
+            <param name="id">id de l'etat</param>
+            <returns></returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.LieuController.GetLieux">
             <summary>
             récupère la liste de tout les lieux
             </summary>
             <returns>liste de lieux</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.LieuController.GetIById(System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.LieuController.GetLieu(System.Int32)">
             <summary>
             récupère le lieux correspond a l'id passé en parametre
             </summary>

@@ -115,7 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -152,12 +151,18 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CategorieController.cs" />
     <Compile Include="Controllers\EvenementController.cs" />
+    <Compile Include="Controllers\EvenementEtatController.cs" />
+    <Compile Include="Models\EvenementEtat.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LieuController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Categorie.cs" />
+    <Compile Include="Models\Evenement.cs" />
+    <Compile Include="Models\EvenementTimeline.cs" />
+    <Compile Include="Models\LieuEvenement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -210,12 +215,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Service.Evenement.Dal\Service.Evenement.Dal.csproj">
-      <Project>{13646a72-1632-43bd-bd8c-b3e7fb5b6372}</Project>
-      <Name>Service.Evenement.Dal</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

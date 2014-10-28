@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service.Evenement.ExpositionAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -13,9 +14,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// Retourne la liste des catégories
         /// </summary>
         /// <returns>liste des catégories</returns>
-        public IEnumerable<object> GetAll()
+        public IEnumerable<Categorie> GetCategories()
         {
-            return new string[] { "value1", "value2" };
+            return new Categorie[] { new Categorie(), new Categorie() };
         }
 
         /// <summary>
@@ -23,9 +24,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">Id de la catégorie</param>
         /// <returns>une catégorie</returns>
-        public string GetById(int id)
+        public Categorie GetCategorie(int id)
         {
-            return "value";
+            return new Categorie();
         }
 
     }

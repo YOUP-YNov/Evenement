@@ -9,7 +9,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 {
     public class ValuesController : ApiController
     {
-        // GET api/values
+        /* GET api/values
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -34,6 +34,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         // DELETE api/values/5
         public void Delete(int id)
         {
-        }
+        }*/
     }
 }

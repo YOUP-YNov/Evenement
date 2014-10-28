@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Service.Evenement.ExpositionAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Service.Evenement.Dal.Models;
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     public class LieuController : ApiController
@@ -13,7 +13,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// récupère la liste de tout les lieux
         /// </summary>
         /// <returns>liste de lieux</returns>
-        public IEnumerable<LieuEvenement> GetAll()
+        public IEnumerable<LieuEvenement> GetLieux()
         {
             return new LieuEvenement[]{};
         }
@@ -23,7 +23,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">id du lieu</param>
         /// <returns>lieu</returns>
-        public LieuEvenement GetIById(int id)
+        public LieuEvenement GetLieu(int id)
         {
             return new LieuEvenement();
         }
