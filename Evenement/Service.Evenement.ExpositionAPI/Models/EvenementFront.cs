@@ -26,7 +26,7 @@
         /// <summary>
         /// Assigne ou récupère la liste des HashTag associé à l'évenement
         /// </summary>
-        public IEnumerable<StringBuilder> HashTag { get; set; }
+        public IEnumerable<string> HashTag { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la liste des Images associé à l'évenement
@@ -67,12 +67,12 @@
         /// <summary>
         /// Assigne ou récupère le titre de l'évenement
         /// </summary>
-        public StringBuilder TitreEvenement { get; set; }
+        public string TitreEvenement { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la description de l'évenement
         /// </summary>
-        public StringBuilder DescriptionEvenement { get; set; }
+        public string DescriptionEvenement { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le nombre de participant maximum à l'évenement
@@ -127,13 +127,12 @@
         {
             DateEvenement = date_event;
             DateFinInscription = end_inscription;
-            IEnumerable<StringBuilder> hashTag = new List<StringBuilder>();
-            keys_words.ForEach(t => hashTag.ToList().Add(new StringBuilder(t)));
-            HashTag = hashTag;
+            IEnumerable<string> hashTag = new List<string>();
+            HashTag = keys_words;
             /* La liste des amis n'est pas encore géré */
             MaximumParticipant = total_people;
-            DescriptionEvenement = new StringBuilder(description);
-            TitreEvenement = new StringBuilder(title);
+            DescriptionEvenement = description;
+            TitreEvenement = title;
 
             /* gestion de l'adresse à prévoir */
             EventAdresse = new EventLocationFront();

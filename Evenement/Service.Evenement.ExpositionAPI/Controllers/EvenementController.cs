@@ -13,7 +13,22 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 {
     public class EvenementController : ApiController
     {
-        EvenementBllService serviceBll;
+
+        private EvenementBllService _evenementBllService;
+
+        public EvenementBllService EvenementBllService
+        {
+            get
+            {
+                if (_evenementBllService == null)
+                    _evenementBllService = new EvenementBllService();
+                return _evenementBllService;
+            }
+            set
+            {
+                _evenementBllService = value;
+            }
+        }
         /// <summary>
         /// retourne la liste des evenements
         /// </summary>
@@ -48,8 +63,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         {
             Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
 
-            Business.EvenementBllService evenementBllService = new Business.EvenementBllService();
-            IEnumerable<Business.EvenementBll> bllEventList = evenementBllService.GetByProfil(id_profil);
+
+            IEnumerable<Business.EvenementBll> bllEventList = EvenementBllService.GetByProfil(id_profil);
             IEnumerable<EvenementTimelineFront> timelineFrontEventList = null;
             foreach(var e in bllEventList)
             {
@@ -80,8 +95,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="location"></param>
         public void PutEvenement(int id, bool? prenium, DateTime? end_inscription, int total_people = -1, string description = null, List<Stream> lstPicture = null, object location = null)
         {
-            serviceBll = new EvenementBllService();
-
             EvenementFront evenement = new EvenementFront();
             evenement.Id = id;
             evenement.Premium = prenium ?? false;
@@ -100,7 +113,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evenement);
 
-            serviceBll.PutEvenement(bllEvent);
+            EvenementBllService.PutEvenement(bllEvent);
 
 
 

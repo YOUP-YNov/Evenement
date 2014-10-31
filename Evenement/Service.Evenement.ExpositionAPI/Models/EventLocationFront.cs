@@ -16,17 +16,17 @@ namespace Service.Evenement.ExpositionAPI.Models
         /// <summary>
         /// Assigne ou récupère le nom de la ville
         /// </summary>
-        public StringBuilder Ville { get; set; }
+        public string Ville { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le code postale de l'adresse
         /// </summary>
-        public StringBuilder CodePostale { get; set; }
+        public string CodePostale { get; set; }
 
         /// <summary>
         /// Assigne ou récupère l'adresse
         /// </summary>
-        public StringBuilder Adresse { get; set; }
+        public string Adresse { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la longitude du rendez vous
@@ -46,6 +46,6 @@ namespace Service.Evenement.ExpositionAPI.Models
         /// <summary>
         /// Assigne ou récupère le nom choisi par l'utilisateur
         /// </summary>
-        public StringBuilder Nom { get; set; }
+        public string Nom { get; set; }
     }
 }
