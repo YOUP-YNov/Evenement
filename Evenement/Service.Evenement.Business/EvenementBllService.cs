@@ -30,7 +30,7 @@ namespace Service.Evenement.Business
         }
 
 
-        public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null)
+        public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result, int categorie, string text_search, int max_id, string orderby, bool? premium)
         {
             Mapper.CreateMap<EvenementDao, EvenementBll>();
 
@@ -44,6 +44,9 @@ namespace Service.Evenement.Business
 
             if (text_search != null)
                 tmp = tmp.Where(e => e.TitreEvenement.ToString().Contains(text_search));
+
+            if (premium != null)
+                tmp = tmp.Where(e => e.Premium == premium);
 
             if (orderby != null)
                 switch (orderby)
