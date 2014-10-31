@@ -11,22 +11,28 @@ namespace Service.Evenement.Business
 {
     public class EvenementBllService
     {
-        /// <summary>
-        /// Exemple pour montrer comment on transforme une objet DAO en objet BLL avec AutoMapper
-        /// A supprimer !
-        /// </summary>
-        /// <param name="daoEvent"></param>
-        public void ExampleAutoMapper(EvenementDao daoEvent)
+        private EvenementDalService _evenementDalService;
+
+        public EvenementDalService EvenementDalService
+        {
+            get
+            {
+                if ( _evenementDalService == null )
+                    _evenementDalService = new EvenementDalService();
+                return _evenementDalService;
+            }
+            set
+            {
+                _evenementDalService = value;
+            }
+        }
+
+        public EvenementBllService ()
         {
             Mapper.CreateMap<EvenementDao, EvenementBll>();
-            EvenementBll bllEvent = Mapper.Map<EvenementDao, EvenementBll>(daoEvent);
         }
 
-        private EvenementDalService evenementDalService;
 
-        public EvenementBllService()
-        {
-            evenementDalService = new EvenementDalService();
-        }
+        
     }
 }

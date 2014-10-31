@@ -42,7 +42,6 @@ namespace Service.Evenement.Business
             IEnumerable<EvenementCategorieDao> result = _evenementDalService.GetAllCategorie(new EvenementDalRequest(){ Categorie = categ});
             Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
             return result == null ? null :  Mapper.Map<EvenementCategorieDao, EvenementCategorieBll>(result.First());
-
         }
 
        
