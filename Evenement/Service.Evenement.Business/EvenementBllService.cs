@@ -78,5 +78,38 @@ namespace Service.Evenement.Business
 
             return ret;
         }
+        
+        /// <summary>
+        /// retourne la liste des événements d'un profil 
+        /// </summary>
+        /// <param name="id_profil">id du profil</param>
+        /// <returns>liste d'événements</returns>
+        public IEnumerable<EvenementBll> GetByProfil(int id_profil)
+        {
+            Mapper.CreateMap<EvenementDao, EvenementBll>();
+            
+            // pour l'instant les event dont le profil est organisateur (api profil pour gerer les event ou le profil est inscrit)
+            IEnumerable<EvenementDao> daoEventList = evenementDalService.GetAllEvenement().Where(e => e.OrganisateurId==id_profil);
+            IEnumerable<EvenementBll> bllEventList = null;
+            foreach (EvenementDao e in daoEventList)
+            {
+                bllEventList.ToList().Add(Mapper.Map<EvenementDao, EvenementBll>(e));
+            }           
+            return bllEventList;
+        }
+
+        public void DeactivateEvent(int eventId)
+        {
+            EvenementDao eventDao = new EvenementDao();
+            eventDao.Id = eventId;
+            eventDao.EtatEvenement = new EventStateDao()
+            {
+                Id = 16,
+                Nom = Dal.Dao.EventStateEnum.Desactiver
+            };
+            eventDao.DateModification = DateTime.Now;
+
+            evenementDalService.UpdateStateEvenement(eventDao);
+        }
     }
 }
