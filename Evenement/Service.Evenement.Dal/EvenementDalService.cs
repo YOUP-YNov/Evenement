@@ -165,7 +165,6 @@ namespace Service.Evenement.Dal
             return result.ToEvenementDao();
         }
 
-
         public IEnumerable<EvenementDao> GetAllEvenement ()
         {
             var result = EventDalService.GetAllEvent();
@@ -251,6 +250,12 @@ namespace Service.Evenement.Dal
                                 );
 
             return result.ToEvenementDao();
+        }
+
+        public EvenementDao getEvenementId(EvenementDalRequest request)
+        {
+            var daoRequest = EventDalService.GetEvenementById(request.EvenementId);
+            return daoRequest.ToEvenementDao().FirstOrDefault();
         }
 
         #endregion

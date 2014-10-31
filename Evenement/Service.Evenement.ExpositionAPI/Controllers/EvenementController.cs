@@ -26,7 +26,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>la liste des événements</returns>
         public IEnumerable<EvenementTimelineFront> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null, bool? premium = null)
         {
-            IEnumerable<Business.EvenementBll> list = new Business.EvenementBllService().GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby, premium);
+            IEnumerable<Business.EvenementBll> list = serviceBll.GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby, premium);
             List<EvenementTimelineFront> ret = new List<EvenementTimelineFront>();
 
             Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
@@ -65,7 +65,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>un événement</returns>
         public Service.Evenement.ExpositionAPI.Models.EvenementFront GetEvenement(int id)
         {
-            return new Service.Evenement.ExpositionAPI.Models.EvenementFront();
+            return null;
         }
 
         /// <summary>

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service.Evenement.Dal;
+using Service.Evenement.Dal.Dao.Request;
 
 namespace Service.Evenement.Business
 {
@@ -33,8 +34,6 @@ namespace Service.Evenement.Business
 
         public void PutEvenement(EvenementBll evenementBll)
         {
-            serviceDal = new EvenementDalService();
-
             Mapper.CreateMap<EvenementBll, EvenementDao>();
             EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
 
@@ -81,7 +80,19 @@ namespace Service.Evenement.Business
 
             return ret;
         }
-        
+
+
+        public EvenementBll GetEvenementById(long id)
+        {
+            Mapper.CreateMap<EvenementBll, EvenementDao>();
+            EvenementDalRequest request = new EvenementDalRequest();
+            request.EvenementId = id;
+            var evt = evenementDalService.getEvenementId(request);
+            EvenementBll evtBLL = Mapper.Map<EvenementDao, EvenementBll>(evt);
+
+            return evtBLL;
+        }
+
         /// <summary>
         /// retourne la liste des événements d'un profil 
         /// </summary>
