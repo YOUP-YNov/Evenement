@@ -14,7 +14,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// récupère la liste de tout les lieux
         /// </summary>
         /// <returns>liste de lieux</returns>
-        public IEnumerable<LieuEvenement> GetAll()
+        public IEnumerable<LieuEvenementFront> GetAll()
         {
             return null;
         }
@@ -24,9 +24,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">id du lieu</param>
         /// <returns>lieu</returns>
-        public LieuEvenement GetLieu(int id)
+        public LieuEvenementFront GetLieu(int id)
         {
-            return new LieuEvenement();
+            return new LieuEvenementFront();
         }
     }
 }
