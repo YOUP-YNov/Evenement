@@ -600,7 +600,7 @@
             <param name="id">id de l'etat</param>
             <returns></returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.LieuController.GetLieux">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.LieuController.GetAll">
             <summary>
             récupère la liste de tout les lieux
             </summary>
