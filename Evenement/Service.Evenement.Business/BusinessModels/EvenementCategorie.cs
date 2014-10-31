@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Service.Evenement.Business
 {
-    public class Class1
+    public class EvenementCategorieBll
     {
+        public long Id { get; set; }
+
+        public StringBuilder Libelle { get; set; }
     }
 }

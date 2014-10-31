@@ -45,7 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="BusinessModels\Evenement.cs" />
+    <Compile Include="BusinessModels\EvenementCategorie.cs" />
+    <Compile Include="BusinessModels\EventImage.cs" />
+    <Compile Include="BusinessModels\EventLocation.cs" />
+    <Compile Include="BusinessModels\EventState.cs" />
+    <Compile Include="BusinessModels\EventStateEnum.cs" />
+    <Compile Include="BusinessModels\Request\EvenementDalRequest.cs" />
+    <Compile Include="EvenementBllService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

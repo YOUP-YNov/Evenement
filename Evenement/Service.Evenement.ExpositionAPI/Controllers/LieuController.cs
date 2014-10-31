@@ -26,7 +26,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>lieu</returns>
         public LieuEvenement GetLieu(int id)
         {
-            return null;
+            return new LieuEvenement();
         }
     }
 }
