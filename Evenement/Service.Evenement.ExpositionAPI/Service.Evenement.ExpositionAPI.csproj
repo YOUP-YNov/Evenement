@@ -162,17 +162,18 @@
     <Compile Include="Controllers\CategorieController.cs" />
     <Compile Include="Controllers\EvenementController.cs" />
     <Compile Include="Controllers\EvenementEtatController.cs" />
-    <Compile Include="Models\EvenementEtat.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LieuController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Categorie.cs" />
-    <Compile Include="Models\Evenement.cs" />
+    <Compile Include="Models\EvenementFront.cs" />
+    <Compile Include="Models\EvenementCategorieFront.cs" />
     <Compile Include="Models\EvenementTimeline.cs" />
-    <Compile Include="Models\LieuEvenement.cs" />
+    <Compile Include="Models\EventImageFront.cs" />
+    <Compile Include="Models\EventLocationFront.cs" />
+    <Compile Include="Models\EventStateFront.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
