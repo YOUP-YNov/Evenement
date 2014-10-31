@@ -14,9 +14,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// Retourne la liste des catégories
         /// </summary>
         /// <returns>liste des catégories</returns>
-        public IEnumerable<CategorieFront> GetCategories()
+        public IEnumerable<EvenementCategorieFront> GetCategories()
         {
-            return new CategorieFront[] { new CategorieFront(), new CategorieFront() };
+            return new EvenementCategorieFront[] { new EvenementCategorieFront(), new EvenementCategorieFront() };
         }
 
         /// <summary>
@@ -24,9 +24,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">Id de la catégorie</param>
         /// <returns>une catégorie</returns>
-        public CategorieFront GetCategorie(int id)
+        public EvenementCategorieFront GetCategorie(int id)
         {
-            return new CategorieFront();
+            return new EvenementCategorieFront();
         }
 
     }
