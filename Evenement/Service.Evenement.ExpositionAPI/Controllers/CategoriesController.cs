@@ -10,7 +10,7 @@ using AutoMapper;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
-    public class CategorieController : ApiController
+    public class CategoriesController : ApiController
     {
 
         private CategorieBllService _categorieBllService;
@@ -34,10 +34,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>liste des catégories</returns>
         public IEnumerable<EvenementCategorieFront> GetCategories()
         {
-            var result = _categorieBllService.GetCategories();
+            IEnumerable <EvenementCategorieBll> result = CategorieBllService.GetCategories();
             Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
 
-            return result == null ? null : Mapper.Map<IEnumerable<EvenementCategorieBll>, IEnumerable<EvenementCategorieFront>>(result);
+            return (result == null || result.Count() == 0) ? null : Mapper.Map<IEnumerable<EvenementCategorieBll>, IEnumerable<EvenementCategorieFront>>(result);
         }
 
         /// <summary>
@@ -47,9 +47,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>une catégorie</returns>
         public EvenementCategorieFront GetCategorie(long id)
         {
-            var result = _categorieBllService.GetCategorie(id);
+            EvenementCategorieBll result = CategorieBllService.GetCategorie(id);
             Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
-            return result == null ? null : Mapper.Map<EvenementCategorieBll, EvenementCategorieFront>(result);
+
+            return (result == null ) ? null :  Mapper.Map<EvenementCategorieBll, EvenementCategorieFront>(result);
         }
 
     }

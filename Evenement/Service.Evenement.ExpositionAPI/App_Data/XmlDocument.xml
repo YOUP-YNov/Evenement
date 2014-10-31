@@ -481,13 +481,13 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategorieController.GetCategories">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategoriesController.GetCategories">
             <summary>
             Retourne la liste des catégories
             </summary>
             <returns>liste des catégories</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategorieController.GetCategorie(System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategoriesController.GetCategorie(System.Int64)">
             <summary>
             Retourne la catégorie dont l'id est passé en parémètre
             </summary>
