@@ -85,6 +85,10 @@ namespace Service.Evenement.Business
             return bllEventList;
         }
 
+        /// <summary>
+        /// Permet de désactiver un événement
+        /// </summary>
+        /// <param name="eventId">id de l'événement à désactiver</param>
         public void DeactivateEvent(int eventId)
         {
             EvenementDao eventDao = new EvenementDao();
