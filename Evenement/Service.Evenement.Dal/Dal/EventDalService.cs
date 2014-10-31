@@ -6,6 +6,9 @@
 }
 
 namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
+    partial class CategorieTableAdapter
+    {
+    }
 
 
     public partial class ImageTableAdapter
