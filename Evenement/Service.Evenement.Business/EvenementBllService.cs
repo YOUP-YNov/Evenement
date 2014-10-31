@@ -32,11 +32,19 @@ namespace Service.Evenement.Business
             Mapper.CreateMap<EvenementDao, EvenementBll>();
         }
 
+        public void PutEvenement(EvenementBll evenementBll)
+        {
+            serviceDal = new EvenementDalService();
 
-        
+            Mapper.CreateMap<EvenementBll, EvenementDao>();
+            EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
 
+            serviceDal.UpdateEvenement(daoEvent);
+            
 
-        public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null)
+        }
+
+        public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result, int categorie, string text_search, int max_id, string orderby, bool? premium)
         {
             Mapper.CreateMap<EvenementDao, EvenementBll>();
 
@@ -50,6 +58,9 @@ namespace Service.Evenement.Business
 
             if (text_search != null)
                 tmp = tmp.Where(e => e.TitreEvenement.ToString().Contains(text_search));
+
+            if (premium != null)
+                tmp = tmp.Where(e => e.Premium == premium);
 
             if (orderby != null)
                 switch (orderby)
@@ -70,6 +81,39 @@ namespace Service.Evenement.Business
             }
 
             return ret;
+        }
+        
+        /// <summary>
+        /// retourne la liste des événements d'un profil 
+        /// </summary>
+        /// <param name="id_profil">id du profil</param>
+        /// <returns>liste d'événements</returns>
+        public IEnumerable<EvenementBll> GetByProfil(int id_profil)
+        {
+            Mapper.CreateMap<EvenementDao, EvenementBll>();
+            
+            // pour l'instant les event dont le profil est organisateur (api profil pour gerer les event ou le profil est inscrit)
+            IEnumerable<EvenementDao> daoEventList = evenementDalService.GetAllEvenement().Where(e => e.OrganisateurId==id_profil);
+            IEnumerable<EvenementBll> bllEventList = null;
+            foreach (EvenementDao e in daoEventList)
+            {
+                bllEventList.ToList().Add(Mapper.Map<EvenementDao, EvenementBll>(e));
+            }           
+            return bllEventList;
+        }
+
+        public void DeactivateEvent(int eventId)
+        {
+            EvenementDao eventDao = new EvenementDao();
+            eventDao.Id = eventId;
+            eventDao.EtatEvenement = new EventStateDao()
+            {
+                Id = 16,
+                Nom = Dal.Dao.EventStateEnum.Desactiver
+            };
+            eventDao.DateModification = DateTime.Now;
+
+            evenementDalService.UpdateStateEvenement(eventDao);
         }
     }
 }
