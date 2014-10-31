@@ -11,26 +11,40 @@ namespace Service.Evenement.Business
 {
     public class EvenementBllService
     {
-        /// <summary>
-        /// Exemple pour montrer comment on transforme une objet DAO en objet BLL avec AutoMapper
-        /// A supprimer !
-        /// </summary>
-        /// <param name="daoEvent"></param>
-        public void ExampleAutoMapper(EvenementDao daoEvent)
+        private EvenementDalService _evenementDalService;
+
+        public EvenementDalService EvenementDalService
+        {
+            get
+            {
+                if ( _evenementDalService == null )
+                    _evenementDalService = new EvenementDalService();
+                return _evenementDalService;
+            }
+            set
+            {
+                _evenementDalService = value;
+            }
+        }
+
+        public EvenementBllService ()
         {
             Mapper.CreateMap<EvenementDao, EvenementBll>();
-            EvenementBll bllEvent = Mapper.Map<EvenementDao, EvenementBll>(daoEvent);
         }
 
-        private EvenementDalService evenementDalService;
-
-        public EvenementBllService()
+        public void PutEvenement(EvenementBll evenementBll)
         {
-            evenementDalService = new EvenementDalService();
+            serviceDal = new EvenementDalService();
+
+            Mapper.CreateMap<EvenementBll, EvenementDao>();
+            EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
+
+            serviceDal.UpdateEvenement(daoEvent);
+            
+
         }
 
-
-        public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null)
+        public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result, int categorie, string text_search, int max_id, string orderby, bool? premium)
         {
             Mapper.CreateMap<EvenementDao, EvenementBll>();
 
@@ -44,6 +58,9 @@ namespace Service.Evenement.Business
 
             if (text_search != null)
                 tmp = tmp.Where(e => e.TitreEvenement.ToString().Contains(text_search));
+
+            if (premium != null)
+                tmp = tmp.Where(e => e.Premium == premium);
 
             if (orderby != null)
                 switch (orderby)
