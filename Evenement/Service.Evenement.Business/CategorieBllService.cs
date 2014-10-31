@@ -27,6 +27,7 @@ namespace Service.Evenement.Business
 
         public EvenementCategorieBll GetCategories ()
         {
+            return null;
         }
     }
 }
