@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service.Evenement.Dal;
-
 namespace Service.Evenement.Business
 {
-    class EvenementBllService
+    public class CategorieBllService
     {
-        private EvenementDalService evenementDalService;
+         private EvenementDalService evenementDalService;
 
-        public EvenementBllService()
+         public CategorieBllService()
         {
             evenementDalService = new EvenementDalService();
         }
