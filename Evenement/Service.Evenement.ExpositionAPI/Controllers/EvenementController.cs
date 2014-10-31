@@ -73,6 +73,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 
             AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evenement);
+
             
 
 
