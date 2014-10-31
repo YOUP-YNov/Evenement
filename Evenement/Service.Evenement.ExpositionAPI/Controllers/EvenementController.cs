@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.IO;
 using Service.Evenement.ExpositionAPI.Models;
+using Service.Evenement.Business;
+
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     public class EvenementController : ApiController
@@ -97,7 +99,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         public void CreateEvenement( DateTime end_inscription, DateTime date_event, List<String> keys_words, List<object> friends, int total_people, string description, string title,
                             object location, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null)
         {
-
+            EvenementBll nouvelEvenement = new EvenementBll();
+            nouvelEvenement.DateFinInscription = end_inscription;
         }
 
         /// <summary>
