@@ -144,6 +144,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         public void CreateEvenement( DateTime end_inscription, DateTime date_event, List<String> keys_words, List<object> friends, int total_people, string description, string title,
                             object location, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null)
         {
+            EvenementFront newEvt = new EvenementFront(end_inscription, date_event, keys_words, friends, total_people
+                , description, title, location, prenium, payant, isPublic, lstPicture);
+            
         }
 
         /// <summary>
