@@ -6,16 +6,14 @@ using System.Net.Http;
 using System.Web.Http;
 using System.IO;
 using Service.Evenement.ExpositionAPI.Models;
-<<<<<<< HEAD
-=======
 using Service.Evenement.Business;
->>>>>>> 9e61f31bacdd6db29c90a5140a3a4abe2b111f46
 using AutoMapper;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     public class EvenementController : ApiController
     {
+        EvenementBllService serviceBll;
         /// <summary>
         /// retourne la liste des evenements
         /// </summary>
@@ -73,21 +71,27 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="location"></param>
         public void PutEvenement(int id, bool? prenium, DateTime? end_inscription, int total_people = -1, string description = null, List<Stream> lstPicture = null, object location = null)
         {
+            serviceBll = new EvenementBllService();
+
             EvenementFront evenement = new EvenementFront();
+            evenement.Id = id;
             evenement.Premium = prenium ?? false;
             //la date de fin d'inscription est notée comme nullable, mais
             //coté front l'utilisateur sera forcé de noter une date de fin, donc je force dateTime.now pour gérer le nullable
             evenement.DateFinInscription = end_inscription ?? DateTime.Now;
             evenement.MaximumParticipant = total_people;
             evenement.DescriptionEvenement = new System.Text.StringBuilder(description);
+            // la liste de photos n'est pas encore prise en compte 
 
+            //la gestion des adresse n'est pas encore établie
+            evenement.EventAdresse = new EventLocationFront() ;
 
 
 
             AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evenement);
 
-            
+            serviceBll.PutEvenement(bllEvent);
 
 
 

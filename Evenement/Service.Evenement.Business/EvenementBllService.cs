@@ -16,6 +16,8 @@ namespace Service.Evenement.Business
         /// A supprimer !
         /// </summary>
         /// <param name="daoEvent"></param>
+        /// 
+        EvenementDalService serviceDal;
         public void ExampleAutoMapper(EvenementDao daoEvent)
         {
             Mapper.CreateMap<EvenementDao, EvenementBll>();
@@ -29,6 +31,17 @@ namespace Service.Evenement.Business
             evenementDalService = new EvenementDalService();
         }
 
+        public void PutEvenement(EvenementBll evenementBll)
+        {
+            serviceDal = new EvenementDalService();
+
+            Mapper.CreateMap<EvenementBll, EvenementDao>();
+            EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
+
+            serviceDal.UpdateEvenement(daoEvent);
+            
+
+        }
 
         public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null)
         {
