@@ -13,7 +13,9 @@ namespace Service.Evenement.Business
          public CategorieBllService()
         {
             evenementDalService = new EvenementDalService();
+             
         }
+
 
        /* public EvenementCategorieBll GetCategorie(int id)
         {
