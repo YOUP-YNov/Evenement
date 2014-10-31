@@ -4,15 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service.Evenement.Dal;
+
 namespace Service.Evenement.Business
 {
     public class CategorieBllService
     {
-         private EvenementDalService evenementDalService;
+        private EvenementDalService _evenementDalService;
 
-         public CategorieBllService()
+        public EvenementDalService EvenementDalService
         {
-            evenementDalService = new EvenementDalService();
+            get
+            {
+                if ( _evenementDalService == null )
+                    _evenementDalService = new EvenementDalService();
+                return _evenementDalService;
+            }
+            set
+            {
+                _evenementDalService = value;
+            }
+        }
+
+        public EvenementCategorieBll GetCategories ()
+        {
         }
     }
 }

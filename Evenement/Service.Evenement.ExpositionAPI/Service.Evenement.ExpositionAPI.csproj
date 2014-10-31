@@ -40,12 +40,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper">
-      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoMapper.Net4">
-      <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -161,17 +155,18 @@
     <Compile Include="Controllers\CategorieController.cs" />
     <Compile Include="Controllers\EvenementController.cs" />
     <Compile Include="Controllers\EvenementEtatController.cs" />
-    <Compile Include="Models\EvenementEtat.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LieuController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Categorie.cs" />
-    <Compile Include="Models\Evenement.cs" />
+    <Compile Include="Models\EvenementFront.cs" />
+    <Compile Include="Models\EvenementCategorieFront.cs" />
     <Compile Include="Models\EvenementTimeline.cs" />
-    <Compile Include="Models\LieuEvenement.cs" />
+    <Compile Include="Models\EventImageFront.cs" />
+    <Compile Include="Models\EventLocationFront.cs" />
+    <Compile Include="Models\EventStateFront.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -264,7 +259,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

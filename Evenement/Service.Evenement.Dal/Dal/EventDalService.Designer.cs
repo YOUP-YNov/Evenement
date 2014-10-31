@@ -1764,6 +1764,13 @@ namespace Service.Evenement.Dal.Dal {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public CategorieRow FindByCategorie_id(long Categorie_id) {
+                return ((CategorieRow)(this.Rows.Find(new object[] {
+                            Categorie_id})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
                 CategorieDataTable cln = ((CategorieDataTable)(base.Clone()));
                 cln.InitVars();
@@ -1790,9 +1797,12 @@ namespace Service.Evenement.Dal.Dal {
                 base.Columns.Add(this.columnCategorie_id);
                 this.columnLibelle = new global::System.Data.DataColumn("Libelle", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLibelle);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnCategorie_id}, true));
                 this.columnCategorie_id.AutoIncrement = true;
                 this.columnCategorie_id.AllowDBNull = false;
                 this.columnCategorie_id.ReadOnly = true;
+                this.columnCategorie_id.Unique = true;
                 this.columnLibelle.AllowDBNull = false;
                 this.columnLibelle.MaxLength = 50;
             }
@@ -3893,14 +3903,21 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
             this._commandCollection[0].CommandText = "dbo.ps_GetAllCategorie";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.BigInt, 8, global::System.Data.ParameterDirection.Input, 19, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EventDalService.CategorieDataTable GetEvenementCategorie() {
+        public virtual EventDalService.CategorieDataTable GetEvenementCategorie(global::System.Nullable<long> Id) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((Id.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((long)(Id.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
             EventDalService.CategorieDataTable dataTable = new EventDalService.CategorieDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

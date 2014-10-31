@@ -10,7 +10,7 @@ namespace Service.Evenement.Dal.Interface
 {
     interface IEvenementDalService : IDisposable
     {
-        IEnumerable<EvenementCategorieDao> GetAllCategorie ();
+        IEnumerable<EvenementCategorieDao> GetAllCategorie ( EvenementDalRequest request );
         IEnumerable<EventImageDao> GetImageByEventId ( EvenementDalRequest request );
         IEnumerable<EventImageDao> CreateImage ( EvenementDalRequest request, EventImageDao image );
         IEnumerable<EvenementDao> GetLieuEvenementByVille ( EvenementDalRequest request );
