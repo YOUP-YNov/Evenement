@@ -6,10 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.IO;
 using Service.Evenement.ExpositionAPI.Models;
-<<<<<<< HEAD
-=======
 using Service.Evenement.Business;
->>>>>>> 9e61f31bacdd6db29c90a5140a3a4abe2b111f46
 using AutoMapper;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
@@ -48,7 +45,16 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>liste d'événements</returns>
         public IEnumerable<EvenementTimelineFront> GetByProfil(int id_profil)
         {
-            return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
+            Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
+
+            Business.EvenementBllService evenementBllService = new Business.EvenementBllService();
+            IEnumerable<Business.EvenementBll> bllEventList = evenementBllService.GetByProfil(id_profil);
+            IEnumerable<EvenementTimelineFront> timelineFrontEventList = null;
+            foreach(var e in bllEventList)
+            {
+                timelineFrontEventList.ToList().Add(Mapper.Map<Business.EvenementBll, EvenementTimelineFront>(e));
+            }
+            return timelineFrontEventList;
         }
 
         /// <summary>
