@@ -30,18 +30,19 @@ namespace Service.Evenement.Business
 
         public IEnumerable<EvenementCategorieBll> GetCategories()
         {
-            IEnumerable<EvenementCategorieDao> result = _evenementDalService.GetAllCategorie(new EvenementDalRequest() { Categorie = new EvenementCategorieDao() });
+            IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest() {});
             Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
-            return result == null ? null : Mapper.Map<IEnumerable<EvenementCategorieDao>, IEnumerable<EvenementCategorieBll>>(result);
+            return (result.Count() == 0 || result == null) ? null : Mapper.Map<IEnumerable<EvenementCategorieDao>, IEnumerable<EvenementCategorieBll>>(result);
         }
 
         public EvenementCategorieBll GetCategorie(long id)
         {
             Dal.Dao.EvenementCategorieDao categ = new  EvenementCategorieDao();
             categ.Id = id;
-            IEnumerable<EvenementCategorieDao> result = _evenementDalService.GetAllCategorie(new EvenementDalRequest(){ Categorie = categ});
+            IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest(){ Categorie = categ});
             Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
-            return result == null ? null :  Mapper.Map<EvenementCategorieDao, EvenementCategorieBll>(result.First());
+            return (result.Count() == 0 || result == null) ? null :  Mapper.Map<EvenementCategorieDao, EvenementCategorieBll>(result.First());
+
         }
 
        
