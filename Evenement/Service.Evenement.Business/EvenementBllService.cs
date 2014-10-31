@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Service.Evenement.Dal;
 
 namespace Service.Evenement.Business
 {
@@ -19,6 +20,13 @@ namespace Service.Evenement.Business
         {
             Mapper.CreateMap<EvenementDao, EvenementBll>();
             EvenementBll bllEvent = Mapper.Map<EvenementDao, EvenementBll>(daoEvent);
+        }
+
+        private EvenementDalService evenementDalService;
+
+        public EvenementBllService()
+        {
+            evenementDalService = new EvenementDalService();
         }
     }
 }

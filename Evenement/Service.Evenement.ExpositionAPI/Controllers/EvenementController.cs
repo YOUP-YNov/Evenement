@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.IO;
 using Service.Evenement.ExpositionAPI.Models;
+
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     public class EvenementController : ApiController
@@ -20,9 +21,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="max_id">l'id du derniers evenements</param>
         /// <param name="orderby">le nom du trie (date, categorie, disponnible)</param>
         /// <returns>la liste des événements</returns>
-        public IEnumerable<EvenementTimeline> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null)
+        public IEnumerable<EvenementTimelineFront> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null)
         {
-            return new EvenementTimeline[] { new EvenementTimeline(), new EvenementTimeline() };
+            return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
         }
 
         /// <summary>
@@ -30,9 +31,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id_profil">id du profil</param>
         /// <returns>liste d'événements</returns>
-        public IEnumerable<EvenementTimeline> GetByProfil(int id_profil)
+        public IEnumerable<EvenementTimelineFront> GetByProfil(int id_profil)
         {
-            return new EvenementTimeline[] { new EvenementTimeline(), new EvenementTimeline() };
+            return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
         }
 
         /// <summary>
@@ -40,9 +41,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">l'id de l'événement</param>
         /// <returns>un événement</returns>
-        public Service.Evenement.ExpositionAPI.Models.Evenement GetEvenement(int id)
+        public Service.Evenement.ExpositionAPI.Models.EvenementFront GetEvenement(int id)
         {
-            return new Service.Evenement.ExpositionAPI.Models.Evenement();
+            return new Service.Evenement.ExpositionAPI.Models.EvenementFront();
         }
 
         /// <summary>
@@ -97,7 +98,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         public void CreateEvenement( DateTime end_inscription, DateTime date_event, List<String> keys_words, List<object> friends, int total_people, string description, string title,
                             object location, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null)
         {
-
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id_profil">id du profil admin</param>
         /// <param name="nb_min_signalement">nb de signalement minimum</param>
         /// <returns>liste d'evenement signalé</returns>
-        public IEnumerable<EvenementTimeline> GetEvenementsSignale(int id_profil, int nb_min_signalement = 1)
+        public IEnumerable<EvenementTimelineFront> GetEvenementsSignale(int id_profil, int nb_min_signalement = 1)
         {
-             return new EvenementTimeline[] { new EvenementTimeline(), new EvenementTimeline() };
+             return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
         }
             
         /// <summary>
@@ -128,9 +128,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id_profil">id du profil</param>
         /// <param name="id_etat">id de l'etat</param>
         /// <returns></returns>
-        public IEnumerable<EvenementTimeline> GetEvenementsEtats(int id_profil, int id_etat)
+        public IEnumerable<EvenementTimelineFront> GetEvenementsEtats(int id_profil, int id_etat)
         {
-            return new EvenementTimeline[] { new EvenementTimeline(), new EvenementTimeline() };
+            return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
         }
     }
 }
