@@ -3,6 +3,7 @@
     using Service.Evenement.Business;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -107,5 +108,52 @@
         /// Assigne ou récupère le statut d'un evenement
         /// </summary>
         public string Statut { get; set; }
+
+        /// <summary>
+        /// Assigne ou récupère la visibilité de l'évènement
+        /// </summary>
+        public bool Public { get; set; }
+
+        /// <summary>
+        /// Assigne ou récupère la visibilité de l'évènement
+        /// </summary>
+        public bool  Payant { get; set; }
+
+        public EvenementFront(DateTime end_inscription, DateTime date_event, 
+            List<String> keys_words, List<object> friends, 
+            int total_people, string description, string title,
+            object location, bool? prenium, bool? payant, 
+            bool? isPublic, List<Stream> lstPicture = null)
+        {
+            DateEvenement = date_event;
+            DateFinInscription = end_inscription;
+            IEnumerable<StringBuilder> hashTag = new List<StringBuilder>();
+            keys_words.ForEach(t => hashTag.ToList().Add(new StringBuilder(t)));
+            HashTag = hashTag;
+            /* La liste des amis n'est pas encore géré */
+            MaximumParticipant = total_people;
+            DescriptionEvenement = new StringBuilder(description);
+            TitreEvenement = new StringBuilder(title);
+
+            /* gestion de l'adresse à prévoir */
+            EventAdresse = new EventLocationFront();
+            Premium = prenium ?? false;
+
+            // par défaut un évènementr est public
+            Public = isPublic ?? true;
+
+            // par défaut un évènement n'est pas payant.
+            Payant = payant ?? false;
+
+            // gerer le flux des images
+            List<EventImageFront> test = new List<EventImageFront>();
+            Galleries = test;
+            
+
+        }
+
+        public EvenementFront()
+        {
+        }
     }
 }
