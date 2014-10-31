@@ -65,5 +65,19 @@ namespace Service.Evenement.Business
 
             return ret;
         }
+
+        public void DeactivateEvent(int eventId)
+        {
+            EvenementDao eventDao = new EvenementDao();
+            eventDao.Id = eventId;
+            eventDao.EtatEvenement = new EventStateDao()
+            {
+                Id = 16,
+                Nom = Dal.Dao.EventStateEnum.Desactiver
+            };
+            eventDao.DateModification = DateTime.Now;
+
+            evenementDalService.UpdateStateEvenement(eventDao);
+        }
     }
 }
