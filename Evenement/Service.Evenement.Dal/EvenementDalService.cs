@@ -85,11 +85,20 @@ namespace Service.Evenement.Dal
         #endregion
 
         #region Méthode Public
-        public IEnumerable<EvenementCategorieDao> GetAllCategorie ()
+        public IEnumerable<EvenementCategorieDao> GetAllCategorie ( EvenementDalRequest request )
         {
-            var result = CategorieDalService.GetEvenementCategorie();
+            if ( request == null || request.Categorie == null )
+            {
+                long? param = null;
 
-            return result.ToCategorieDao();
+                var result = CategorieDalService.GetEvenementCategorie(param);
+
+                return result.ToCategorieDao();
+            }
+            
+            var result2 = CategorieDalService.GetEvenementCategorie( request.Categorie.Id );
+
+            return result2.ToCategorieDao();
         }
 
         public IEnumerable<EventImageDao> GetImageByEventId ( EvenementDalRequest request )
