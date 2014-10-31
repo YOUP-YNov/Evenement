@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.IO;
 using Service.Evenement.ExpositionAPI.Models;
+using Service.Evenement.Business;
+using AutoMapper;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
@@ -23,7 +25,17 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>la liste des événements</returns>
         public IEnumerable<EvenementTimelineFront> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null)
         {
-            return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
+            IEnumerable<Business.EvenementBll> list = new Business.EvenementBllService().GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby);
+            List<EvenementTimelineFront> ret = new List<EvenementTimelineFront>();
+
+            Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
+
+            foreach (var item in list)
+            {
+                ret.Add(Mapper.Map<Business.EvenementBll, EvenementTimelineFront>(item));
+            }
+
+            return ret;
         }
 
         /// <summary>
@@ -67,6 +79,24 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="location"></param>
         public void PutEvenement(int id, bool? prenium, DateTime? end_inscription, int total_people = -1, string description = null, List<Stream> lstPicture = null, object location = null)
         {
+            EvenementFront evenement = new EvenementFront();
+            evenement.Premium = prenium ?? false;
+            //la date de fin d'inscription est notée comme nullable, mais
+            //coté front l'utilisateur sera forcé de noter une date de fin, donc je force dateTime.now pour gérer le nullable
+            evenement.DateFinInscription = end_inscription ?? DateTime.Now;
+            evenement.MaximumParticipant = total_people;
+            evenement.DescriptionEvenement = new System.Text.StringBuilder(description);
+
+
+
+
+            AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
+            EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evenement);
+
+            
+
+
+
 
         }
         /// <summary>

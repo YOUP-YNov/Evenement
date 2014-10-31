@@ -5,18 +5,39 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Service.Evenement.Business;
+using AutoMapper;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     public class CategorieController : ApiController
     {
+
+        private CategorieBllService _categorieBllService;
+
+        public CategorieBllService CategorieBllService
+        {
+            get
+            {
+                if (_categorieBllService == null)
+                    _categorieBllService = new CategorieBllService();
+                return _categorieBllService;
+            }
+            set
+            {
+                _categorieBllService = value;
+            }
+        }
         /// <summary>
         /// Retourne la liste des catégories
         /// </summary>
         /// <returns>liste des catégories</returns>
-        public IEnumerable<CategorieFront> GetCategories()
+        public IEnumerable<EvenementCategorieFront> GetCategories()
         {
-            return new CategorieFront[] { new CategorieFront(), new CategorieFront() };
+            var result = _categorieBllService.GetCategories();
+            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
+
+            return result == null ? null : Mapper.Map<IEnumerable<EvenementCategorieBll>, IEnumerable<EvenementCategorieFront>>(result);
         }
 
         /// <summary>
@@ -24,9 +45,11 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">Id de la catégorie</param>
         /// <returns>une catégorie</returns>
-        public CategorieFront GetCategorie(int id)
+        public EvenementCategorieFront GetCategorie(long id)
         {
-            return new CategorieFront();
+            var result = _categorieBllService.GetCategorie(id);
+            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
+            return result == null ? null : Mapper.Map<EvenementCategorieBll, EvenementCategorieFront>(result);
         }
 
     }
