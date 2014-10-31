@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
-    public class EvenementEtat
+    public class EvenementEtatFront
     {
         public long EvenementEtat_id { get; set; }
         public string Libelle { get; set; }

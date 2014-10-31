@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Service.Evenement.ExpositionAPI.Models
 {
-    public class Evenement
+    public class EvenementFront
     {
         public long Evenement_id { get; set; }
         public long Utilisateur_id { get; set; }
