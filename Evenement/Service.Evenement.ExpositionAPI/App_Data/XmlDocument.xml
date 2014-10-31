@@ -494,7 +494,7 @@
             <param name="id">Id de la catégorie</param>
             <returns>une catégorie</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenements(System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.Int32,System.String)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenements(System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.Int32,System.String,System.Nullable{System.Boolean})">
             <summary>
             retourne la liste des evenements
             </summary>
