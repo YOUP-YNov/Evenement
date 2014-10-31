@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Service.Evenement.ExpositionAPI.Models
 {
-    public class Categorie
+    public class CategorieFront
     {
         public long Categorie_id { get; set; }
         public string Libelle { get; set; }

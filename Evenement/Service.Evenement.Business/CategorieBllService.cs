@@ -27,8 +27,6 @@ namespace Service.Evenement.Business
 
         public EvenementCategorieBll GetCategories ()
         {
-            var result = EvenementDalService.GetAllCategorie();
-            return 
         }
     }
 }

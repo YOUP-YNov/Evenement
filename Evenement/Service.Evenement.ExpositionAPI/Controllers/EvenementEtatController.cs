@@ -13,9 +13,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// liste des etats d'un evenement
         /// </summary>
         /// <returns>liste d'etats</returns>
-        public IEnumerable<EvenementEtat> GetEtats()
+        public IEnumerable<EvenementEtatFront> GetEtats()
         {
-            return new EvenementEtat[] { new EvenementEtat(), new EvenementEtat() };
+            return new EvenementEtatFront[] { new EvenementEtatFront(), new EvenementEtatFront() };
         }
 
        /// <summary>
@@ -23,9 +23,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
        /// </summary>
        /// <param name="id">id de l'etat</param>
        /// <returns></returns>
-        public EvenementEtat GetEtat(int id)
+        public EvenementEtatFront GetEtat(int id)
         {
-            return new EvenementEtat();
+            return new EvenementEtatFront();
         }
     }
 }
