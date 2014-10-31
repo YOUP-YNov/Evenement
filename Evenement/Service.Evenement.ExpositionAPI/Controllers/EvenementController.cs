@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.IO;
 using Service.Evenement.ExpositionAPI.Models;
+using AutoMapper;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
@@ -23,7 +24,17 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>la liste des événements</returns>
         public IEnumerable<EvenementTimelineFront> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null)
         {
-            return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
+            IEnumerable<Business.EvenementBll> list = new Business.EvenementBllService().GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby);
+            List<EvenementTimelineFront> ret = new List<EvenementTimelineFront>();
+
+            Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
+
+            foreach (var item in list)
+            {
+                ret.Add(Mapper.Map<Business.EvenementBll, EvenementTimelineFront>(item));
+            }
+
+            return ret;
         }
 
         /// <summary>
