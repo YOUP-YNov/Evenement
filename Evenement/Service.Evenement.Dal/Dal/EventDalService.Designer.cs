@@ -883,7 +883,6 @@ namespace Service.Evenement.Dal.Dal {
                 this.columnCategorie_id.AllowDBNull = false;
                 this.columnDateEvenement.AllowDBNull = false;
                 this.columnDateCreation.AllowDBNull = false;
-                this.columnDateModification.AllowDBNull = false;
                 this.columnDateFinInscription.AllowDBNull = false;
                 this.columnTitreEvenement.AllowDBNull = false;
                 this.columnTitreEvenement.MaxLength = 50;
@@ -891,7 +890,6 @@ namespace Service.Evenement.Dal.Dal {
                 this.columnStatut.MaxLength = 50;
                 this.columnPrix.AllowDBNull = false;
                 this.columnPremium.AllowDBNull = false;
-                this.columnDateMiseEnAvant.AllowDBNull = false;
                 this.columnEtat_id.AllowDBNull = false;
                 this.columnVille.AllowDBNull = false;
                 this.columnVille.MaxLength = 100;
@@ -2015,7 +2013,14 @@ namespace Service.Evenement.Dal.Dal {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public System.DateTime DateModification {
                 get {
+                    try {
                     return ((global::System.DateTime)(this[this.tableEvenement.DateModificationColumn]));
+                }
+                    catch (global::System.InvalidCastException e) {
+                        return new System.DateTime();
+                        throw new global::System.Data.StrongTypingException("La valeur pour la colonne \'DateModification\' dans la table \'Evenement\' est DBNull" +
+                                ".", e);
+                    }
                 }
                 set {
                     this[this.tableEvenement.DateModificationColumn] = value;
@@ -2134,7 +2139,14 @@ namespace Service.Evenement.Dal.Dal {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public System.DateTime DateMiseEnAvant {
                 get {
+                    try {
                     return ((global::System.DateTime)(this[this.tableEvenement.DateMiseEnAvantColumn]));
+                }
+                    catch (global::System.InvalidCastException e) {
+                        return new System.DateTime();
+                        throw new global::System.Data.StrongTypingException("La valeur pour la colonne \'DateMiseEnAvant\' dans la table \'Evenement\' est DBNull." +
+                                "", e);
+                    }
                 }
                 set {
                     this[this.tableEvenement.DateMiseEnAvantColumn] = value;
@@ -2273,6 +2285,18 @@ namespace Service.Evenement.Dal.Dal {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDateModificationNull() {
+                return this.IsNull(this.tableEvenement.DateModificationColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDateModificationNull() {
+                this[this.tableEvenement.DateModificationColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsDescriptionEvenementNull() {
                 return this.IsNull(this.tableEvenement.DescriptionEvenementColumn);
             }
@@ -2317,6 +2341,18 @@ namespace Service.Evenement.Dal.Dal {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetStatutNull() {
                 this[this.tableEvenement.StatutColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDateMiseEnAvantNull() {
+                return this.IsNull(this.tableEvenement.DateMiseEnAvantColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDateMiseEnAvantNull() {
+                this[this.tableEvenement.DateMiseEnAvantColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
