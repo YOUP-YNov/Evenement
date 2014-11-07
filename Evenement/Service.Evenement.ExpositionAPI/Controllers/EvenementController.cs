@@ -89,7 +89,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             //coté front l'utilisateur sera forcé de noter une date de fin, donc je force dateTime.now pour gérer le nullable
             evenement.DateFinInscription = end_inscription ?? DateTime.Now;
             evenement.MaximumParticipant = total_people;
-            evenement.DescriptionEvenement = new System.Text.StringBuilder(description);
+            evenement.DescriptionEvenement = description;
             // la liste de photos n'est pas encore prise en compte 
 
             //la gestion des adresse n'est pas encore établie
