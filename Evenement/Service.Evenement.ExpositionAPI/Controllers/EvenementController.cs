@@ -29,6 +29,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>la liste des événements</returns>
         public IEnumerable<EvenementTimelineFront> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null, bool? premium = null)
         {
+            serviceBll = new EvenementBllService();
             IEnumerable<Business.EvenementBll> list = serviceBll.GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby, premium);
             List<EvenementTimelineFront> ret = new List<EvenementTimelineFront>();
 
