@@ -275,6 +275,24 @@ namespace Service.Evenement.Dal
             return result.ToEvenementDao();
         }
 
+        public EvenementDao GetLieuId(decimal latitude, decimal longitude)
+        {
+
+            var result = LieuEventDalService.GetLieuExist(latitude, longitude);
+            if (result != null)
+            {
+                if(result.ToEvenementDao().Count()>0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return result.ToEvenementDao().First();
+                }
+            }
+            return null;
+        }
+
         public EvenementDao getEvenementId(EvenementDalRequest request)
         {
             var daoRequest = EventDalService.GetEvenementById(request.EvenementId);
