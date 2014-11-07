@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service.Evenement.Dal;
+using Service.Evenement.Dal.Dao.Request;
 
 namespace Service.Evenement.Business
 {
@@ -17,13 +18,27 @@ namespace Service.Evenement.Business
         /// </summary>
         /// <param name="daoEvent"></param>
         /// 
-        EvenementDalService serviceDal;
         public void ExampleAutoMapper(EvenementDao daoEvent)
         {
             Mapper.CreateMap<EvenementDao, EvenementBll>();
             EvenementBll bllEvent = Mapper.Map<EvenementDao, EvenementBll>(daoEvent);
         }
 
+        private EvenementDalService _evenementDalService;
+
+        public EvenementDalService EvenementDalService
+        {
+            get
+            {
+                if (_evenementDalService == null)
+                    _evenementDalService = new EvenementDalService();
+                return _evenementDalService;
+            }
+            set
+            {
+                _evenementDalService = value;
+            }
+        }
         private EvenementDalService evenementDalService;
 
         public EvenementBllService()
@@ -33,12 +48,13 @@ namespace Service.Evenement.Business
 
         public void PutEvenement(EvenementBll evenementBll)
         {
-            serviceDal = new EvenementDalService();
-
+           
+            //Regarder si le lieux est tjr le meme
+            this.locationExistOrCreate(evenementBll.EventAdresse);
             Mapper.CreateMap<EvenementBll, EvenementDao>();
             EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
 
-            serviceDal.UpdateEvenement(daoEvent);
+            EvenementDalService.UpdateEvenement(daoEvent);
             
 
         }
@@ -47,7 +63,7 @@ namespace Service.Evenement.Business
         {
             Mapper.CreateMap<EvenementDao, EvenementBll>();
 
-            IEnumerable<Dal.Dao.EvenementDao> tmp = evenementDalService.GetAllEvenement();
+            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
             
             if (date_search != null)
                 tmp.Where(e => e.DateEvenement == date_search  && e.Id >= (long)max_id);
@@ -92,7 +108,7 @@ namespace Service.Evenement.Business
             Mapper.CreateMap<EvenementDao, EvenementBll>();
             
             // pour l'instant les event dont le profil est organisateur (api profil pour gerer les event ou le profil est inscrit)
-            IEnumerable<EvenementDao> daoEventList = evenementDalService.GetAllEvenement().Where(e => e.OrganisateurId==id_profil);
+            IEnumerable<EvenementDao> daoEventList = EvenementDalService.GetAllEvenement().Where(e => e.OrganisateurId == id_profil);
             IEnumerable<EvenementBll> bllEventList = null;
             foreach (EvenementDao e in daoEventList)
             {
@@ -112,7 +128,33 @@ namespace Service.Evenement.Business
             };
             eventDao.DateModification = DateTime.Now;
 
-            evenementDalService.UpdateStateEvenement(eventDao);
+            EvenementDalService.UpdateStateEvenement(eventDao);
+        }
+
+        public void PostEvenement(EvenementBll evenement)
+        {
+            Mapper.CreateMap<EvenementBll, EvenementDao>();
+            this.locationExistOrCreate(evenement.EventAdresse);
+            EvenementDalService.CreateEvenement(new EvenementDalRequest(), Mapper.Map<EvenementBll, EvenementDao>(evenement));
+        }
+
+        private long locationExistOrCreate(EventLocationBll loc)
+        {
+            if (loc != null)
+            {
+                //Penser a set l id
+                EvenementDao e =  EvenementDalService.GetLieuId(loc.Latitude, loc.Longitude);
+                if (e != null)
+                {
+                    return e.EventAdresse.Id;
+                }
+                else
+                {
+                    return 0;
+                }
+
+            }
+            return 0;
         }
     }
 }

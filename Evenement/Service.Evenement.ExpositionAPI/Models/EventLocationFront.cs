@@ -8,9 +8,6 @@ namespace Service.Evenement.ExpositionAPI.Models
 {
     public class EventLocationFront
     {
-        /// <summary>
-        /// Assigne ou récupère l'id de l'adresse de l'évenement
-        /// </summary>
         public long Id { get; set; }
 
         /// <summary>
@@ -41,11 +38,26 @@ namespace Service.Evenement.ExpositionAPI.Models
         /// <summary>
         /// Assigne ou récupère le nom du pays
         /// </summary>
-        public StringBuilder Pays { get; set; }
+        public string Pays { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le nom choisi par l'utilisateur
         /// </summary>
         public string Nom { get; set; }
+
+        public EventLocationFront(decimal latitude, decimal longitude, string adresse, string pays, string code_postale, string ville)
+        {
+            this.Latitude = latitude;
+            this.Longitude = longitude;
+            this.Adresse = adresse;
+            this.Pays = pays;
+            this.CodePostale = code_postale;
+            this.Ville = ville;
+        }
+
+        public EventLocationFront()
+        {
+
+        }
     }
 }

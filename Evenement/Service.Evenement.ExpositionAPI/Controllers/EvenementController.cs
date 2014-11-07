@@ -8,6 +8,7 @@ using System.IO;
 using Service.Evenement.ExpositionAPI.Models;
 using Service.Evenement.Business;
 using AutoMapper;
+using System.Text;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
@@ -93,30 +94,32 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="description"></param>
         /// <param name="lstPicture"></param>
         /// <param name="location"></param>
-        public void PutEvenement(int id, bool? prenium, DateTime? end_inscription, int total_people = -1, string description = null, List<Stream> lstPicture = null, object location = null)
+        [HttpPut]
+        public void Put(int id, [FromBody]EvenementUpdate evenement)
         {
-            EvenementFront evenement = new EvenementFront();
-            evenement.Id = id;
-            evenement.Premium = prenium ?? false;
-            //la date de fin d'inscription est notée comme nullable, mais
-            //coté front l'utilisateur sera forcé de noter une date de fin, donc je force dateTime.now pour gérer le nullable
-            evenement.DateFinInscription = end_inscription ?? DateTime.Now;
-            evenement.MaximumParticipant = total_people;
-            evenement.DescriptionEvenement = new System.Text.StringBuilder(description);
-            // la liste de photos n'est pas encore prise en compte 
+            Mapper.CreateMap<EvenementUpdate, EvenementBll>();
+            Mapper.CreateMap<string, StringBuilder>().ConvertUsing(s =>
+            {
+                StringBuilder sb = new StringBuilder(s);
+                return sb;
+            });
+            Mapper.CreateMap<EventLocationFront, EventLocationBll>().ConvertUsing(loc =>
+            {
+                EventLocationBll location = new EventLocationBll();
+                location.Adresse = new StringBuilder(loc.Adresse);
+                location.Pays = new StringBuilder(loc.Pays);
+                location.Ville = new StringBuilder(loc.Ville);
+                location.Latitude = loc.Latitude;
+                location.Longitude = loc.Longitude;
+                location.CodePostale = new StringBuilder(loc.CodePostale);
+                return location;
+            });
+            EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
+          
 
-            //la gestion des adresse n'est pas encore établie
-            evenement.EventAdresse = new EventLocationFront() ;
 
-
-
-            AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
-            EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evenement);
 
             EvenementBllService.PutEvenement(bllEvent);
-
-
-
 
         }
         /// <summary>
@@ -155,10 +158,16 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="isPublic">evenement ouvert au public</param>
         /// <param name="lstPicture">liste des images</param>
         public void CreateEvenement( DateTime end_inscription, DateTime date_event, List<String> keys_words, List<object> friends, int total_people, string description, string title,
-                            object location, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null)
+                            decimal latitude, decimal longitude, string adresse, string pays, string code_postale, string ville, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null)
         {
+            EventLocationFront location = new EventLocationFront(latitude, longitude, adresse, pays, code_postale, ville);
             EvenementFront newEvt = new EvenementFront(end_inscription, date_event, keys_words, friends, total_people
-                , description, title, location, prenium, payant, isPublic, lstPicture);
+                , description, title, location , prenium, payant, isPublic, lstPicture );
+
+            AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
+            EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(newEvt);
+
+            //EvenementBllService.
             
         }
 
@@ -181,7 +190,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id_etat">id de l'etat</param>
         public void PutEvenementEtat(int id_profil, int id_evenement, int id_etat)
         {
-
+           
         }
 
         /// <summary>
@@ -194,5 +203,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         {
             return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
         }
+
+
     }
+
+  
 }

@@ -26,7 +26,7 @@
         /// <summary>
         /// Assigne ou récupère la liste des HashTag associé à l'évenement
         /// </summary>
-        public IEnumerable<string> HashTag { get; set; }
+        //public IEnumerable<string> HashTag { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la liste des Images associé à l'évenement
@@ -117,38 +117,35 @@
         /// <summary>
         /// Assigne ou récupère la visibilité de l'évènement
         /// </summary>
-        public bool  Payant { get; set; }
+        //public bool  Payant { get; set; }
 
         public EvenementFront(DateTime end_inscription, DateTime date_event, 
             List<String> keys_words, List<object> friends, 
             int total_people, string description, string title,
-            object location, bool? prenium, bool? payant, 
+            EventLocationFront location, bool? prenium, bool? payant, 
             bool? isPublic, List<Stream> lstPicture = null)
         {
+
             DateEvenement = date_event;
             DateFinInscription = end_inscription;
-            IEnumerable<string> hashTag = new List<string>();
-            HashTag = keys_words;
+            IEnumerable<string> hashTag = keys_words;
             /* La liste des amis n'est pas encore géré */
             MaximumParticipant = total_people;
             DescriptionEvenement = description;
             TitreEvenement = title;
 
-            /* gestion de l'adresse à prévoir */
-            EventAdresse = new EventLocationFront();
+            EventAdresse = location;
             Premium = prenium ?? false;
 
             // par défaut un évènementr est public
             Public = isPublic ?? true;
 
             // par défaut un évènement n'est pas payant.
-            Payant = payant ?? false;
+            //Payant = payant ?? false;
 
             // gerer le flux des images
             List<EventImageFront> test = new List<EventImageFront>();
             Galleries = test;
-            
-
         }
 
         public EvenementFront()

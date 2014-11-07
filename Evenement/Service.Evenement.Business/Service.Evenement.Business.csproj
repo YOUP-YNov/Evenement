@@ -55,6 +55,7 @@
     <Compile Include="BusinessModels\Request\EvenementDalRequest.cs" />
     <Compile Include="CategorieBllService.cs" />
     <Compile Include="EvenementBllService.cs" />
+    <Compile Include="LieuBllService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
