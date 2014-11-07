@@ -173,6 +173,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
            
         }
 
+        /// <summary>
+        /// méthode d'appel de l'api profil
+        /// </summary>
+        /// <param name="invitations">classe de liaison entre evenement et profil</param>
         private void InviteFriends(InviteFriends invitations)
         {
             //TODO => appeler le profil
