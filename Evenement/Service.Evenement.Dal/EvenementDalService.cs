@@ -25,6 +25,8 @@ namespace Service.Evenement.Dal
 
         private CategorieTableAdapter _categorieDalService;
 
+        private SubscriptionEventTableAdapter _SubscriptionDalService;
+
         #endregion
 
         #region Propriétés
@@ -79,6 +81,20 @@ namespace Service.Evenement.Dal
             set
             {
                 _categorieDalService = value;
+            }
+        }
+
+        public SubscriptionEventTableAdapter SubscriptionDalService 
+        { 
+            get
+            {
+                if ( _SubscriptionDalService == null )
+                    _SubscriptionDalService = new SubscriptionEventTableAdapter();
+                return _SubscriptionDalService;
+            }
+            set
+            {
+                _SubscriptionDalService = value;
             }
         }
 
@@ -259,10 +275,68 @@ namespace Service.Evenement.Dal
             return result.ToEvenementDao();
         }
 
+        public EvenementDao GetLieuId(decimal latitude, decimal longitude)
+        {
+
+            var result = LieuEventDalService.GetLieuExist(latitude, longitude);
+            if (result != null)
+            {
+                if(result.ToEvenementDao().Count()>0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return result.ToEvenementDao().First();
+                }
+            }
+            return null;
+        }
+
         public EvenementDao getEvenementId(EvenementDalRequest request)
         {
             var daoRequest = EventDalService.GetEvenementById(request.EvenementId);
             return daoRequest.ToEvenementDao().FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Permet d'inscrire un utilisateur à une evenement. Si celui-ci participe deja a l'évenement
+        /// alors il sera désincrit.
+        /// </summary>
+        /// <param name="request"> Parametre de requete contenant le userId et l'evenementId</param>
+        /// <returns>L'état de l'inscription du user par rapport a cette evenement</returns>
+        public IEnumerable<EvenementSubcriber> SubscribeEvenement ( EvenementDalRequest request )
+        {
+            if( request == null && request.EvenementId == null && request.UserId == null )
+                return null;
+            var result = SubscriptionDalService.GetParticipationByUserAndEventId(request.EvenementId, request.UserId);
+            return result.ToSubscriberDao();
+        }
+
+        /// <summary>
+        /// Recupere la liste de tout les utilisateurs qui ont souscrit a un evenement, Annulé ou non
+        /// </summary>
+        /// <param name="request"> Parametre de requete contenant l'evenementId</param>
+        /// <returns>La liste des personnes qui sont inscrites a l'evenement</returns>
+        public IEnumerable<EvenementSubcriber> GetSubscribersByEvent ( EvenementDalRequest request )
+        {
+            if ( request == null && request.EvenementId == null)
+                return null;
+            var result = SubscriptionDalService.GetParticipantByEvent(request.EvenementId);
+            return result.ToSubscriberDao();
+        }
+
+        /// <summary>
+        /// Recupere la liste de tous les evenements aux quelles un utilisateur s'est inscrit
+        /// </summary>
+        /// <param name="request"> Parametre de requete contenant le userId</param>
+        /// <returns>La liste des personnes qui sont inscrites a l'evenement</returns>
+        public IEnumerable<EvenementSubcriber> GetSubscriptionByUser ( EvenementDalRequest request )
+        {
+            if ( request == null && request.UserId == null )
+                return null;
+            var result = SubscriptionDalService.GetEventParticipationByUserId(request.UserId);
+            return result.ToSubscriberDao();
         }
 
         #endregion

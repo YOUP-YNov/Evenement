@@ -106,5 +106,10 @@
         /// Assigne ou récupère le statut d'un evenement
         /// </summary>
         public string Statut { get; set; }
+
+        /// <summary>
+        /// Assigne ou récupère la liste des participants de l'evenementss
+        /// </summary>
+        public IEnumerable<EvenementSubcriber> Participants { get; set; }
     }
 }

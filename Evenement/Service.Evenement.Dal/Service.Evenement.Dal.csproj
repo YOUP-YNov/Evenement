@@ -51,6 +51,7 @@
     </Compile>
     <Compile Include="Dao\Evenement.cs" />
     <Compile Include="Dao\EvenementCategorie.cs" />
+    <Compile Include="Dao\EvenementSubcriber.cs" />
     <Compile Include="Dao\EventImage.cs" />
     <Compile Include="Dao\EventLocation.cs" />
     <Compile Include="Dao\EventState.cs" />
