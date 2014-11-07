@@ -57,6 +57,10 @@
     <Compile Include="EvenementDALTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Service.Evenement.Business\Service.Evenement.Business.csproj">
+      <Project>{5968d451-9f4f-4361-aacc-645ee4298f3b}</Project>
+      <Name>Service.Evenement.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Service.Evenement.Dal\Service.Evenement.Dal.csproj">
       <Project>{13646a72-1632-43bd-bd8c-b3e7fb5b6372}</Project>
       <Name>Service.Evenement.Dal</Name>

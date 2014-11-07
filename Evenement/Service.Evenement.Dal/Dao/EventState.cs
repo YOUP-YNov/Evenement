@@ -23,5 +23,10 @@ namespace Service.Evenement.Dal.Dao
             Nom = name;
             Id = (long)name;
         }
+
+        public EventStateDao()
+        {
+
+        }
     }
 }
