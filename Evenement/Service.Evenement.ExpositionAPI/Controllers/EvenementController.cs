@@ -151,37 +151,22 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Création d'un evenement 
-        /// </summary>
-        /// <param name="end_inscription"> date de fin d'inscription a un evenement</param>
-        /// <param name="date_event">date de l'evenement</param>
-        /// <param name="keys_words">liste des mots clés de l'evenement</param>
-        /// <param name="friends">liste des amis</param>
-        /// <param name="total_people">nombre de personne max pour l'evenement</param>
-        /// <param name="description">description de l'evenement</param>
-        /// <param name="title">titre de l'evenement</param>
-        /// <param name="location">localisation de l'evenement</param>
-        /// <param name="prenium">evenement prenium par defaut il ne l est pas</param>
-        /// <param name="payant">evenement payant par defaut il est gratuit</param>
-        /// <param name="isPublic">evenement ouvert au public</param>
-        /// <param name="lstPicture">liste des images</param>
-        public void CreateEvenement(long idUtilisateur, DateTime end_inscription, DateTime date_event, List<String> keys_words, List<object> friends, int total_people, string description, string title,
-                            object location, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null
-                            , List<long> idsFriends = null)
+       /// <summary>
+       /// fonction de création de l'évènement
+       /// </summary>
+       /// <param name="evt">l'évènement à creer</param>
+        public void CreateEvenement([FromBody] EvenementCreate evt)
         {
-            EvenementFront newEvt = new EvenementFront(idUtilisateur, end_inscription, date_event, keys_words, friends, total_people
-                , description, title, location, prenium, payant, isPublic, lstPicture);
-
+            
             AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
-            EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(newEvt);
+            EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evt.evenement);
 
             EvenementBllService.PutEvenement(bllEvent);
 
             InviteFriends invitations = new InviteFriends();
             invitations.idEvent = bllEvent.Id;
             invitations.idUser = bllEvent.OrganisateurId;
-            invitations.idFriends = idsFriends;
+            invitations.idFriends = evt.friends;
            
         }
 

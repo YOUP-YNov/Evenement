@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Service.Evenement.ExpositionAPI.Models
 {
-    public enum EventStateEnum
+    public enum EventStateEnumFront
     {
         AValider = 11,
         Valide = 12,
