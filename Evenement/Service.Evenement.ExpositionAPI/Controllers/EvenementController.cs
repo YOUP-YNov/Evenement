@@ -85,8 +85,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [Route("api/Evenements/Reported")]
         public IEnumerable<EvenementFront> GetReportedEvents()
         {
-            serviceBll = new EvenementBllService();
-            IEnumerable<EvenementBll> tmp = serviceBll.GetReportedEvents();
+            IEnumerable<EvenementBll> tmp = EvenementBllService.GetReportedEvents();
 
             Mapper.CreateMap<EvenementBll, EvenementFront>();
             Mapper.CreateMap<EventLocationBll, EventLocationFront>();
@@ -172,7 +171,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             var existsEvt = evts.FirstOrDefault(evt => evt.Id == id);
             if (existsEvt != null)
             {
-                EvenementBllService.DeactivateEvent(id);
+                EvenementBllService.ModifyEventState(id, new EventStateBll(EventStateEnum.Desactiver));
             }
         }
 
