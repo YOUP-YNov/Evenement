@@ -11,6 +11,9 @@ using AutoMapper;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
+    /// <summary>
+    /// controller d'évènement.
+    /// </summary>
     public class EvenementController : ApiController
     {
         EvenementBllService serviceBll;
@@ -78,7 +81,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="description"></param>
         /// <param name="lstPicture"></param>
         /// <param name="location"></param>
-        public void PutEvenement(int id, bool? prenium, DateTime? end_inscription, int total_people = -1, string description = null, List<Stream> lstPicture = null, object location = null)
+        public void PutEvenement(int id, bool? prenium, DateTime? end_inscription, int total_people = -1, string description = null, List<long> ids_pictures = null, object location = null)
         {
             serviceBll = new EvenementBllService();
 
@@ -90,11 +93,18 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             evenement.DateFinInscription = end_inscription ?? DateTime.Now;
             evenement.MaximumParticipant = total_people;
             evenement.DescriptionEvenement = description;
-            // la liste de photos n'est pas encore prise en compte 
-
+            // la liste de photos  
+            List<EventImageFront> gallerie = new List<EventImageFront>();
+            for (int i = 0; i < ids_pictures.Count;i++)
+            {
+                EventImageFront image = new EventImageFront();
+                image.Id = ids_pictures[i];
+                // à trouver comment récupérer url
+                gallerie.Add(image);
+            }
+            evenement.Galleries = gallerie;
             //la gestion des adresse n'est pas encore établie
-            evenement.EventAdresse = new EventLocationFront() ;
-
+            evenement.EventAdresse = new EventLocationFront();
 
 
             AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
@@ -144,16 +154,28 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="payant">evenement payant par defaut il est gratuit</param>
         /// <param name="isPublic">evenement ouvert au public</param>
         /// <param name="lstPicture">liste des images</param>
-        public void CreateEvenement( DateTime end_inscription, DateTime date_event, List<String> keys_words, List<object> friends, int total_people, string description, string title,
-                            object location, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null)
+        public void CreateEvenement(long idUtilisateur, DateTime end_inscription, DateTime date_event, List<String> keys_words, List<object> friends, int total_people, string description, string title,
+                            object location, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null
+                            , List<long> idsFriends = null)
         {
-            EvenementFront newEvt = new EvenementFront(end_inscription, date_event, keys_words, friends, total_people
+            EvenementFront newEvt = new EvenementFront(idUtilisateur, end_inscription, date_event, keys_words, friends, total_people
                 , description, title, location, prenium, payant, isPublic, lstPicture);
 
             AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(newEvt);
 
             serviceBll.PutEvenement(bllEvent);
+
+            InviteFriends invitations = new InviteFriends();
+            invitations.idEvent = bllEvent.Id;
+            invitations.idUser = bllEvent.OrganisateurId;
+            invitations.idFriends = idsFriends;
+           
+        }
+
+        private void InviteFriends(InviteFriends invitations)
+        {
+            //TODO => appeler le profil
         }
 
         /// <summary>

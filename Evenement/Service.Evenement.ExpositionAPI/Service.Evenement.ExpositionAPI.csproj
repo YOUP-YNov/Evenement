@@ -173,6 +173,7 @@
     <Compile Include="Models\EventImageFront.cs" />
     <Compile Include="Models\EventLocationFront.cs" />
     <Compile Include="Models\EventStateFront.cs" />
+    <Compile Include="Models\InviteFriends.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
