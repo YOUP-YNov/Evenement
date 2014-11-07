@@ -54,8 +54,8 @@ namespace Service.Evenement.Dal.Mappeur
             result.CreateDate = EvenementRow.DateCreation;
             result.DateEvenement = EvenementRow.DateEvenement;
             result.DateFinInscription = EvenementRow.DateFinInscription;
-            result.DateMiseEnAvant = EvenementRow.DateMiseEnAvant;
-            result.DateModification = EvenementRow.DateModification;
+            result.DateMiseEnAvant = EvenementRow.IsDateMiseEnAvantNull() ? new DateTime() : EvenementRow.DateMiseEnAvant;
+            result.DateModification = EvenementRow.IsDateModificationNull() ? new DateTime() : EvenementRow.DateModification;
             result.DescriptionEvenement = EvenementRow.IsDescriptionEvenementNull() ? new StringBuilder() : new StringBuilder(EvenementRow.DescriptionEvenement);
             result.EtatEvenement = EvenementRow.ToEvenementStateDao();
             result.EventAdresse = EvenementRow.ToEvenementAdresseDao();
@@ -184,7 +184,7 @@ namespace Service.Evenement.Dal.Mappeur
             EvenementImageDao result = new EvenementImageDao();
 
             result.Id = ImageRow.EvenementPhoto_id;
-            result.Url = ImageRow.Adresse;
+            result.Url = ImageRow.Adresse.ToString();
 
             return result;
         }

@@ -46,6 +46,11 @@ namespace Service.Evenement.Business
 
         }
 
+        public void DeleteCategorie(long id)
+        {
+            _evenementDalService.CategorieDalService.DeleteCategorie(id);
+        }
+
        
     }
 }
