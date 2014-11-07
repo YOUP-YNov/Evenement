@@ -35,19 +35,15 @@ namespace Service.Evenement.Business
 
         public void PutEvenement(EvenementBll evenementBll)
         {
-            Mapper.CreateMap<EvenementBll, EvenementDao>();
             EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
 
-            _evenementDalService.UpdateEvenement(daoEvent);
-            
-
+            EvenementDalService.UpdateEvenement(daoEvent);
         }
 
         public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result, int categorie, string text_search, int max_id, string orderby, bool? premium)
         {
-            Mapper.CreateMap<EvenementDao, EvenementBll>();
 
-            IEnumerable<Dal.Dao.EvenementDao> tmp = _evenementDalService.GetAllEvenement();
+            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
             
             if (date_search != null)
                 tmp.Where(e => e.DateEvenement == date_search  && e.Id >= (long)max_id);
@@ -128,7 +124,7 @@ namespace Service.Evenement.Business
             };
             eventDao.DateModification = DateTime.Now;
 
-            _evenementDalService.UpdateStateEvenement(eventDao);
+            EvenementDalService.UpdateStateEvenement(eventDao);
         }
     }
 }
