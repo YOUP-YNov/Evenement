@@ -539,9 +539,10 @@
             <param name="idEvenement">id de l'evenement</param>
             <param name="idProfil">id du profil</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DeleteEvenement(System.Int32,System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DesactivateEvenement(System.Int32,System.Int32)">
             <summary>
-            supression de l'evenement 
+            desactivation de l'evenement 
+            c'est une mise en archive. L'évenement n'est plus consultable. 
             </summary>
             <param name="id">id de l'evenement</param>
             <param name="id_profil">id du profil</param>
@@ -571,7 +572,7 @@
             <param name="nb_min_signalement">nb de signalement minimum</param>
             <returns>liste d'evenement signalé</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PutEvenementEtat(System.Int32,System.Int32,System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PutEvenemenntEtat(System.Int32,System.Int32,System.Int32)">
             <summary>
             permet de modifier l'etat d'un evenement (Admin)
             </summary>
