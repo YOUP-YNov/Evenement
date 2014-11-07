@@ -53,5 +53,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             return (result == null ) ? null :  Mapper.Map<EvenementCategorieBll, EvenementCategorieFront>(result);
         }
 
+        public void DeleteCategorie(long id)
+        {
+            _categorieBllService.DeleteCategorie(id);
+        }
+
     }
 }

@@ -81,7 +81,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="description"></param>
         /// <param name="lstPicture"></param>
         /// <param name="location"></param>
-        public void PutEvenement(int id, bool? prenium, DateTime? end_inscription, int total_people = -1, string description = null, List<Stream> lstPicture = null, object location = null)
+        public void PutEvenement(int id, bool? prenium, DateTime? end_inscription, int total_people = -1, string description = null, List<long> ids_pictures = null, object location = null)
         {
             serviceBll = new EvenementBllService();
 
@@ -93,11 +93,18 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             evenement.DateFinInscription = end_inscription ?? DateTime.Now;
             evenement.MaximumParticipant = total_people;
             evenement.DescriptionEvenement = description;
-            // la liste de photos n'est pas encore prise en compte 
-
+            // la liste de photos  
+            List<EventImageFront> gallerie = new List<EventImageFront>();
+            for (int i = 0; i < ids_pictures.Count;i++)
+            {
+                EventImageFront image = new EventImageFront();
+                image.Id = ids_pictures[i];
+                // à trouver comment récupérer url
+                gallerie.Add(image);
+            }
+            evenement.Galleries = gallerie;
             //la gestion des adresse n'est pas encore établie
-            evenement.EventAdresse = new EventLocationFront() ;
-
+            evenement.EventAdresse = new EventLocationFront();
 
 
             AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
