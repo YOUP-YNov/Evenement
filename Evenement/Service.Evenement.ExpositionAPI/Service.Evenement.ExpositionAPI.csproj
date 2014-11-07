@@ -161,6 +161,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\EvenementController.cs" />
     <Compile Include="Controllers\EvenementEtatController.cs" />
+    <Compile Include="Models\EvenementCreate.cs" />
     <Compile Include="Models\EvenementUpdate.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LieuController.cs" />
