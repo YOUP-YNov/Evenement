@@ -110,6 +110,24 @@ namespace Service.Evenement.Business
         }
 
         /// <summary>
+        /// Retourne la liste des événements signalés
+        /// </summary>
+        /// <returns>Liste d'événements</returns>
+        public IEnumerable<EvenementBll> GetReportedEvents()
+        {
+            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
+            Mapper.CreateMap<EvenementDao, EvenementBll>();
+            Mapper.CreateMap<EventLocationDao, EventLocationBll>();
+            Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
+            Mapper.CreateMap<EventStateDao, EventStateBll>();
+
+            IEnumerable<EvenementBll> events = from e in tmp
+                                                       where e.EtatEvenement.Nom == Dal.Dao.EventStateEnum.Signaler
+                                                       select Mapper.Map<EvenementDao, EvenementBll>(e);
+            return events;
+        }
+
+        /// <summary>
         /// Permet de désactiver un événement
         /// </summary>
         /// <param name="eventId">id de l'événement à désactiver</param>

@@ -518,6 +518,13 @@
             <param name="id_profil">id du profil</param>
             <returns>liste d'événements</returns>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetReportedEvents">
+            <summary>
+            Retourne la liste des événements signalés
+            </summary>
+            <returns>Liste d'événements</returns>
+            
+        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenement(System.Int32)">
             <summary>
             retourne le détail d'un événement
@@ -569,14 +576,6 @@
             <param name="isPublic">evenement ouvert au public</param>
             <param name="lstPicture">liste des images</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenementsSignale(System.Int32,System.Int32)">
-            <summary>
-            retourne la liste des evenements signalés ( admnin)
-            </summary>
-            <param name="id_profil">id du profil admin</param>
-            <param name="nb_min_signalement">nb de signalement minimum</param>
-            <returns>liste d'evenement signalé</returns>
-        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PutEvenemenntEtat(System.Int32,System.Int32,System.Int32)">
             <summary>
             permet de modifier l'etat d'un evenement (Admin)
@@ -593,17 +592,11 @@
             <param name="id_etat">id de l'etat</param>
             <returns></returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.GetEtats">
-            <summary>
-            liste des etats d'un evenement
-            </summary>
-            <returns>liste d'etats</returns>
-        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.GetEtat(System.Int32)">
             <summary>
             un etat en particulié 
             </summary>
-            <param name="id">id de l'etat</param>
+            <param name="id">id de l'evenement</param>
             <returns></returns>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.LieuController.GetAll">
