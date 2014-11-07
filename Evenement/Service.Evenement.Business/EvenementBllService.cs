@@ -110,15 +110,48 @@ namespace Service.Evenement.Business
         }
 
         /// <summary>
-        /// Permet de désactiver un événement
+        /// retourne l'état d'un événement 
         /// </summary>
-        /// <param name="eventId">id de l'événement à désactiver</param>
-        public void DeactivateEvent(int eventId)
+        /// <param name="id">id de l'événement</param>
+        /// <returns>état de l'événement</returns>
+        public EventStateBll GetEventState(int id)
         {
-            EvenementDao eventDao = new EvenementDao();
-            eventDao.Id = eventId;
-            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
-            eventDao.DateModification = DateTime.Now;
+            return GetEvenementById(id).EtatEvenement;
+        }
+        /// <summary>
+        /// retourne l'état d'un événement 
+        /// </summary>
+        /// <param name="id">id de l'événement</param>
+        /// <returns>état de l'événement</returns>
+        public void ModifyEventState(int id, EventStateBll state)
+        {
+            EvenementDalRequest request = new EvenementDalRequest();
+            request.EvenementId = id;
+            EvenementDao eventDao = EvenementDalService.getEvenementId(request);
+
+            switch (state.Nom)
+            {
+                case EventStateEnum.Annuler:
+                    eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.Annuler);
+                    break;
+                case EventStateEnum.AValider:
+                    eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.AValider);
+                    break;
+                case EventStateEnum.Desactiver:
+                    eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.Desactiver);
+                    break;
+                case EventStateEnum.Reussi:
+                    eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.Reussi);
+                    break;
+                case EventStateEnum.Signaler:
+                    eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.Signaler);
+                    break;
+                case EventStateEnum.Valide:
+                    eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.Valide);
+                    break;
+                default:
+                    break;
+            }
 
             EvenementDalService.UpdateStateEvenement(eventDao);
         }
