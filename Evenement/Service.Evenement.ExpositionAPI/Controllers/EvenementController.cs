@@ -95,15 +95,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             //la gestion des adresse n'est pas encore établie
             evenement.EventAdresse = new EventLocationFront() ;
 
-
-
             AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evenement);
 
             serviceBll.PutEvenement(bllEvent);
-
-
-
 
         }
         /// <summary>
