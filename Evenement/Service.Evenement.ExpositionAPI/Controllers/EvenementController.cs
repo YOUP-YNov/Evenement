@@ -11,6 +11,9 @@ using AutoMapper;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
+    /// <summary>
+    /// controller d'évènement.
+    /// </summary>
     public class EvenementController : ApiController
     {
         EvenementBllService serviceBll;
@@ -144,16 +147,28 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="payant">evenement payant par defaut il est gratuit</param>
         /// <param name="isPublic">evenement ouvert au public</param>
         /// <param name="lstPicture">liste des images</param>
-        public void CreateEvenement( DateTime end_inscription, DateTime date_event, List<String> keys_words, List<object> friends, int total_people, string description, string title,
-                            object location, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null)
+        public void CreateEvenement(long idUtilisateur, DateTime end_inscription, DateTime date_event, List<String> keys_words, List<object> friends, int total_people, string description, string title,
+                            object location, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null
+                            , List<long> idsFriends = null)
         {
-            EvenementFront newEvt = new EvenementFront(end_inscription, date_event, keys_words, friends, total_people
+            EvenementFront newEvt = new EvenementFront(idUtilisateur, end_inscription, date_event, keys_words, friends, total_people
                 , description, title, location, prenium, payant, isPublic, lstPicture);
 
             AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(newEvt);
 
             serviceBll.PutEvenement(bllEvent);
+
+            InviteFriends invitations = new InviteFriends();
+            invitations.idEvent = bllEvent.Id;
+            invitations.idUser = bllEvent.OrganisateurId;
+            invitations.idFriends = idsFriends;
+           
+        }
+
+        private void InviteFriends(InviteFriends invitations)
+        {
+            //TODO => appeler le profil
         }
 
         /// <summary>
