@@ -2,6 +2,9 @@
     
     
     public partial class EventDalService {
+        partial class SubscriptionEventDataTable
+        {
+        }
     }
 }
 
