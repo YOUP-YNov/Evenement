@@ -13,6 +13,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 {
     public class EvenementController : ApiController
     {
+        EvenementBllService serviceBll;
         /// <summary>
         /// retourne la liste des evenements
         /// </summary>
@@ -23,9 +24,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="max_id">l'id du derniers evenements</param>
         /// <param name="orderby">le nom du trie (date, categorie, disponnible)</param>
         /// <returns>la liste des événements</returns>
-        public IEnumerable<EvenementTimelineFront> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null)
+        public IEnumerable<EvenementTimelineFront> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null, bool? premium = null)
         {
-            IEnumerable<Business.EvenementBll> list = new Business.EvenementBllService().GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby);
+            IEnumerable<Business.EvenementBll> list = serviceBll.GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby, premium);
             List<EvenementTimelineFront> ret = new List<EvenementTimelineFront>();
 
             Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
@@ -64,7 +65,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>un événement</returns>
         public Service.Evenement.ExpositionAPI.Models.EvenementFront GetEvenement(int id)
         {
-            return new Service.Evenement.ExpositionAPI.Models.EvenementFront();
+            return null;
         }
 
         /// <summary>
@@ -79,21 +80,27 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="location"></param>
         public void PutEvenement(int id, bool? prenium, DateTime? end_inscription, int total_people = -1, string description = null, List<Stream> lstPicture = null, object location = null)
         {
+            serviceBll = new EvenementBllService();
+
             EvenementFront evenement = new EvenementFront();
+            evenement.Id = id;
             evenement.Premium = prenium ?? false;
             //la date de fin d'inscription est notée comme nullable, mais
             //coté front l'utilisateur sera forcé de noter une date de fin, donc je force dateTime.now pour gérer le nullable
             evenement.DateFinInscription = end_inscription ?? DateTime.Now;
             evenement.MaximumParticipant = total_people;
             evenement.DescriptionEvenement = new System.Text.StringBuilder(description);
+            // la liste de photos n'est pas encore prise en compte 
 
+            //la gestion des adresse n'est pas encore établie
+            evenement.EventAdresse = new EventLocationFront() ;
 
 
 
             AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evenement);
 
-            
+            serviceBll.PutEvenement(bllEvent);
 
 
 
@@ -137,6 +144,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         public void CreateEvenement( DateTime end_inscription, DateTime date_event, List<String> keys_words, List<object> friends, int total_people, string description, string title,
                             object location, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null)
         {
+            EvenementFront newEvt = new EvenementFront(end_inscription, date_event, keys_words, friends, total_people
+                , description, title, location, prenium, payant, isPublic, lstPicture);
+            
         }
 
         /// <summary>
