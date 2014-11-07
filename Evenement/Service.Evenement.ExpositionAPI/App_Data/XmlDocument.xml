@@ -593,17 +593,11 @@
             <param name="id_etat">id de l'etat</param>
             <returns></returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.GetEtats">
-            <summary>
-            liste des etats d'un evenement
-            </summary>
-            <returns>liste d'etats</returns>
-        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.GetEtat(System.Int32)">
             <summary>
             un etat en particulié 
             </summary>
-            <param name="id">id de l'etat</param>
+            <param name="id">id de l'evenement</param>
             <returns></returns>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.LieuController.GetAll">
