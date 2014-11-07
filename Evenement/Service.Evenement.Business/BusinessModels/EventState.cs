@@ -17,5 +17,11 @@ namespace Service.Evenement.Business
         /// Assigne ou récupère l'id de l'état de l'évenement
         /// </summary>
         public long Id { get; set; }
+
+        public EventStateBll(EventStateEnum name)
+        {
+            Nom = name;
+            Id = (long)name;
+        }
     }
 }
