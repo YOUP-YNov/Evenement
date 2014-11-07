@@ -102,9 +102,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 
             serviceBll.PutEvenement(bllEvent);
 
-
-
-
         }
         /// <summary>
         /// Permet l'inscription et la desincription
@@ -117,13 +114,19 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// supression de l'evenement 
+        /// desactivation de l'evenement 
+        /// c'est une mise en archive. L'évenement n'est plus consultable. 
         /// </summary>
         /// <param name="id">id de l'evenement</param>
         /// <param name="id_profil">id du profil</param>
-        public void DeleteEvenement(int id, int id_profil)
+        public void DesactivateEvenement(int id, int id_profil)
         {
-
+            var evts = serviceBll.GetByProfil(id_profil);
+            var existsEvt = evts.FirstOrDefault(evt => evt.Id == id);
+            if (existsEvt != null)
+            {
+                serviceBll.DeactivateEvent(id);
+            }
         }
 
         /// <summary>
@@ -146,7 +149,11 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         {
             EvenementFront newEvt = new EvenementFront(end_inscription, date_event, keys_words, friends, total_people
                 , description, title, location, prenium, payant, isPublic, lstPicture);
-            
+
+            AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
+            EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(newEvt);
+
+            serviceBll.PutEvenement(bllEvent);
         }
 
         /// <summary>
@@ -166,7 +173,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id_profil">id de profil</param>
         /// <param name="id_evenement">id de l'evenement</param>
         /// <param name="id_etat">id de l'etat</param>
-        public void PutEvenementEtat(int id_profil, int id_evenement, int id_etat)
+        public void PutEvenemenntEtat(int id_profil, int id_evenement, int id_etat)
         {
 
         }
