@@ -17,5 +17,11 @@ namespace Service.Evenement.Dal.Dao
         /// Assigne ou récupère l'id de l'état de l'évenement
         /// </summary>
         public long Id { get; set; }
+
+        public EventStateDao(EventStateEnum name)
+        {
+            Nom = name;
+            Id = (long)name;
+        }
     }
 }

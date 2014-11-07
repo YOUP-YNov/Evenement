@@ -172,6 +172,7 @@
     <Compile Include="Models\EvenementTimeline.cs" />
     <Compile Include="Models\EventImageFront.cs" />
     <Compile Include="Models\EventLocationFront.cs" />
+    <Compile Include="Models\EventStateEnumFront.cs" />
     <Compile Include="Models\EventStateFront.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

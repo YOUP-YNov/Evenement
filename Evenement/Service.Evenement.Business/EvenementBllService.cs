@@ -121,11 +121,7 @@ namespace Service.Evenement.Business
         {
             EvenementDao eventDao = new EvenementDao();
             eventDao.Id = eventId;
-            eventDao.EtatEvenement = new EventStateDao()
-            {
-                Id = 16,
-                Nom = Dal.Dao.EventStateEnum.Desactiver
-            };
+            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
             eventDao.DateModification = DateTime.Now;
 
             _evenementDalService.UpdateStateEvenement(eventDao);
