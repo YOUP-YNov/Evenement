@@ -15,6 +15,8 @@ using EvenementDao = Service.Evenement.Dal.Dao.EvenementDao;
 using EvenementImageDao = Service.Evenement.Dal.Dao.EventImageDao;
 using EvenementLocationDao = Service.Evenement.Dal.Dao.EventLocationDao;
 using EvenementStateDao = Service.Evenement.Dal.Dao.EventStateDao;
+using SubcriptionUsersTable = Service.Evenement.Dal.Dal.EventDalService.SubscriptionEventDataTable;
+using SubcriptionUsersRow = Service.Evenement.Dal.Dal.EventDalService.SubscriptionEventRow;
 using EvenementStateEnumDao = Service.Evenement.Dal.Dao.EventStateEnum;
 using Service.Evenement.Dal.Dao;
 
@@ -54,8 +56,8 @@ namespace Service.Evenement.Dal.Mappeur
             result.CreateDate = EvenementRow.DateCreation;
             result.DateEvenement = EvenementRow.DateEvenement;
             result.DateFinInscription = EvenementRow.DateFinInscription;
-            result.DateMiseEnAvant = EvenementRow.DateMiseEnAvant;
-            result.DateModification = EvenementRow.DateModification;
+            result.DateMiseEnAvant = EvenementRow.IsDateMiseEnAvantNull() ? new DateTime() : EvenementRow.DateMiseEnAvant;
+            result.DateModification = EvenementRow.IsDateModificationNull() ? new DateTime() : EvenementRow.DateModification;
             result.DescriptionEvenement = EvenementRow.IsDescriptionEvenementNull() ? new StringBuilder() : new StringBuilder(EvenementRow.DescriptionEvenement);
             result.EtatEvenement = EvenementRow.ToEvenementStateDao();
             result.EventAdresse = EvenementRow.ToEvenementAdresseDao();
@@ -232,6 +234,44 @@ namespace Service.Evenement.Dal.Mappeur
 
             result.Id = CategorieRow.Categorie_id;
             result.Libelle = new StringBuilder(CategorieRow.Libelle);
+
+            return result;
+        }
+
+        #endregion
+
+        #region SubcriptionUser
+
+        internal static IEnumerable<EvenementSubcriber> ToSubscriberDao ( this SubcriptionUsersTable SubcribersTable )
+        {
+            if ( SubcribersTable == null && SubcribersTable.Rows == null )
+                return null;
+
+            List<EvenementSubcriber> result = new List<EvenementSubcriber>();
+
+            foreach ( SubcriptionUsersRow EventRow in SubcribersTable )
+            {
+                EvenementSubcriber daoResult = EventRow.ToSubscriberDao();
+                if ( daoResult != null )
+                    result.Add(daoResult);
+            }
+
+            return result;
+        }
+
+        internal static EvenementSubcriber ToSubscriberDao ( this SubcriptionUsersRow SubcriptionUser )
+        {
+            if ( SubcriptionUser == null )
+                return null;
+
+            EvenementSubcriber result = new EvenementSubcriber();
+
+            result.DateAnnulation = SubcriptionUser.IsDateAnnulationNull() ? new DateTime() : SubcriptionUser.DateAnnulation;
+            result.DateInscription = SubcriptionUser.DateAnnulation;
+            result.Annulation = SubcriptionUser.Annulation;
+            result.ParticipationId = SubcriptionUser.Participe_id;
+            result.EvenementId = SubcriptionUser.Evenement_id;
+            result.UtilisateurId = SubcriptionUser.Utilisateur_id;
 
             return result;
         }

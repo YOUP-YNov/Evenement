@@ -8,12 +8,12 @@ namespace Service.Evenement.Dal.Dao
 {
     public enum EventStateEnum
     {
-        AValider,
-        Valide,
-        Annuler,
-        Signaler,
-        Reussi,
-        Desactiver,
+        AValider = 11,
+        Valide = 12,
+        Annuler = 13,
+        Signaler = 14,
+        Reussi = 15,
+        Desactiver = 16,
         Unspecified
     }
 }

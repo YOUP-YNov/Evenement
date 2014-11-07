@@ -11,7 +11,7 @@ namespace Service.Evenement.Dal.Dao
         /// <summary>
         /// Assigne ou récupère l'url de l'image
         /// </summary>
-        public String Url { get; set; }
+        public StringBuilder Url { get; set; }
 
         /// <summary>
         /// Assigne ou récupère l'id de l'image

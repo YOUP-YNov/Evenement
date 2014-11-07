@@ -8,12 +8,30 @@ using System.IO;
 using Service.Evenement.ExpositionAPI.Models;
 using Service.Evenement.Business;
 using AutoMapper;
+using System.Text;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
+    /// <summary>
+    /// controller d'évènement.
+    /// </summary>
     public class EvenementController : ApiController
     {
-        EvenementBllService serviceBll;
+        private EvenementBllService _evenementBllService;
+
+        public EvenementBllService EvenementBllService
+        {
+            get
+            {
+                if (_evenementBllService == null)
+                    _evenementBllService = new EvenementBllService();
+                return _evenementBllService;
+            }
+            set
+            {
+                _evenementBllService = value;
+            }
+        }
         /// <summary>
         /// retourne la liste des evenements
         /// </summary>
@@ -26,7 +44,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>la liste des événements</returns>
         public IEnumerable<EvenementTimelineFront> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null, bool? premium = null)
         {
-            IEnumerable<Business.EvenementBll> list = serviceBll.GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby, premium);
+
+            IEnumerable<Business.EvenementBll> list = EvenementBllService.GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby, premium);
             List<EvenementTimelineFront> ret = new List<EvenementTimelineFront>();
 
             Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
@@ -48,8 +67,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         {
             Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
 
-            Business.EvenementBllService evenementBllService = new Business.EvenementBllService();
-            IEnumerable<Business.EvenementBll> bllEventList = evenementBllService.GetByProfil(id_profil);
+
+            IEnumerable<Business.EvenementBll> bllEventList = EvenementBllService.GetByProfil(id_profil);
             IEnumerable<EvenementTimelineFront> timelineFrontEventList = null;
             foreach(var e in bllEventList)
             {
@@ -78,36 +97,32 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="description"></param>
         /// <param name="lstPicture"></param>
         /// <param name="location"></param>
-        public void PutEvenement(int id, bool? prenium, DateTime? end_inscription, int total_people = -1, string description = null, List<long> ids_pictures = null, object location = null)
+        [HttpPut]
+        public void Put(int id, [FromBody]EvenementUpdate evenement)
         {
-            serviceBll = new EvenementBllService();
-
-            EvenementFront evenement = new EvenementFront();
-            evenement.Id = id;
-            evenement.Premium = prenium ?? false;
-            //la date de fin d'inscription est notée comme nullable, mais
-            //coté front l'utilisateur sera forcé de noter une date de fin, donc je force dateTime.now pour gérer le nullable
-            evenement.DateFinInscription = end_inscription ?? DateTime.Now;
-            evenement.MaximumParticipant = total_people;
-            evenement.DescriptionEvenement = description;
-            // la liste de photos  
-            List<EventImageFront> gallerie = new List<EventImageFront>();
-            for (int i = 0; i < ids_pictures.Count;i++)
+            Mapper.CreateMap<EvenementUpdate, EvenementBll>();
+            Mapper.CreateMap<string, StringBuilder>().ConvertUsing(s =>
             {
-                EventImageFront image = new EventImageFront();
-                image.Id = ids_pictures[i];
-                // à trouver comment récupérer url
-                gallerie.Add(image);
-            }
-            evenement.Galleries = gallerie;
-            //la gestion des adresse n'est pas encore établie
-            evenement.EventAdresse = new EventLocationFront();
+                StringBuilder sb = new StringBuilder(s);
+                return sb;
+            });
+            Mapper.CreateMap<EventLocationFront, EventLocationBll>().ConvertUsing(loc =>
+            {
+                EventLocationBll location = new EventLocationBll();
+                location.Adresse = new StringBuilder(loc.Adresse);
+                location.Pays = new StringBuilder(loc.Pays);
+                location.Ville = new StringBuilder(loc.Ville);
+                location.Latitude = loc.Latitude;
+                location.Longitude = loc.Longitude;
+                location.CodePostale = new StringBuilder(loc.CodePostale);
+                return location;
+            });
+            EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
 
 
-            AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
-            EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evenement);
 
-            serviceBll.PutEvenement(bllEvent);
+
+            EvenementBllService.PutEvenement(bllEvent);
 
         }
         /// <summary>
@@ -128,11 +143,11 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id_profil">id du profil</param>
         public void DesactivateEvenement(int id, int id_profil)
         {
-            var evts = serviceBll.GetByProfil(id_profil);
+            var evts = EvenementBllService.GetByProfil(id_profil);
             var existsEvt = evts.FirstOrDefault(evt => evt.Id == id);
             if (existsEvt != null)
             {
-                serviceBll.DeactivateEvent(id);
+                EvenementBllService.DeactivateEvent(id);
             }
         }
 
@@ -151,16 +166,32 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="payant">evenement payant par defaut il est gratuit</param>
         /// <param name="isPublic">evenement ouvert au public</param>
         /// <param name="lstPicture">liste des images</param>
-        public void CreateEvenement( DateTime end_inscription, DateTime date_event, List<String> keys_words, List<object> friends, int total_people, string description, string title,
-                            object location, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null)
+        public void CreateEvenement(long idUtilisateur, DateTime end_inscription, DateTime date_event, List<String> keys_words, List<object> friends, int total_people, string description, string title,
+                            object location, bool? prenium, bool? payant, bool? isPublic, List<Stream> lstPicture = null
+                            , List<long> idsFriends = null)
         {
-            EvenementFront newEvt = new EvenementFront(end_inscription, date_event, keys_words, friends, total_people
+            EvenementFront newEvt = new EvenementFront(idUtilisateur, end_inscription, date_event, keys_words, friends, total_people
                 , description, title, location, prenium, payant, isPublic, lstPicture);
 
             AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(newEvt);
 
-            serviceBll.PutEvenement(bllEvent);
+            EvenementBllService.PutEvenement(bllEvent);
+
+            InviteFriends invitations = new InviteFriends();
+            invitations.idEvent = bllEvent.Id;
+            invitations.idUser = bllEvent.OrganisateurId;
+            invitations.idFriends = idsFriends;
+           
+        }
+
+        /// <summary>
+        /// méthode d'appel de l'api profil
+        /// </summary>
+        /// <param name="invitations">classe de liaison entre evenement et profil</param>
+        private void InviteFriends(InviteFriends invitations)
+        {
+            //TODO => appeler le profil
         }
 
         /// <summary>
