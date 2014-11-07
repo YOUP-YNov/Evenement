@@ -6,39 +6,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service.Evenement.Dal;
+using Service.Evenement.Dal.Dao.Request;
 
 namespace Service.Evenement.Business
 {
     public class EvenementBllService
     {
-        /// <summary>
-        /// Exemple pour montrer comment on transforme une objet DAO en objet BLL avec AutoMapper
-        /// A supprimer !
-        /// </summary>
-        /// <param name="daoEvent"></param>
-        /// 
-        EvenementDalService serviceDal;
-        public void ExampleAutoMapper(EvenementDao daoEvent)
+        private EvenementDalService _evenementDalService;
+
+        public EvenementDalService EvenementDalService
         {
-            Mapper.CreateMap<EvenementDao, EvenementBll>();
-            EvenementBll bllEvent = Mapper.Map<EvenementDao, EvenementBll>(daoEvent);
+            get
+            {
+                if ( _evenementDalService == null )
+                    _evenementDalService = new EvenementDalService();
+                return _evenementDalService;
+            }
+            set
+        {
+                _evenementDalService = value;
+            }
         }
 
-        private EvenementDalService evenementDalService;
-
-        public EvenementBllService()
+        public EvenementBllService ()
         {
-            evenementDalService = new EvenementDalService();
+            Mapper.CreateMap<EvenementDao, EvenementBll>();
         }
 
         public void PutEvenement(EvenementBll evenementBll)
         {
-            serviceDal = new EvenementDalService();
-
             Mapper.CreateMap<EvenementBll, EvenementDao>();
             EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
 
-            serviceDal.UpdateEvenement(daoEvent);
+            _evenementDalService.UpdateEvenement(daoEvent);
             
 
         }
@@ -47,7 +47,7 @@ namespace Service.Evenement.Business
         {
             Mapper.CreateMap<EvenementDao, EvenementBll>();
 
-            IEnumerable<Dal.Dao.EvenementDao> tmp = evenementDalService.GetAllEvenement();
+            IEnumerable<Dal.Dao.EvenementDao> tmp = _evenementDalService.GetAllEvenement();
             
             if (date_search != null)
                 tmp.Where(e => e.DateEvenement == date_search  && e.Id >= (long)max_id);
@@ -82,6 +82,18 @@ namespace Service.Evenement.Business
             return ret;
         }
         
+
+        public EvenementBll GetEvenementById(long id)
+        {
+            Mapper.CreateMap<EvenementBll, EvenementDao>();
+            EvenementDalRequest request = new EvenementDalRequest();
+            request.EvenementId = id;
+            var evt = _evenementDalService.getEvenementId(request);
+            EvenementBll evtBLL = Mapper.Map<EvenementDao, EvenementBll>(evt);
+
+            return evtBLL;
+        }
+
         /// <summary>
         /// retourne la liste des événements d'un profil 
         /// </summary>
@@ -92,7 +104,7 @@ namespace Service.Evenement.Business
             Mapper.CreateMap<EvenementDao, EvenementBll>();
             
             // pour l'instant les event dont le profil est organisateur (api profil pour gerer les event ou le profil est inscrit)
-            IEnumerable<EvenementDao> daoEventList = evenementDalService.GetAllEvenement().Where(e => e.OrganisateurId==id_profil);
+            IEnumerable<EvenementDao> daoEventList = _evenementDalService.GetAllEvenement().Where(e => e.OrganisateurId == id_profil);
             IEnumerable<EvenementBll> bllEventList = null;
             foreach (EvenementDao e in daoEventList)
             {
@@ -101,6 +113,10 @@ namespace Service.Evenement.Business
             return bllEventList;
         }
 
+        /// <summary>
+        /// Permet de désactiver un événement
+        /// </summary>
+        /// <param name="eventId">id de l'événement à désactiver</param>
         public void DeactivateEvent(int eventId)
         {
             EvenementDao eventDao = new EvenementDao();
@@ -112,7 +128,7 @@ namespace Service.Evenement.Business
             };
             eventDao.DateModification = DateTime.Now;
 
-            evenementDalService.UpdateStateEvenement(eventDao);
+            _evenementDalService.UpdateStateEvenement(eventDao);
         }
     }
 }

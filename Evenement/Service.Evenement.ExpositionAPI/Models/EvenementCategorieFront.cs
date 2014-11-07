@@ -10,6 +10,6 @@ namespace Service.Evenement.ExpositionAPI.Models
     {
         public long Id { get; set; }
 
-        public StringBuilder Libelle { get; set; }
+        public string Libelle { get; set; }
     }
 }
