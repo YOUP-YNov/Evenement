@@ -7,14 +7,15 @@ using Service.Evenement.Dal;
 using Service.Evenement.Dal.Dao.Request;
 using AutoMapper;
 using Service.Evenement.Dal.Dao;
+using Service.Evenement.Dal.Interface;
 
 namespace Service.Evenement.Business
 {
     public class CategorieBllService
     {
-        private EvenementDalService _evenementDalService;
+        private IEvenementDalService _evenementDalService;
 
-        public EvenementDalService EvenementDalService
+        public IEvenementDalService EvenementDalService
         {
             get
             {
@@ -43,6 +44,11 @@ namespace Service.Evenement.Business
             Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
             return (result.Count() == 0 || result == null) ? null :  Mapper.Map<EvenementCategorieDao, EvenementCategorieBll>(result.First());
 
+        }
+
+        public void DeleteCategorie(long id)
+        {
+            ((EvenementDalService)_evenementDalService).CategorieDalService.DeleteCategorie(id);
         }
 
        

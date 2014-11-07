@@ -2,6 +2,9 @@
     
     
     public partial class EventDalService {
+        partial class SubscriptionEventDataTable
+        {
+        }
     }
 }
 
@@ -13,5 +16,21 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
 
     public partial class ImageTableAdapter
     {
+    }
+}
+
+namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters
+{
+    
+    
+    public partial class EvenementTableAdapter {
+    }
+}
+
+namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters
+{
+    
+    
+    public partial class EvenementTableAdapter {
     }
 }

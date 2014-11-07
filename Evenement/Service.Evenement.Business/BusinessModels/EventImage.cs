@@ -11,7 +11,7 @@ namespace Service.Evenement.Business
         /// <summary>
         /// Assigne ou récupère l'url de l'image
         /// </summary>
-        public StringBuilder Url { get; set; }
+        public String Url { get; set; }
 
         /// <summary>
         /// Assigne ou récupère l'id de l'image

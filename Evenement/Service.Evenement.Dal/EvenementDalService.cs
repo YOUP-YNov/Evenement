@@ -165,10 +165,16 @@ namespace Service.Evenement.Dal
             return result.ToEvenementDao();
         }
 
-
         public IEnumerable<EvenementDao> GetAllEvenement ()
         {
             var result = EventDalService.GetAllEvent();
+
+            return result.ToEvenementDao();
+        }
+
+        public IEnumerable<EvenementDao> GetEvenementByProfil(long id_profil)
+        {
+            var result = EventDalService.GetEventByProfil(id_profil);
 
             return result.ToEvenementDao();
         }
@@ -269,6 +275,12 @@ namespace Service.Evenement.Dal
                 }
             }
             return null;
+        }
+
+        public EvenementDao getEvenementId(EvenementDalRequest request)
+        {
+            var daoRequest = EventDalService.GetEvenementById(request.EvenementId);
+            return daoRequest.ToEvenementDao().FirstOrDefault();
         }
 
         #endregion
