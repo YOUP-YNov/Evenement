@@ -34,21 +34,15 @@ namespace Service.Evenement.Business
 
         public void PutEvenement(EvenementBll evenementBll)
         {
-            serviceDal = new EvenementDalService();
-
-            Mapper.CreateMap<EvenementBll, EvenementDao>();
             EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
 
-            serviceDal.UpdateEvenement(daoEvent);
-            
-
+            EvenementDalService.UpdateEvenement(daoEvent);
         }
 
         public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result, int categorie, string text_search, int max_id, string orderby, bool? premium)
         {
-            Mapper.CreateMap<EvenementDao, EvenementBll>();
 
-            IEnumerable<Dal.Dao.EvenementDao> tmp = evenementDalService.GetAllEvenement();
+            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
             
             if (date_search != null)
                 tmp.Where(e => e.DateEvenement == date_search  && e.Id >= (long)max_id);
@@ -93,7 +87,7 @@ namespace Service.Evenement.Business
             Mapper.CreateMap<EvenementDao, EvenementBll>();
             
             // pour l'instant les event dont le profil est organisateur (api profil pour gerer les event ou le profil est inscrit)
-            IEnumerable<EvenementDao> daoEventList = evenementDalService.GetAllEvenement().Where(e => e.OrganisateurId==id_profil);
+            IEnumerable<EvenementDao> daoEventList = EvenementDalService.GetAllEvenement().Where(e => e.OrganisateurId == id_profil);
             IEnumerable<EvenementBll> bllEventList = null;
             foreach (EvenementDao e in daoEventList)
             {
@@ -113,7 +107,7 @@ namespace Service.Evenement.Business
             };
             eventDao.DateModification = DateTime.Now;
 
-            evenementDalService.UpdateStateEvenement(eventDao);
+            EvenementDalService.UpdateStateEvenement(eventDao);
         }
     }
 }

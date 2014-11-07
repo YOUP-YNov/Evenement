@@ -494,7 +494,7 @@
             <param name="id">Id de la catégorie</param>
             <returns>une catégorie</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenements(System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.Int32,System.String)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenements(System.Nullable{System.DateTime},System.Int32,System.Int32,System.String,System.Int32,System.String,System.Nullable{System.Boolean})">
             <summary>
             retourne la liste des evenements
             </summary>
@@ -712,6 +712,16 @@
         <member name="P:Service.Evenement.ExpositionAPI.Models.EvenementFront.Statut">
             <summary>
             Assigne ou récupère le statut d'un evenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.EvenementFront.Public">
+            <summary>
+            Assigne ou récupère la visibilité de l'évènement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.EvenementFront.Payant">
+            <summary>
+            Assigne ou récupère la visibilité de l'évènement
             </summary>
         </member>
         <member name="P:Service.Evenement.ExpositionAPI.Models.EventImageFront.Url">
