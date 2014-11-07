@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service.Evenement.Dal;
+using Service.Evenement.Dal.Dao.Request;
 
 namespace Service.Evenement.Business
 {
@@ -20,9 +21,9 @@ namespace Service.Evenement.Business
                 if ( _evenementDalService == null )
                     _evenementDalService = new EvenementDalService();
                 return _evenementDalService;
-            }
+        }
             set
-            {
+        {
                 _evenementDalService = value;
             }
         }
@@ -77,6 +78,18 @@ namespace Service.Evenement.Business
             return ret;
         }
         
+
+        public EvenementBll GetEvenementById(long id)
+        {
+            Mapper.CreateMap<EvenementBll, EvenementDao>();
+            EvenementDalRequest request = new EvenementDalRequest();
+            request.EvenementId = id;
+            var evt = _evenementDalService.getEvenementId(request);
+            EvenementBll evtBLL = Mapper.Map<EvenementDao, EvenementBll>(evt);
+
+            return evtBLL;
+        }
+
         /// <summary>
         /// retourne la liste des événements d'un profil 
         /// </summary>
@@ -87,7 +100,7 @@ namespace Service.Evenement.Business
             Mapper.CreateMap<EvenementDao, EvenementBll>();
             
             // pour l'instant les event dont le profil est organisateur (api profil pour gerer les event ou le profil est inscrit)
-            IEnumerable<EvenementDao> daoEventList = EvenementDalService.GetAllEvenement().Where(e => e.OrganisateurId == id_profil);
+            IEnumerable<EvenementDao> daoEventList = _evenementDalService.GetEvenementByProfil((long)id_profil);
             IEnumerable<EvenementBll> bllEventList = null;
             foreach (EvenementDao e in daoEventList)
             {
@@ -96,6 +109,10 @@ namespace Service.Evenement.Business
             return bllEventList;
         }
 
+        /// <summary>
+        /// Permet de désactiver un événement
+        /// </summary>
+        /// <param name="eventId">id de l'événement à désactiver</param>
         public void DeactivateEvent(int eventId)
         {
             EvenementDao eventDao = new EvenementDao();

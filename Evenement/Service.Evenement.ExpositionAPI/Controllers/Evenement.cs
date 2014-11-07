@@ -1,9 +1,7 @@
-﻿namespace Service.Evenement.ExpositionAPI.Models
+﻿namespace Service.Evenement.Business
 {
-    using Service.Evenement.Business;
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -11,7 +9,7 @@
     /// <summary>
     /// Model d'accès au données représentant un évenement
     /// </summary>
-    public class EvenementFront
+    public class EvenementBll
     {
         /// <summary>
         /// Assigne ou récupère l'id de l'évenement.
@@ -26,22 +24,22 @@
         /// <summary>
         /// Assigne ou récupère la liste des HashTag associé à l'évenement
         /// </summary>
-        public IEnumerable<String> HashTag { get; set; }
+        public IEnumerable<StringBuilder> HashTag { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la liste des Images associé à l'évenement
         /// </summary>
-        public IEnumerable<EventImageFront> Galleries { get; set; }
+        public IEnumerable<EventImageBll> Galleries { get; set; }
 
         /// <summary>
         /// Assigne ou récupère l'adresse de l'évenement
         /// </summary>
-        public EventLocationFront EventAdresse { get; set; }
+        public EventLocationBll EventAdresse { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la catégorie de l'évenement
         /// </summary>
-        public EvenementCategorieFront Categorie { get; set; }
+        public EvenementCategorieBll Categorie { get; set; }
         
         /// <summary>
         /// Assigne ou récupère la Date à laquelle l'évenement a lieu.
@@ -67,12 +65,12 @@
         /// <summary>
         /// Assigne ou récupère le titre de l'évenement
         /// </summary>
-        public String TitreEvenement { get; set; }
+        public StringBuilder TitreEvenement { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la description de l'évenement
         /// </summary>
-        public String DescriptionEvenement { get; set; }
+        public StringBuilder DescriptionEvenement { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le nombre de participant maximum à l'évenement
@@ -87,7 +85,7 @@
         /// <summary>
         /// Assigne ou récupère l'état de l'évenement
         /// </summary>
-        public EventStateFront EtatEvenement { get; set; }
+        public EventStateBll EtatEvenement { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le price a payé pour participé à l'évenement
@@ -108,52 +106,5 @@
         /// Assigne ou récupère le statut d'un evenement
         /// </summary>
         public string Statut { get; set; }
-
-        /// <summary>
-        /// Assigne ou récupère la visibilité de l'évènement
-        /// </summary>
-        public bool Public { get; set; }
-
-        /// <summary>
-        /// Assigne ou récupère la visibilité de l'évènement
-        /// </summary>
-        public bool  Payant { get; set; }
-
-        public EvenementFront(DateTime end_inscription, DateTime date_event, 
-            List<String> keys_words, List<object> friends, 
-            int total_people, string description, string title,
-            object location, bool? prenium, bool? payant, 
-            bool? isPublic, List<Stream> lstPicture = null)
-        {
-            DateEvenement = date_event;
-            DateFinInscription = end_inscription;
-            IEnumerable<String> hashTag = new List<String>();
-            keys_words.ForEach(t => hashTag.ToList().Add(t));
-            HashTag = hashTag;
-            /* La liste des amis n'est pas encore géré */
-            MaximumParticipant = total_people;
-            DescriptionEvenement = description;
-            TitreEvenement = title;
-
-            /* gestion de l'adresse à prévoir */
-            EventAdresse = new EventLocationFront();
-            Premium = prenium ?? false;
-
-            // par défaut un évènementr est public
-            Public = isPublic ?? true;
-
-            // par défaut un évènement n'est pas payant.
-            Payant = payant ?? false;
-
-            // gerer le flux des images
-            List<EventImageFront> test = new List<EventImageFront>();
-            Galleries = test;
-            
-
-        }
-
-        public EvenementFront()
-        {
-        }
     }
 }

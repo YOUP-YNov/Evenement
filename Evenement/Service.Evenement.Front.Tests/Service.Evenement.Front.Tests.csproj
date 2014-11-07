@@ -8,12 +8,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Service.Evenement.Front.Tests</RootNamespace>
     <AssemblyName>Service.Evenement.Front.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +50,21 @@
   <ItemGroup>
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EvenementDALTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Service.Evenement.Business\Service.Evenement.Business.csproj">
+      <Project>{5968d451-9f4f-4361-aacc-645ee4298f3b}</Project>
+      <Name>Service.Evenement.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service.Evenement.Dal\Service.Evenement.Dal.csproj">
+      <Project>{13646a72-1632-43bd-bd8c-b3e7fb5b6372}</Project>
+      <Name>Service.Evenement.Dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service.Evenement.ExpositionAPI\Service.Evenement.ExpositionAPI.csproj">
+      <Project>{8117d637-4984-419b-b39a-ad96dfc39b24}</Project>
+      <Name>Service.Evenement.ExpositionAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

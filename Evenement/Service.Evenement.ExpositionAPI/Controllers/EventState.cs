@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Evenement.ExpositionAPI.Models
+namespace Service.Evenement.Business
 {
-    public class EventImageFront
+    public class EventStateBll
     {
         /// <summary>
-        /// Assigne ou récupère l'url de l'image
+        /// Assigne ou récupère le libelle de l'état de l'évenement
         /// </summary>
-        public String Url { get; set; }
+        public EventStateEnum Nom { get; set; }
 
         /// <summary>
-        /// Assigne ou récupère l'id de l'image
+        /// Assigne ou récupère l'id de l'état de l'évenement
         /// </summary>
         public long Id { get; set; }
     }
