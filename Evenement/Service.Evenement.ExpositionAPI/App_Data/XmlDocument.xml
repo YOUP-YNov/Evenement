@@ -569,6 +569,12 @@
             <param name="isPublic">evenement ouvert au public</param>
             <param name="lstPicture">liste des images</param>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.InviteFriends(Service.Evenement.ExpositionAPI.Models.InviteFriends)">
+            <summary>
+            méthode d'appel de l'api profil
+            </summary>
+            <param name="invitations">classe de liaison entre evenement et profil</param>
+        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenementsSignale(System.Int32,System.Int32)">
             <summary>
             retourne la liste des evenements signalés ( admnin)

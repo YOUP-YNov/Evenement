@@ -69,6 +69,10 @@ namespace Service.Evenement.Business
                     default: break;
                 }
             List<EvenementBll> ret = new List<EvenementBll>();
+            Mapper.CreateMap<EvenementDao,EvenementBll >();
+            Mapper.CreateMap<EventLocationDao, EventLocationBll>();
+            Mapper.CreateMap<EvenementCategorieDao,EvenementCategorieBll>();
+            Mapper.CreateMap<EventStateDao, EventStateBll>();
 
             foreach (var item in tmp)
             {
