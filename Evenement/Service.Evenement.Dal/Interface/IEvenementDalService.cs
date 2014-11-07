@@ -8,7 +8,7 @@ using Service.Evenement.Dal.Dao.Request;
 
 namespace Service.Evenement.Dal.Interface
 {
-    interface IEvenementDalService : IDisposable
+    public interface IEvenementDalService : IDisposable
     {
         IEnumerable<EvenementCategorieDao> GetAllCategorie ( EvenementDalRequest request );
         IEnumerable<EventImageDao> GetImageByEventId ( EvenementDalRequest request );

@@ -24,5 +24,10 @@ namespace Service.Evenement.ExpositionAPI.Models
             Nom = name;
             Id = (long)name;
         }
+
+        public EventStateFront()
+        {
+
+        }
     }
 }
