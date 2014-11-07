@@ -35,6 +35,7 @@ namespace Service.Evenement.Business
 
         public void PutEvenement(EvenementBll evenementBll)
         {
+            Mapper.CreateMap<EvenementBll, EvenementDao>();
             EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
 
             EvenementDalService.UpdateEvenement(daoEvent);

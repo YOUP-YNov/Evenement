@@ -58,5 +58,17 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             _categorieBllService.DeleteCategorie(id);
         }
 
+        public void UpdateCategorie(long id, String libelle)
+        {
+            EvenementCategorieFront categorie = new EvenementCategorieFront();
+            categorie.Id = id;
+            categorie.Libelle = libelle;
+
+            AutoMapper.Mapper.CreateMap<EvenementCategorieFront, EvenementCategorieBll>();
+            EvenementCategorieBll bllEventCategorie = Mapper.Map<EvenementCategorieFront, EvenementCategorieBll>(categorie);
+
+            _categorieBllService.UpdateCategorie(bllEventCategorie);
+        }
+
     }
 }
