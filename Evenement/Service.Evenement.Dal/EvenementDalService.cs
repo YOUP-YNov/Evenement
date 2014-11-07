@@ -262,7 +262,7 @@ namespace Service.Evenement.Dal
         public EvenementDao GetLieuId(decimal latitude, decimal longitude)
         {
 
-            var result = LieuEventDalService.GetLieuId(latitude, longitude);
+            var result = LieuEventDalService.GetLieuExist(latitude, longitude);
             if (result != null)
             {
                 if(result.ToEvenementDao().Count()>0)

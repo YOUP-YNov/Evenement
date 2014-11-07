@@ -593,31 +593,73 @@
             <param name="id_etat">id de l'etat</param>
             <returns></returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.GetEtats">
-            <summary>
-            liste des etats d'un evenement
-            </summary>
-            <returns>liste d'etats</returns>
-        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.GetEtat(System.Int32)">
             <summary>
             un etat en particulié 
             </summary>
-            <param name="id">id de l'etat</param>
+            <param name="id">id de l'evenement</param>
             <returns></returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.LieuController.GetAll">
+        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.Id">
             <summary>
-            récupère la liste de tout les lieux
+            Assigne ou récupère l'id de l'évenement.
             </summary>
-            <returns>liste de lieux</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.LieuController.GetLieu(System.Int32)">
+        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.OrganisateurId">
             <summary>
-            récupère le lieux correspond a l'id passé en parametre
+            Assigne ou récupère l'id de l'organisateur de l'évenement.
             </summary>
-            <param name="id">id du lieu</param>
-            <returns>lieu</returns>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.HashTag">
+            <summary>
+            Assigne ou récupère la liste des HashTag associé à l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.EventAdresse">
+            <summary>
+            Assigne ou récupère l'adresse de l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.DateFinInscription">
+            <summary>
+            Assigne ou récupère la Date à partir de laquelle les utilisateurs ne peuvent plus
+            s'incrirent.
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.TitreEvenement">
+            <summary>
+            Assigne ou récupère le titre de l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.DescriptionEvenement">
+            <summary>
+            Assigne ou récupère la description de l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.MaximumParticipant">
+            <summary>
+            Assigne ou récupère le nombre de participant maximum à l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.MinimumParticipant">
+            <summary>
+            Assigne ou récupère le nombre de participant minimum à l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.Price">
+            <summary>
+            Assigne ou récupère le price a payé pour participé à l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.Premium">
+            <summary>
+            Assigne ou récupère l'attestation que l'évenement est premium
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.Public">
+            <summary>
+            Assigne ou récupère la visibilité de l'évènement
+            </summary>
         </member>
         <member name="T:Service.Evenement.ExpositionAPI.Models.EvenementFront">
             <summary>

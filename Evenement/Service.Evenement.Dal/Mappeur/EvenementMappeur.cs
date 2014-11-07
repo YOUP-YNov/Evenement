@@ -186,7 +186,7 @@ namespace Service.Evenement.Dal.Mappeur
             EvenementImageDao result = new EvenementImageDao();
 
             result.Id = ImageRow.EvenementPhoto_id;
-            result.Url = ImageRow.Adresse.ToString();
+            //result.Url = ImageRow.Adresse.ToString();
 
             return result;
         }
