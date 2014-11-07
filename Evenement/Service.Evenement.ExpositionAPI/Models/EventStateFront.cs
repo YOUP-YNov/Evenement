@@ -12,14 +12,14 @@ namespace Service.Evenement.ExpositionAPI.Models
         /// <summary>
         /// Assigne ou récupère le libelle de l'état de l'évenement
         /// </summary>
-        public EventStateEnum Nom { get; set; }
+        public EventStateEnumFront Nom { get; set; }
 
         /// <summary>
         /// Assigne ou récupère l'id de l'état de l'évenement
         /// </summary>
         public long Id { get; set; }
 
-        public EventStateFront(EventStateEnum name)
+        public EventStateFront(EventStateEnumFront name)
         {
             Nom = name;
             Id = (long)name;
