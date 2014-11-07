@@ -24,9 +24,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="max_id">l'id du derniers evenements</param>
         /// <param name="orderby">le nom du trie (date, categorie, disponnible)</param>
         /// <returns>la liste des événements</returns>
-        public IEnumerable<EvenementTimelineFront> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null)
+        public IEnumerable<EvenementTimelineFront> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null, bool? premium = null)
         {
-            IEnumerable<Business.EvenementBll> list = new Business.EvenementBllService().GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby);
+            IEnumerable<Business.EvenementBll> list = serviceBll.GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby, premium);
             List<EvenementTimelineFront> ret = new List<EvenementTimelineFront>();
 
             Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
@@ -65,7 +65,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>un événement</returns>
         public Service.Evenement.ExpositionAPI.Models.EvenementFront GetEvenement(int id)
         {
-            return new Service.Evenement.ExpositionAPI.Models.EvenementFront();
+            return null;
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             //coté front l'utilisateur sera forcé de noter une date de fin, donc je force dateTime.now pour gérer le nullable
             evenement.DateFinInscription = end_inscription ?? DateTime.Now;
             evenement.MaximumParticipant = total_people;
-            evenement.DescriptionEvenement = new System.Text.StringBuilder(description);
+            evenement.DescriptionEvenement = description;
             // la liste de photos n'est pas encore prise en compte 
 
             //la gestion des adresse n'est pas encore établie

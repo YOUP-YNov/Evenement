@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Evenement.ExpositionAPI.Models
+namespace Service.Evenement.Business
 {
-    public class EventLocationFront
+    public class EventLocationBll
     {
         /// <summary>
         /// Assigne ou récupère l'id de l'adresse de l'évenement
@@ -16,17 +16,17 @@ namespace Service.Evenement.ExpositionAPI.Models
         /// <summary>
         /// Assigne ou récupère le nom de la ville
         /// </summary>
-        public String Ville { get; set; }
+        public StringBuilder Ville { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le code postale de l'adresse
         /// </summary>
-        public String CodePostale { get; set; }
+        public StringBuilder CodePostale { get; set; }
 
         /// <summary>
         /// Assigne ou récupère l'adresse
         /// </summary>
-        public String Adresse { get; set; }
+        public StringBuilder Adresse { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la longitude du rendez vous
@@ -41,11 +41,11 @@ namespace Service.Evenement.ExpositionAPI.Models
         /// <summary>
         /// Assigne ou récupère le nom du pays
         /// </summary>
-        public String Pays { get; set; }
+        public StringBuilder Pays { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le nom choisi par l'utilisateur
         /// </summary>
-        public String Nom { get; set; }
+        public StringBuilder Nom { get; set; }
     }
 }
