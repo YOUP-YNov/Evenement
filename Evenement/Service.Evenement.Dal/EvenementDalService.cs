@@ -172,6 +172,13 @@ namespace Service.Evenement.Dal
             return result.ToEvenementDao();
         }
 
+        public IEnumerable<EvenementDao> GetEvenementByProfil(long id_profil)
+        {
+            var result = EventDalService.GetEventByProfil(id_profil);
+
+            return result.ToEvenementDao();
+        }
+
         public IEnumerable<EvenementDao> GetEvenementByCPAndCategorie ( EvenementDalRequest request )
         {
             if ( request == null )

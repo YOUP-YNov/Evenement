@@ -89,7 +89,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             //coté front l'utilisateur sera forcé de noter une date de fin, donc je force dateTime.now pour gérer le nullable
             evenement.DateFinInscription = end_inscription ?? DateTime.Now;
             evenement.MaximumParticipant = total_people;
-            evenement.DescriptionEvenement = new System.Text.StringBuilder(description);
+            evenement.DescriptionEvenement = description;
             // la liste de photos n'est pas encore prise en compte 
 
             //la gestion des adresse n'est pas encore établie
@@ -101,9 +101,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evenement);
 
             serviceBll.PutEvenement(bllEvent);
-
-
-
 
         }
         /// <summary>
@@ -117,13 +114,19 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// supression de l'evenement 
+        /// desactivation de l'evenement 
+        /// c'est une mise en archive. L'évenement n'est plus consultable. 
         /// </summary>
         /// <param name="id">id de l'evenement</param>
         /// <param name="id_profil">id du profil</param>
-        public void DeleteEvenement(int id, int id_profil)
+        public void DesactivateEvenement(int id, int id_profil)
         {
-
+            var evts = serviceBll.GetByProfil(id_profil);
+            var existsEvt = evts.FirstOrDefault(evt => evt.Id == id);
+            if (existsEvt != null)
+            {
+                serviceBll.DeactivateEvent(id);
+            }
         }
 
         /// <summary>
@@ -146,7 +149,11 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         {
             EvenementFront newEvt = new EvenementFront(end_inscription, date_event, keys_words, friends, total_people
                 , description, title, location, prenium, payant, isPublic, lstPicture);
-            
+
+            AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
+            EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(newEvt);
+
+            serviceBll.PutEvenement(bllEvent);
         }
 
         /// <summary>
@@ -166,7 +173,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id_profil">id de profil</param>
         /// <param name="id_evenement">id de l'evenement</param>
         /// <param name="id_etat">id de l'etat</param>
-        public void PutEvenementEtat(int id_profil, int id_evenement, int id_etat)
+        public void PutEvenemenntEtat(int id_profil, int id_evenement, int id_etat)
         {
 
         }

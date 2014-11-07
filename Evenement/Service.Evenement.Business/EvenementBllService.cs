@@ -21,7 +21,7 @@ namespace Service.Evenement.Business
                 if ( _evenementDalService == null )
                     _evenementDalService = new EvenementDalService();
                 return _evenementDalService;
-            }
+        }
             set
         {
                 _evenementDalService = value;
@@ -104,7 +104,7 @@ namespace Service.Evenement.Business
             Mapper.CreateMap<EvenementDao, EvenementBll>();
             
             // pour l'instant les event dont le profil est organisateur (api profil pour gerer les event ou le profil est inscrit)
-            IEnumerable<EvenementDao> daoEventList = _evenementDalService.GetAllEvenement().Where(e => e.OrganisateurId == id_profil);
+            IEnumerable<EvenementDao> daoEventList = _evenementDalService.GetEvenementByProfil((long)id_profil);
             IEnumerable<EvenementBll> bllEventList = null;
             foreach (EvenementDao e in daoEventList)
             {
