@@ -119,12 +119,13 @@
         /// </summary>
         public bool  Payant { get; set; }
 
-        public EvenementFront(DateTime end_inscription, DateTime date_event, 
+        public EvenementFront(long organisateur, DateTime end_inscription, DateTime date_event, 
             List<String> keys_words, List<object> friends, 
             int total_people, string description, string title,
             object location, bool? prenium, bool? payant, 
             bool? isPublic, List<Stream> lstPicture = null)
         {
+            OrganisateurId = organisateur;
             DateEvenement = date_event;
             DateFinInscription = end_inscription;
             IEnumerable<String> hashTag = new List<String>();
@@ -152,6 +153,7 @@
 
         }
 
+        //Constructeur vide
         public EvenementFront()
         {
         }

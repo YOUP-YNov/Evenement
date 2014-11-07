@@ -23,3 +23,11 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters
     public partial class EvenementTableAdapter {
     }
 }
+
+namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters
+{
+    
+    
+    public partial class EvenementTableAdapter {
+    }
+}
