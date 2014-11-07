@@ -7,14 +7,15 @@ using Service.Evenement.Dal;
 using Service.Evenement.Dal.Dao.Request;
 using AutoMapper;
 using Service.Evenement.Dal.Dao;
+using Service.Evenement.Dal.Interface;
 
 namespace Service.Evenement.Business
 {
     public class CategorieBllService
     {
-        private EvenementDalService _evenementDalService;
+        private IEvenementDalService _evenementDalService;
 
-        public EvenementDalService EvenementDalService
+        public IEvenementDalService EvenementDalService
         {
             get
             {
@@ -47,7 +48,7 @@ namespace Service.Evenement.Business
 
         public void DeleteCategorie(long id)
         {
-            _evenementDalService.CategorieDalService.DeleteCategorie(id);
+            ((EvenementDalService)_evenementDalService).CategorieDalService.DeleteCategorie(id);
         }
 
        

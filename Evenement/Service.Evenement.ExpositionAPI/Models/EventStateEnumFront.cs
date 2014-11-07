@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Service.Evenement.Dal.Dao
+namespace Service.Evenement.ExpositionAPI.Models
 {
     public enum EventStateEnum
     {
@@ -13,7 +12,6 @@ namespace Service.Evenement.Dal.Dao
         Annuler = 13,
         Signaler = 14,
         Reussi = 15,
-        Desactiver = 16,
-        Unspecified
+        Desactiver = 16
     }
 }
