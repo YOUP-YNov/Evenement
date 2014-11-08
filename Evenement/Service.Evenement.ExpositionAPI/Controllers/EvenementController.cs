@@ -9,6 +9,7 @@ using Service.Evenement.ExpositionAPI.Models;
 using Service.Evenement.Business;
 using AutoMapper;
 using System.Text;
+using Service.Evenement.ExpositionAPI.Models.ModelsUpdate;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
@@ -42,9 +43,16 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="max_id">l'id du derniers evenements</param>
         /// <param name="orderby">le nom du trie (date, categorie, disponnible)</param>
         /// <returns>la liste des événements</returns>
-        public IEnumerable<EvenementTimelineFront> GetEvenements( DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null, bool? premium = null)
+        [HttpGet]
+        public IEnumerable<EvenementTimelineFront> Get([FromBody]Search search,int max_result = 10, int max_id = -1)
         {
-            IEnumerable<Business.EvenementBll> list = EvenementBllService.GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby, premium);
+            if (search != null)
+            {
+                search = new Search();
+            }
+            
+
+            IEnumerable<Business.EvenementBll> list = EvenementBllService.GetEvenements(search.Date_search, max_result, search.Id_Categorie, search.Text, max_id, search.OrderBy, search.Prenium);
             List<EvenementTimelineFront> ret = new List<EvenementTimelineFront>();
 
             foreach (var item in list)
@@ -60,6 +68,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id_profil">id du profil</param>
         /// <returns>liste d'événements</returns>
+        [HttpGet]
+        [Route("Evenements/profil")]
         public IEnumerable<EvenementTimelineFront> GetByProfil(int id_profil)
         {
             IEnumerable<Business.EvenementBll> bllEventList = EvenementBllService.GetByProfil(id_profil);
@@ -102,7 +112,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             throw new NotImplementedException();
             return null;
         }
-        
+
         /// <summary>
         /// modification de l'évènement
         /// </summary>
@@ -130,13 +140,15 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">id de l'evenement</param>
         /// <param name="id_profil">id du profil</param>
-        public void DesactivateEvenement(int id, int id_profil)
+        [HttpDelete]
+        [Route("Evenements/{id_evenement}/Desactiver")]
+        public void DesactivateEvenement([FromUri]int id_evenement, [FromBody] int id_profil)
         {
             var evts = EvenementBllService.GetByProfil(id_profil);
-            var existsEvt = evts.FirstOrDefault(evt => evt.Id == id);
+            var existsEvt = evts.FirstOrDefault(evt => evt.Id == id_evenement);
             if (existsEvt != null)
             {
-                EvenementBllService.ModifyEventState(id, new EventStateBll(EventStateEnum.Desactiver));
+                EvenementBllService.DeactivateEvent(id_evenement);
             }
         }
 
@@ -156,15 +168,23 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             invitations.idFriends = evt.friends;
         }
 
+        private void InviteFriends(InviteFriends invitations)
+        {
+            //TODO => appeler le profil
+        }
+
         /// <summary>
         /// méthode d'appel de l'api profil
         /// </summary>
-        /// <param name="invitations">classe de liaison entre evenement et profil</param>
-        private void InviteFriends(InviteFriends invitations)
+        /// <param name="id_profil">id du profil admin</param>
+        /// <param name="nb_min_signalement">nb de signalement minimum</param>
+        /// <returns>liste d'evenement signalé</returns>
+        public IEnumerable<EvenementTimelineFront> GetEvenementsSignale(int id_profil, int nb_min_signalement = 1)
         {
             throw new NotImplementedException();
             //TODO => appeler le profil
             //GETINVITEVENT(int,int,int)
+            return null;
         }
             
         /// <summary>

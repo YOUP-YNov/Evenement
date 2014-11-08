@@ -40,7 +40,7 @@ namespace Service.Evenement.Business
             EvenementDalService.UpdateEvenement(daoEvent);
         }
 
-        public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result, int categorie, string text_search, int max_id, string orderby, bool? premium)
+        public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result, long categorie, string text_search, int max_id, string orderby, bool? premium)
         {
 
             IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
@@ -73,6 +73,9 @@ namespace Service.Evenement.Business
 
             foreach (var item in tmp)
             {
+                Mapper.CreateMap<EventLocationDao, EventLocationBll>();
+                Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
+                Mapper.CreateMap<EvenementDao, EvenementBll>();
                 ret.Add(Mapper.Map<EvenementDao, EvenementBll>(item));
             }
 
@@ -164,6 +167,39 @@ namespace Service.Evenement.Business
                 default:
                     break;
             }
+
+            EvenementDalService.UpdateStateEvenement(eventDao);
+        }
+
+        private long locationExistOrCreate(EventLocationBll loc)
+        {
+            if (loc != null)
+            {
+                //Penser a set l id
+                Mapper.CreateMap<EventLocationBll, EventLocationDao>();
+
+                EventLocationDao locDAO = Mapper.Map<EventLocationBll, EventLocationDao>(loc);
+                IEnumerable<EvenementDao> e = EvenementDalService.CreateLieuEvenement(new EvenementDalRequest(), locDAO);
+                if (e != null)
+                {
+                    EvenementDao evenement = e.First();
+                    
+                    return evenement.EventAdresse.Id;
+                }
+            } 
+            return 0;
+        }
+
+        /// <summary>
+        /// Permet de désactiver un événement
+        /// </summary>
+        /// <param name="eventId">id de l'événement à désactiver</param>
+        public void DeactivateEvent(int eventId)
+        {
+            EvenementDao eventDao = new EvenementDao();
+            eventDao.Id = eventId;
+            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
+            eventDao.DateModification = DateTime.Now;
 
             EvenementDalService.UpdateStateEvenement(eventDao);
         }
