@@ -206,5 +206,19 @@ namespace Service.Evenement.Business
             } 
             return 0;
         }
+
+        /// <summary>
+        /// Permet de désactiver un événement
+        /// </summary>
+        /// <param name="eventId">id de l'événement à désactiver</param>
+        public void DeactivateEvent(int eventId)
+        {
+            EvenementDao eventDao = new EvenementDao();
+            eventDao.Id = eventId;
+            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
+            eventDao.DateModification = DateTime.Now;
+
+            EvenementDalService.UpdateStateEvenement(eventDao);
+        }
     }
 }

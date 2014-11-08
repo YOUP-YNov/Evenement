@@ -43,7 +43,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="max_id">l'id du derniers evenements</param>
         /// <param name="orderby">le nom du trie (date, categorie, disponnible)</param>
         /// <returns>la liste des événements</returns>
-        [httpGet]
+        [HttpGet]
         public IEnumerable<EvenementTimelineFront> Get([FromBody]Search search,int max_result = 10, int max_id = -1)
         {
             if (search != null)
@@ -175,7 +175,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             var existsEvt = evts.FirstOrDefault(evt => evt.Id == id_evenement);
             if (existsEvt != null)
             {
-                EvenementBllService.DeactivateEvent(id);
+                EvenementBllService.DeactivateEvent(id_evenement);
             }
         }
 
@@ -193,6 +193,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             invitations.idEvent = bllEvent.Id;
             invitations.idUser = bllEvent.OrganisateurId;
             invitations.idFriends = evt.friends;
+        }
 
         private void InviteFriends(InviteFriends invitations)
         {
@@ -209,6 +210,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         {
             //TODO => appeler le profil
             //GETINVITEVENT(int,int,int)
+            return null;
         }
             
         /// <summary>
