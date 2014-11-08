@@ -23,5 +23,10 @@ namespace Service.Evenement.Business
             Nom = name;
             Id = (long)name;
         }
+
+        public EventStateBll()
+        {
+
+        }
     }
 }

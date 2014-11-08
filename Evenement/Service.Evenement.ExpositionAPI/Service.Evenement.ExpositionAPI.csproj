@@ -126,6 +126,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutomapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Controllers\EvenementEtatController.cs" />
     <Compile Include="Models\ModelsUpdate\CategorieUpdate.cs" />
     <Compile Include="Models\ModelsUpdate\EvenementUpdate.cs" />
+	<Compile Include="Models\EvenementCreate.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LieuController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

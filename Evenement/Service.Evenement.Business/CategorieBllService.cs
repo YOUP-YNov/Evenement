@@ -19,7 +19,7 @@ namespace Service.Evenement.Business
         {
             get
             {
-                if ( _evenementDalService == null )
+                if (_evenementDalService == null)
                     _evenementDalService = new EvenementDalService();
                 return _evenementDalService;
             }
@@ -31,18 +31,18 @@ namespace Service.Evenement.Business
 
         public IEnumerable<EvenementCategorieBll> GetCategories()
         {
-            IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest() {});
+            IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest() { });
             Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
             return (result.Count() == 0 || result == null) ? null : Mapper.Map<IEnumerable<EvenementCategorieDao>, IEnumerable<EvenementCategorieBll>>(result);
         }
 
         public EvenementCategorieBll GetCategorie(long id)
         {
-            Dal.Dao.EvenementCategorieDao categ = new  EvenementCategorieDao();
+            Dal.Dao.EvenementCategorieDao categ = new EvenementCategorieDao();
             categ.Id = id;
-            IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest(){ Categorie = categ});
+            IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest() { Categorie = categ });
             Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
-            return (result.Count() == 0 || result == null) ? null :  Mapper.Map<EvenementCategorieDao, EvenementCategorieBll>(result.First());
+            return (result.Count() == 0 || result == null) ? null : Mapper.Map<EvenementCategorieDao, EvenementCategorieBll>(result.First());
 
         }
 
@@ -51,6 +51,16 @@ namespace Service.Evenement.Business
             ((EvenementDalService)_evenementDalService).CategorieDalService.DeleteCategorie(id);
         }
 
+        public void UpdateCategorie(EvenementCategorieBll categoriebll)
+        {
+            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieDao>();
+             EvenementCategorieDao daoEventCategorie = Mapper.Map<EvenementCategorieBll, EvenementCategorieDao>(categoriebll);
+
+            // TODO : corriger cette ligne :
+            //_evenementDalService.CategorieDalService.UpdateCategorie(daoEventCategorie.Id,daoEventCategorie.Libelle.ToString());
+
+            throw new NotImplementedException();
+        }
        
     }
 }

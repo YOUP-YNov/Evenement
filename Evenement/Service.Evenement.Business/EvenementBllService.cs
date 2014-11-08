@@ -76,6 +76,10 @@ namespace Service.Evenement.Business
                     default: break;
                 }
             List<EvenementBll> ret = new List<EvenementBll>();
+            Mapper.CreateMap<EvenementDao,EvenementBll >();
+            Mapper.CreateMap<EventLocationDao, EventLocationBll>();
+            Mapper.CreateMap<EvenementCategorieDao,EvenementCategorieBll>();
+            Mapper.CreateMap<EventStateDao, EventStateBll>();
 
             foreach (var item in tmp)
             {
@@ -120,15 +124,66 @@ namespace Service.Evenement.Business
         }
 
         /// <summary>
-        /// Permet de désactiver un événement
+        /// Retourne la liste des événements signalés
         /// </summary>
-        /// <param name="eventId">id de l'événement à désactiver</param>
-        public void DeactivateEvent(int eventId)
+        /// <returns>Liste d'événements</returns>
+        public IEnumerable<EvenementBll> GetReportedEvents()
         {
-            EvenementDao eventDao = new EvenementDao();
-            eventDao.Id = eventId;
-            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
-            eventDao.DateModification = DateTime.Now;
+            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
+            Mapper.CreateMap<EvenementDao, EvenementBll>();
+            Mapper.CreateMap<EventLocationDao, EventLocationBll>();
+            Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
+            Mapper.CreateMap<EventStateDao, EventStateBll>();
+
+            IEnumerable<EvenementBll> events = from e in tmp
+                                                       where e.EtatEvenement.Nom == Dal.Dao.EventStateEnum.Signaler
+                                                       select Mapper.Map<EvenementDao, EvenementBll>(e);
+            return events;
+        }
+
+        /// <summary>
+        /// Retourne l'état d'un événement
+        /// </summary>
+        /// <param name="id">id de l'événement</param>
+        /// <returns>état de l'événement</returns>
+        public EventStateBll GetEventState(int id)
+        {
+            return GetEvenementById(id).EtatEvenement;
+        }
+        /// <summary>
+        /// Permet de modifier l'état d'un événement 
+        /// </summary>
+        /// <param name="id">id de l'événement</param>
+        /// <returns>état de l'événement</returns>
+        public void ModifyEventState(int id, EventStateBll state)
+        {
+            EvenementDalRequest request = new EvenementDalRequest();
+            request.EvenementId = id;
+            EvenementDao eventDao = EvenementDalService.getEvenementId(request);
+
+            switch (state.Nom)
+        {
+                case EventStateEnum.Annuler:
+                    eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.Annuler);
+                    break;
+                case EventStateEnum.AValider:
+                    eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.AValider);
+                    break;
+                case EventStateEnum.Desactiver:
+                    eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.Desactiver);
+                    break;
+                case EventStateEnum.Reussi:
+                    eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.Reussi);
+                    break;
+                case EventStateEnum.Signaler:
+                    eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.Signaler);
+                    break;
+                case EventStateEnum.Valide:
+                    eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.Valide);
+                    break;
+                default:
+                    break;
+            }
 
             EvenementDalService.UpdateStateEvenement(eventDao);
         }
