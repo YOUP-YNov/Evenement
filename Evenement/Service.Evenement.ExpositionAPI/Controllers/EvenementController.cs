@@ -72,6 +72,30 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
+        /// Retourne la liste des événements signalés
+        /// </summary>
+        /// <returns>Liste d'événements</returns>
+        /// 
+        [Route("api/Evenements/Reported")]
+        public IEnumerable<EvenementFront> GetReportedEvents()
+        {
+            IEnumerable<EvenementBll> tmp = EvenementBllService.GetReportedEvents();
+
+            Mapper.CreateMap<EvenementBll, EvenementFront>();
+            Mapper.CreateMap<EventLocationBll, EventLocationFront>();
+            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
+            Mapper.CreateMap<EventStateBll, EventStateFront>();
+            List<EvenementFront> events = new List<EvenementFront>();
+
+            foreach (EvenementBll e in tmp)
+            {
+                events.Add(Mapper.Map<EvenementBll, EvenementFront>(e));
+            }
+
+            return events;
+        }
+
+        /// <summary>
         /// retourne le détail d'un événement
         /// </summary>
         /// <param name="id">l'id de l'événement</param>
@@ -122,7 +146,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             var existsEvt = evts.FirstOrDefault(evt => evt.Id == id);
             if (existsEvt != null)
             {
-                EvenementBllService.DeactivateEvent(id);
+                EvenementBllService.ModifyEventState(id, new EventStateBll(EventStateEnum.Desactiver));
             }
         }
 
@@ -151,17 +175,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         {
             //TODO => appeler le profil
             //GETINVITEVENT(int,int,int)
-        }
-
-        /// <summary>
-        /// retourne la liste des evenements signalés ( admnin)
-        /// </summary>
-        /// <param name="id_profil">id du profil admin</param>
-        /// <param name="nb_min_signalement">nb de signalement minimum</param>
-        /// <returns>liste d'evenement signalé</returns>
-        public IEnumerable<EvenementTimelineFront> GetEvenementsSignale(int id_profil, int nb_min_signalement = 1)
-        {
-             return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
         }
             
         /// <summary>

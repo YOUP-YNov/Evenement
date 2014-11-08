@@ -70,6 +70,10 @@ namespace Service.Evenement.Business
                     default: break;
                 }
             List<EvenementBll> ret = new List<EvenementBll>();
+            Mapper.CreateMap<EvenementDao,EvenementBll >();
+            Mapper.CreateMap<EventLocationDao, EventLocationBll>();
+            Mapper.CreateMap<EvenementCategorieDao,EvenementCategorieBll>();
+            Mapper.CreateMap<EventStateDao, EventStateBll>();
 
             foreach (var item in tmp)
             {
@@ -111,7 +115,25 @@ namespace Service.Evenement.Business
         }
 
         /// <summary>
-        /// retourne l'état d'un événement 
+        /// Retourne la liste des événements signalés
+        /// </summary>
+        /// <returns>Liste d'événements</returns>
+        public IEnumerable<EvenementBll> GetReportedEvents()
+        {
+            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
+            Mapper.CreateMap<EvenementDao, EvenementBll>();
+            Mapper.CreateMap<EventLocationDao, EventLocationBll>();
+            Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
+            Mapper.CreateMap<EventStateDao, EventStateBll>();
+
+            IEnumerable<EvenementBll> events = from e in tmp
+                                                       where e.EtatEvenement.Nom == Dal.Dao.EventStateEnum.Signaler
+                                                       select Mapper.Map<EvenementDao, EvenementBll>(e);
+            return events;
+        }
+
+        /// <summary>
+        /// Retourne l'état d'un événement
         /// </summary>
         /// <param name="id">id de l'événement</param>
         /// <returns>état de l'événement</returns>
@@ -120,7 +142,7 @@ namespace Service.Evenement.Business
             return GetEvenementById(id).EtatEvenement;
         }
         /// <summary>
-        /// retourne l'état d'un événement 
+        /// Permet de modifier l'état d'un événement 
         /// </summary>
         /// <param name="id">id de l'événement</param>
         /// <returns>état de l'événement</returns>
@@ -131,7 +153,7 @@ namespace Service.Evenement.Business
             EvenementDao eventDao = EvenementDalService.getEvenementId(request);
 
             switch (state.Nom)
-            {
+        {
                 case EventStateEnum.Annuler:
                     eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.Annuler);
                     break;
