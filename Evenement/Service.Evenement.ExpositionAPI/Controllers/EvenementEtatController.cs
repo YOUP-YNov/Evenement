@@ -24,7 +24,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
        /// <returns></returns>
         public EventStateFront GetEventState(int id)
         {
-            Mapper.CreateMap<Business.EventStateBll, EventStateFront>();
             return Mapper.Map<Business.EventStateBll, EventStateFront>(bllService.GetEventState(id));
         }
 

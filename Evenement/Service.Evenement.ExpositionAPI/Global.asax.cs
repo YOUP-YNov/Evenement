@@ -10,8 +10,14 @@ using System.Web.Routing;
 
 namespace Service.Evenement.ExpositionAPI
 {
+    /// <summary>
+    /// Application WebAPI
+    /// </summary>
     public class WebApiApplication : System.Web.HttpApplication
     {
+        /// <summary>
+        /// application start
+        /// </summary>
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

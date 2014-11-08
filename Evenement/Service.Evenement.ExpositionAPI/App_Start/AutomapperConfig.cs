@@ -20,28 +20,40 @@ namespace Service.Evenement.ExpositionAPI.App_Start
         /// Une fois l'initialisation faite, tous les objets objets peuvent être mapper
         /// </summary>
         public static void initAutoMapper(){
+            initExpoAutoMapper();
+            InitBllAutoMappeur.initialisation();
+        }
+
+        /// <summary>
+        /// init mapper pour les objet de l'API et business
+        /// </summary>
+        private static void initExpoAutoMapper(){
             Mapper.CreateMap<EvenementUpdate, EvenementBll>();
+            Mapper.CreateMap<EvenementBll, EvenementUpdate>();
+
             Mapper.CreateMap<EvenementFront, EvenementBll>();
+            Mapper.CreateMap<EvenementBll, EvenementFront>();
+
+            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
+            Mapper.CreateMap<EvenementCategorieFront, EvenementCategorieBll>();
+
+            Mapper.CreateMap<EvenementBll, EvenementFront>();
+            Mapper.CreateMap<EvenementFront, EvenementBll>();
+
             Mapper.CreateMap<EvenementBll, EvenementTimelineFront>();
+            Mapper.CreateMap<EvenementTimelineFront, EvenementBll>();
+
+            Mapper.CreateMap<EventStateBll, EventStateFront>();
+            Mapper.CreateMap<EventStateFront, EventStateBll>();
+
+            Mapper.CreateMap<EventLocationBll, EventLocationFront>();
+            Mapper.CreateMap<EventLocationFront, EventLocationBll>();
 
             //création de map pour les string builder
             Mapper.CreateMap<string, StringBuilder>().ConvertUsing(s =>
             {
                 StringBuilder sb = new StringBuilder(s);
                 return sb;
-            });
-
-            //mapping particulier de l'eventFront vers event Location
-            Mapper.CreateMap<EventLocationFront, EventLocationBll>().ConvertUsing(loc =>
-            {
-                EventLocationBll location = new EventLocationBll();
-                location.Adresse = new StringBuilder(loc.Adresse);
-                location.Pays = new StringBuilder(loc.Pays);
-                location.Ville = new StringBuilder(loc.Ville);
-                location.Latitude = loc.Latitude;
-                location.Longitude = loc.Longitude;
-                location.CodePostale = new StringBuilder(loc.CodePostale);
-                return location;
             });
         }
     }

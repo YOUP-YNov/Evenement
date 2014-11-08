@@ -81,6 +81,7 @@
     <Compile Include="CategorieBllService.cs" />
     <Compile Include="EvenementBllService.cs" />
     <Compile Include="ImageBllService.cs" />
+    <Compile Include="InitBllAutoMappeur.cs" />
     <Compile Include="Interface\ICategorieBllService.cs" />
     <Compile Include="Interface\IEvenementBllService.cs" />
     <Compile Include="Interface\IImageBllService.cs" />

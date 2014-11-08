@@ -30,12 +30,11 @@ namespace Service.Evenement.Business
 
         public EvenementBllService ()
         {
-            Mapper.CreateMap<EvenementDao, EvenementBll>();
+            
         }
 
         public void PutEvenement(EvenementBll evenementBll)
         {
-            Mapper.CreateMap<EvenementBll, EvenementDao>();
             EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
 
             EvenementDalService.UpdateEvenement(daoEvent);
@@ -70,10 +69,7 @@ namespace Service.Evenement.Business
                     default: break;
                 }
             List<EvenementBll> ret = new List<EvenementBll>();
-            Mapper.CreateMap<EvenementDao,EvenementBll >();
-            Mapper.CreateMap<EventLocationDao, EventLocationBll>();
-            Mapper.CreateMap<EvenementCategorieDao,EvenementCategorieBll>();
-            Mapper.CreateMap<EventStateDao, EventStateBll>();
+            
 
             foreach (var item in tmp)
             {
@@ -86,7 +82,7 @@ namespace Service.Evenement.Business
 
         public EvenementBll GetEvenementById(long id)
         {
-            Mapper.CreateMap<EvenementBll, EvenementDao>();
+           
             EvenementDalRequest request = new EvenementDalRequest();
             request.EvenementId = id;
             var evt = _evenementDalService.getEvenementId(request);
@@ -102,8 +98,6 @@ namespace Service.Evenement.Business
         /// <returns>liste d'événements</returns>
         public IEnumerable<EvenementBll> GetByProfil(int id_profil)
         {
-            Mapper.CreateMap<EvenementDao, EvenementBll>();
-            
             // pour l'instant les event dont le profil est organisateur (api profil pour gerer les event ou le profil est inscrit)
             IEnumerable<EvenementDao> daoEventList = _evenementDalService.GetEvenementByProfil((long)id_profil);
             IEnumerable<EvenementBll> bllEventList = null;
@@ -121,11 +115,6 @@ namespace Service.Evenement.Business
         public IEnumerable<EvenementBll> GetReportedEvents()
         {
             IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
-            Mapper.CreateMap<EvenementDao, EvenementBll>();
-            Mapper.CreateMap<EventLocationDao, EventLocationBll>();
-            Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
-            Mapper.CreateMap<EventStateDao, EventStateBll>();
-
             IEnumerable<EvenementBll> events = from e in tmp
                                                        where e.EtatEvenement.Nom == Dal.Dao.EventStateEnum.Signaler
                                                        select Mapper.Map<EvenementDao, EvenementBll>(e);

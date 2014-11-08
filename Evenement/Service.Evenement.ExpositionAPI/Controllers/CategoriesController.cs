@@ -35,7 +35,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         public IEnumerable<EvenementCategorieFront> GetCategories()
         {
             IEnumerable <EvenementCategorieBll> result = CategorieBllService.GetCategories();
-            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
 
             return (result == null || result.Count() == 0) ? null : Mapper.Map<IEnumerable<EvenementCategorieBll>, IEnumerable<EvenementCategorieFront>>(result);
         }
@@ -48,7 +47,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         public EvenementCategorieFront GetCategorie(long id)
         {
             EvenementCategorieBll result = CategorieBllService.GetCategorie(id);
-            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
 
             return (result == null ) ? null :  Mapper.Map<EvenementCategorieBll, EvenementCategorieFront>(result);
         }
@@ -64,7 +62,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             categorie.Id = id;
             categorie.Libelle = libelle;
 
-            AutoMapper.Mapper.CreateMap<EvenementCategorieFront, EvenementCategorieBll>();
             EvenementCategorieBll bllEventCategorie = Mapper.Map<EvenementCategorieFront, EvenementCategorieBll>(categorie);
 
             _categorieBllService.UpdateCategorie(bllEventCategorie);

@@ -4,6 +4,22 @@
         <name>Service.Evenement.ExpositionAPI</name>
     </assembly>
     <members>
+        <member name="T:Service.Evenement.ExpositionAPI.App_Start.AutomapperConfig">
+            <summary>
+            Classe d'initialisation de l'automapper
+            </summary>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.App_Start.AutomapperConfig.initAutoMapper">
+            <summary>
+            Initialisation de l'autoMapper.
+            Une fois l'initialisation faite, tous les objets objets peuvent être mapper
+            </summary>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.App_Start.AutomapperConfig.initExpoAutoMapper">
+            <summary>
+            init mapper pour les objet de l'API et business
+            </summary>
+        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
             <summary>
             Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
@@ -518,6 +534,13 @@
             <param name="id_profil">id du profil</param>
             <returns>liste d'événements</returns>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetReportedEvents">
+            <summary>
+            Retourne la liste des événements signalés
+            </summary>
+            <returns>Liste d'événements</returns>
+            
+        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenement(System.Int32)">
             <summary>
             retourne le détail d'un événement
@@ -527,15 +550,10 @@
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Put(System.Int32,Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate)">
             <summary>
-            Modification d'une annonce
+            modification de l'évènement
             </summary>
-            <param name="id"></param>
-            <param name="prenium"></param>
-            <param name="end_inscription"></param>
-            <param name="total_people"></param>
-            <param name="description"></param>
-            <param name="lstPicture"></param>
-            <param name="location"></param>
+            <param name="id">id de l'évènement à modifier</param>
+            <param name="evenement">évènement</param>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostInscriptionDeinscription(System.Int32,System.Int32)">
             <summary>
@@ -564,20 +582,6 @@
             </summary>
             <param name="invitations">classe de liaison entre evenement et profil</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.InviteFriends(Service.Evenement.ExpositionAPI.Models.InviteFriends)">
-            <summary>
-            méthode d'appel de l'api profil
-            </summary>
-            <param name="invitations">classe de liaison entre evenement et profil</param>
-        </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenementsSignale(System.Int32,System.Int32)">
-            <summary>
-            retourne la liste des evenements signalés ( admnin)
-            </summary>
-            <param name="id_profil">id du profil admin</param>
-            <param name="nb_min_signalement">nb de signalement minimum</param>
-            <returns>liste d'evenement signalé</returns>
-        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PutEvenemenntEtat(System.Int32,System.Int32,System.Int32)">
             <summary>
             permet de modifier l'etat d'un evenement (Admin)
@@ -594,9 +598,28 @@
             <param name="id_etat">id de l'etat</param>
             <returns></returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.GetEtat(System.Int32)">
+        <member name="T:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController">
             <summary>
-            un etat en particulié 
+            controller pour les Etat de l'évènement
+            </summary>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.GetEventState(System.Int32)">
+            <summary>
+            l'etat d'un evenement particulier 
+            </summary>
+            <param name="id">id de l'evenement</param>
+            <returns></returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.SignalEvent(System.Int32)">
+            <summary>
+            signaler un evenement
+            </summary>
+            <param name="id">id de l'evenement</param>
+            <returns></returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.DesactivateEvent(System.Int32)">
+            <summary>
+            desactiver un evenement
             </summary>
             <param name="id">id de l'evenement</param>
             <returns></returns>
