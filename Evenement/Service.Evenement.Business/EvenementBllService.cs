@@ -35,12 +35,19 @@ namespace Service.Evenement.Business
 
         public void PutEvenement(EvenementBll evenementBll)
         {
+            //Regarder si le lieux est tjr le meme
+
+
+            long idLieu =  this.locationExistOrCreate(evenementBll.EventAdresse);
+            evenementBll.EventAdresse.Id = idLieu;
+            Mapper.CreateMap<EvenementBll, EvenementDao>();
+            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieDao>();
             EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
 
             EvenementDalService.UpdateEvenement(daoEvent);
         }
 
-        public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result, int categorie, string text_search, int max_id, string orderby, bool? premium)
+        public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result, long categorie, string text_search, int max_id, string orderby, bool? premium)
         {
 
             IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
@@ -72,6 +79,9 @@ namespace Service.Evenement.Business
 
             foreach (var item in tmp)
             {
+                Mapper.CreateMap<EventLocationDao, EventLocationBll>();
+                Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
+                Mapper.CreateMap<EvenementDao, EvenementBll>();
                 ret.Add(Mapper.Map<EvenementDao, EvenementBll>(item));
             }
 
@@ -121,6 +131,25 @@ namespace Service.Evenement.Business
             eventDao.DateModification = DateTime.Now;
 
             EvenementDalService.UpdateStateEvenement(eventDao);
+        }
+
+        private long locationExistOrCreate(EventLocationBll loc)
+        {
+            if (loc != null)
+            {
+                //Penser a set l id
+                Mapper.CreateMap<EventLocationBll, EventLocationDao>();
+
+                EventLocationDao locDAO = Mapper.Map<EventLocationBll, EventLocationDao>(loc);
+                IEnumerable<EvenementDao> e = EvenementDalService.CreateLieuEvenement(new EvenementDalRequest(), locDAO);
+                if (e != null)
+                {
+                    EvenementDao evenement = e.First();
+                    
+                    return evenement.EventAdresse.Id;
+                }
+            } 
+            return 0;
         }
     }
 }

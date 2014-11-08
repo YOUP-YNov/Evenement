@@ -9,6 +9,14 @@
 }
 
 namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
+    partial class EvenementTableAdapter
+    {
+    }
+
+    partial class LieuEvenementTableAdapter
+    {
+    }
+
     partial class CategorieTableAdapter
     {
     }

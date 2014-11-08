@@ -3506,18 +3506,16 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EvenementId", global::System.Data.SqlDbType.BigInt, 8, global::System.Data.ParameterDirection.Input, 19, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LieuEvenementId", global::System.Data.SqlDbType.BigInt, 8, global::System.Data.ParameterDirection.Input, 19, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CategorieId", global::System.Data.SqlDbType.BigInt, 8, global::System.Data.ParameterDirection.Input, 19, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateEvenement", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateModification", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateFinInscription", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateEvenement", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateModification", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateFinInscription", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TitreEvenement", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DescritpionEvent", global::System.Data.SqlDbType.NVarChar, 4000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MiniParticipant", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MaxiParticipant", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Statut", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Prix", global::System.Data.SqlDbType.Money, 8, global::System.Data.ParameterDirection.Input, 19, 4, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Premium", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 1, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateMiseEnAvant", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EtatId", global::System.Data.SqlDbType.BigInt, 8, global::System.Data.ParameterDirection.Input, 19, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateMiseEnAvant", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[7] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[7].Connection = this.Connection;
             this._commandCollection[7].CommandText = "dbo.ps_UpdateEventState";
@@ -3740,7 +3738,7 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual EventDalService.EvenementDataTable UpdateEvenement(global::System.Nullable<long> EvenementId, global::System.Nullable<long> LieuEvenementId, global::System.Nullable<long> CategorieId, global::System.Nullable<int> DateEvenement, global::System.Nullable<int> DateModification, global::System.Nullable<int> DateFinInscription, string TitreEvenement, string DescritpionEvent, global::System.Nullable<int> MiniParticipant, global::System.Nullable<int> MaxiParticipant, string Statut, global::System.Nullable<decimal> Prix, global::System.Nullable<bool> Premium, global::System.Nullable<int> DateMiseEnAvant, global::System.Nullable<long> EtatId) {
+        public virtual EventDalService.EvenementDataTable UpdateEvenement(global::System.Nullable<long> EvenementId, global::System.Nullable<long> LieuEvenementId, global::System.Nullable<long> CategorieId, global::System.Nullable<global::System.DateTime> DateEvenement, global::System.Nullable<global::System.DateTime> DateModification, global::System.Nullable<global::System.DateTime> DateFinInscription, string TitreEvenement, string DescritpionEvent, global::System.Nullable<int> MiniParticipant, global::System.Nullable<int> MaxiParticipant, global::System.Nullable<decimal> Prix, global::System.Nullable<bool> Premium, global::System.Nullable<global::System.DateTime> DateMiseEnAvant) {
             this.Adapter.SelectCommand = this.CommandCollection[6];
             if ((EvenementId.HasValue == true)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = ((long)(EvenementId.Value));
@@ -3761,19 +3759,19 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
                 this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             if ((DateEvenement.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[4].Value = ((int)(DateEvenement.Value));
+                this.Adapter.SelectCommand.Parameters[4].Value = ((System.DateTime)(DateEvenement.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             if ((DateModification.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[5].Value = ((int)(DateModification.Value));
+                this.Adapter.SelectCommand.Parameters[5].Value = ((System.DateTime)(DateModification.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
             if ((DateFinInscription.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[6].Value = ((int)(DateFinInscription.Value));
+                this.Adapter.SelectCommand.Parameters[6].Value = ((System.DateTime)(DateFinInscription.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[6].Value = global::System.DBNull.Value;
@@ -3802,35 +3800,23 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
             else {
                 this.Adapter.SelectCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
-            if ((Statut == null)) {
-                this.Adapter.SelectCommand.Parameters[11].Value = global::System.DBNull.Value;
+            if ((Prix.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[11].Value = ((decimal)(Prix.Value));
             }
             else {
-                this.Adapter.SelectCommand.Parameters[11].Value = ((string)(Statut));
+                this.Adapter.SelectCommand.Parameters[11].Value = global::System.DBNull.Value;
             }
-            if ((Prix.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[12].Value = ((decimal)(Prix.Value));
+            if ((Premium.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[12].Value = ((bool)(Premium.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[12].Value = global::System.DBNull.Value;
             }
-            if ((Premium.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[13].Value = ((bool)(Premium.Value));
+            if ((DateMiseEnAvant.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[13].Value = ((System.DateTime)(DateMiseEnAvant.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[13].Value = global::System.DBNull.Value;
-            }
-            if ((DateMiseEnAvant.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[14].Value = ((int)(DateMiseEnAvant.Value));
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[14].Value = global::System.DBNull.Value;
-            }
-            if ((EtatId.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[15].Value = ((long)(EtatId.Value));
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[15].Value = global::System.DBNull.Value;
             }
             EventDalService.EvenementDataTable dataTable = new EventDalService.EvenementDataTable();
             this.Adapter.Fill(dataTable);
@@ -4022,7 +4008,7 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
             this._commandCollection[1].CommandType = global::System.Data.CommandType.StoredProcedure;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ville", global::System.Data.SqlDbType.NVarChar, 100, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CodePostale", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CodePostale", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Adresse", global::System.Data.SqlDbType.NVarChar, 200, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Longitude", global::System.Data.SqlDbType.Decimal, 13, global::System.Data.ParameterDirection.Input, 20, 10, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Latitude", global::System.Data.SqlDbType.Decimal, 13, global::System.Data.ParameterDirection.Input, 20, 10, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -4070,7 +4056,7 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual EventDalService.LieuEvenementDataTable CreateLieuEvenement(string Ville, global::System.Nullable<int> CodePostale, string Adresse, global::System.Nullable<decimal> Longitude, global::System.Nullable<decimal> Latitude, string Pays, string Nom) {
+        public virtual EventDalService.LieuEvenementDataTable CreateLieu(string Ville, string CodePostale, string Adresse, global::System.Nullable<decimal> Longitude, global::System.Nullable<decimal> Latitude, string Pays, string Nom) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
             if ((Ville == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -4078,11 +4064,11 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
             else {
                 this.Adapter.SelectCommand.Parameters[1].Value = ((string)(Ville));
             }
-            if ((CodePostale.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CodePostale.Value));
+            if ((CodePostale == null)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(CodePostale));
             }
             if ((Adresse == null)) {
                 this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
