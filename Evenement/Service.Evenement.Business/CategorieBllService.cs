@@ -56,7 +56,7 @@ namespace Service.Evenement.Business
              Mapper.CreateMap<EvenementCategorieBll,EvenementCategorieDao>();
              EvenementCategorieDao daoEventCategorie = Mapper.Map<EvenementCategorieBll, EvenementCategorieDao>(categoriebll);
 
-             _evenementDalService.CategorieDalService.UpdateCategorie(daoEventCategorie.Id,daoEventCategorie.Libelle.ToString());
+             _evenementDalService.CategorieDalService.UpdateCategorie(daoEventCategorie.Id, daoEventCategorie.Libelle.ToString());
         }
        
     }

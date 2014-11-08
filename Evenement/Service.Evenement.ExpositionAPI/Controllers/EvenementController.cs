@@ -44,11 +44,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>la liste des événements</returns>
         public IEnumerable<EvenementTimelineFront> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null, bool? premium = null)
         {
-
             IEnumerable<Business.EvenementBll> list = EvenementBllService.GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby, premium);
             List<EvenementTimelineFront> ret = new List<EvenementTimelineFront>();
-
-            Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
 
             foreach (var item in list)
             {
@@ -65,9 +62,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>liste d'événements</returns>
         public IEnumerable<EvenementTimelineFront> GetByProfil(int id_profil)
         {
-            Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
-
-
             IEnumerable<Business.EvenementBll> bllEventList = EvenementBllService.GetByProfil(id_profil);
             IEnumerable<EvenementTimelineFront> timelineFrontEventList = null;
             foreach(var e in bllEventList)
@@ -100,27 +94,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [HttpPut]
         public void Put(int id, [FromBody]EvenementUpdate evenement)
         {
-            Mapper.CreateMap<EvenementUpdate, EvenementBll>();
-            Mapper.CreateMap<string, StringBuilder>().ConvertUsing(s =>
-            {
-                StringBuilder sb = new StringBuilder(s);
-                return sb;
-            });
-            Mapper.CreateMap<EventLocationFront, EventLocationBll>().ConvertUsing(loc =>
-            {
-                EventLocationBll location = new EventLocationBll();
-                location.Adresse = new StringBuilder(loc.Adresse);
-                location.Pays = new StringBuilder(loc.Pays);
-                location.Ville = new StringBuilder(loc.Ville);
-                location.Latitude = loc.Latitude;
-                location.Longitude = loc.Longitude;
-                location.CodePostale = new StringBuilder(loc.CodePostale);
-                return location;
-            });
+            
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
-
-
-
 
             EvenementBllService.PutEvenement(bllEvent);
 
@@ -157,8 +132,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
        /// <param name="evt">l'évènement à creer</param>
         public void CreateEvenement([FromBody] EvenementCreate evt)
         {
-            
-            AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evt.evenement);
 
             EvenementBllService.PutEvenement(bllEvent);
@@ -177,6 +150,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         private void InviteFriends(InviteFriends invitations)
         {
             //TODO => appeler le profil
+            //GETINVITEVENT(int,int,int)
         }
 
         /// <summary>

@@ -10,9 +10,13 @@ using AutoMapper;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
+    /// <summary>
+    /// controller pour les Etat de l'évènement
+    /// </summary>
     public class EvenementEtatController : ApiController
     {
         EvenementBllService bllService;
+
        /// <summary>
        /// l'etat d'un evenement particulier 
        /// </summary>
@@ -40,7 +44,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns></returns>
         public void DesactivateEvent(int id)
         {
-            bllService.ModifyEventState(id, new Business.EventStateBll(Business.EventStateEnum.Desactiver));
+            bllService.ModifyEventState(id, new EventStateBll(Business.EventStateEnum.Desactiver));
         }
     }
 }
