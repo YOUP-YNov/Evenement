@@ -9,6 +9,7 @@ using Service.Evenement.ExpositionAPI.Models;
 using Service.Evenement.Business;
 using AutoMapper;
 using System.Text;
+using Service.Evenement.ExpositionAPI.Models.ModelsUpdate;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
@@ -42,13 +43,17 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="max_id">l'id du derniers evenements</param>
         /// <param name="orderby">le nom du trie (date, categorie, disponnible)</param>
         /// <returns>la liste des événements</returns>
-        public IEnumerable<EvenementTimelineFront> GetEvenements(DateTime? date_search, int max_result = 10, int categorie = -1, string text_search = null, int max_id = -1, string orderby = null, bool? premium = null)
+        [HttpGet]
+        public IEnumerable<EvenementTimelineFront> Get([FromBody]Search search,int max_result = 10, int max_id = -1)
         {
+            if (search != null)
+            {
+                search = new Search();
+            }
+            
 
-            IEnumerable<Business.EvenementBll> list = EvenementBllService.GetEvenements(date_search, max_result, categorie, text_search, max_id, orderby, premium);
+            IEnumerable<Business.EvenementBll> list = EvenementBllService.GetEvenements(search.Date_search, max_result, search.Id_Categorie, search.Text, max_id, search.OrderBy, search.Prenium);
             List<EvenementTimelineFront> ret = new List<EvenementTimelineFront>();
-
-            Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
 
             foreach (var item in list)
             {
@@ -63,11 +68,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id_profil">id du profil</param>
         /// <returns>liste d'événements</returns>
+        [HttpGet]
+        [Route("Evenements/profil")]
         public IEnumerable<EvenementTimelineFront> GetByProfil(int id_profil)
         {
-            Mapper.CreateMap<Business.EvenementBll, EvenementTimelineFront>();
-
-
             IEnumerable<Business.EvenementBll> bllEventList = EvenementBllService.GetByProfil(id_profil);
             IEnumerable<EvenementTimelineFront> timelineFrontEventList = null;
             foreach(var e in bllEventList)
@@ -87,10 +91,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         {
             IEnumerable<EvenementBll> tmp = EvenementBllService.GetReportedEvents();
 
-            Mapper.CreateMap<EvenementBll, EvenementFront>();
-            Mapper.CreateMap<EventLocationBll, EventLocationFront>();
-            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
-            Mapper.CreateMap<EventStateBll, EventStateFront>();
+            
             List<EvenementFront> events = new List<EvenementFront>();
 
             foreach (EvenementBll e in tmp)
@@ -108,46 +109,20 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>un événement</returns>
         public Service.Evenement.ExpositionAPI.Models.EvenementFront GetEvenement(int id)
         {
+            throw new NotImplementedException();
             return null;
         }
 
         /// <summary>
-        /// Modification d'une annonce
+        /// modification de l'évènement
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="prenium"></param>
-        /// <param name="end_inscription"></param>
-        /// <param name="total_people"></param>
-        /// <param name="description"></param>
-        /// <param name="lstPicture"></param>
-        /// <param name="location"></param>
+        /// <param name="id">id de l'évènement à modifier</param>
+        /// <param name="evenement">évènement</param>
         [HttpPut]
         public void Put(int id, [FromBody]EvenementUpdate evenement)
         {
-            Mapper.CreateMap<EvenementUpdate, EvenementBll>();
-            Mapper.CreateMap<string, StringBuilder>().ConvertUsing(s =>
-            {
-                StringBuilder sb = new StringBuilder(s);
-                return sb;
-            });
-            Mapper.CreateMap<EventLocationFront, EventLocationBll>().ConvertUsing(loc =>
-            {
-                EventLocationBll location = new EventLocationBll();
-                location.Adresse = new StringBuilder(loc.Adresse);
-                location.Pays = new StringBuilder(loc.Pays);
-                location.Ville = new StringBuilder(loc.Ville);
-                location.Latitude = loc.Latitude;
-                location.Longitude = loc.Longitude;
-                location.CodePostale = new StringBuilder(loc.CodePostale);
-                return location;
-            });
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
-
-
-
-
             EvenementBllService.PutEvenement(bllEvent);
-
         }
         /// <summary>
         /// Permet l'inscription et la desincription
@@ -156,7 +131,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="idProfil">id du profil</param>
         public void PostInscriptionDeinscription(int idEvenement, int idProfil)
         {
-
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -165,13 +140,15 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">id de l'evenement</param>
         /// <param name="id_profil">id du profil</param>
-        public void DesactivateEvenement(int id, int id_profil)
+        [HttpDelete]
+        [Route("Evenements/{id_evenement}/Desactiver")]
+        public void DesactivateEvenement([FromUri]int id_evenement, [FromBody] int id_profil)
         {
             var evts = EvenementBllService.GetByProfil(id_profil);
-            var existsEvt = evts.FirstOrDefault(evt => evt.Id == id);
+            var existsEvt = evts.FirstOrDefault(evt => evt.Id == id_evenement);
             if (existsEvt != null)
             {
-                EvenementBllService.ModifyEventState(id, new EventStateBll(EventStateEnum.Desactiver));
+                EvenementBllService.DeactivateEvent(id_evenement);
             }
         }
 
@@ -181,8 +158,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
        /// <param name="evt">l'évènement à creer</param>
         public void CreateEvenement([FromBody] EvenementCreate evt)
         {
-            
-            AutoMapper.Mapper.CreateMap<EvenementFront, EvenementBll>();
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evt.evenement);
 
             EvenementBllService.PutEvenement(bllEvent);
@@ -191,16 +166,25 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             invitations.idEvent = bllEvent.Id;
             invitations.idUser = bllEvent.OrganisateurId;
             invitations.idFriends = evt.friends;
-           
+        }
+
+        private void InviteFriends(InviteFriends invitations)
+        {
+            //TODO => appeler le profil
         }
 
         /// <summary>
         /// méthode d'appel de l'api profil
         /// </summary>
-        /// <param name="invitations">classe de liaison entre evenement et profil</param>
-        private void InviteFriends(InviteFriends invitations)
+        /// <param name="id_profil">id du profil admin</param>
+        /// <param name="nb_min_signalement">nb de signalement minimum</param>
+        /// <returns>liste d'evenement signalé</returns>
+        public IEnumerable<EvenementTimelineFront> GetEvenementsSignale(int id_profil, int nb_min_signalement = 1)
         {
+            throw new NotImplementedException();
             //TODO => appeler le profil
+            //GETINVITEVENT(int,int,int)
+            return null;
         }
             
         /// <summary>
@@ -211,7 +195,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id_etat">id de l'etat</param>
         public void PutEvenemenntEtat(int id_profil, int id_evenement, int id_etat)
         {
-
+           throw new NotImplementedException();
         }
 
         /// <summary>
@@ -222,6 +206,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns></returns>
         public IEnumerable<EvenementTimelineFront> GetEvenementsEtats(int id_profil, int id_etat)
         {
+            throw new NotImplementedException();
             return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
         }
     }

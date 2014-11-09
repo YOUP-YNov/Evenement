@@ -5,8 +5,15 @@ using System.Web.Http;
 
 namespace Service.Evenement.ExpositionAPI
 {
+    /// <summary>
+    /// configuration de la webAPI
+    /// </summary>
     public static class WebApiConfig
     {
+        /// <summary>
+        /// enregistrement du template de routing
+        /// </summary>
+        /// <param name="config">HttpConfig</param>
         public static void Register(HttpConfiguration config)
         {
             // Configuration et services API Web

@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Service.Evenement.Business;
 using AutoMapper;
+using System.Web.Http.Description;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
@@ -32,12 +33,21 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// Retourne la liste des catégories
         /// </summary>
         /// <returns>liste des catégories</returns>
-        public IEnumerable<EvenementCategorieFront> GetCategories()
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<EvenementCategorieFront>))]
+        public HttpResponseMessage Get()
         {
-            IEnumerable <EvenementCategorieBll> result = CategorieBllService.GetCategories();
-            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
-
-            return (result == null || result.Count() == 0) ? null : Mapper.Map<IEnumerable<EvenementCategorieBll>, IEnumerable<EvenementCategorieFront>>(result);
+            IEnumerable<EvenementCategorieBll> result = CategorieBllService.GetCategories(); IEnumerable<EvenementCategorieFront> lst = (result == null || result.Count() == 0) ? null : Mapper.Map<IEnumerable<EvenementCategorieBll>, IEnumerable<EvenementCategorieFront>>(result);
+            HttpResponseMessage response;
+            if (lst != null)
+            {
+                response = Request.CreateResponse(HttpStatusCode.OK, lst);
+            }
+            else
+            {
+                response = Request.CreateErrorResponse(HttpStatusCode.NoContent, "");
+            }
+            return response;
         }
 
         /// <summary>
@@ -45,15 +55,24 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">Id de la catégorie</param>
         /// <returns>une catégorie</returns>
-        public EvenementCategorieFront GetCategorie(long id)
+        
+        [HttpGet]
+        [ResponseType(typeof(EvenementCategorieFront))]
+        public HttpResponseMessage Get(long id)
         {
             EvenementCategorieBll result = CategorieBllService.GetCategorie(id);
-            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
 
-            return (result == null ) ? null :  Mapper.Map<EvenementCategorieBll, EvenementCategorieFront>(result);
+            EvenementCategorieFront categ = (result == null ) ? null :  Mapper.Map<EvenementCategorieBll, EvenementCategorieFront>(result);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, categ);
+            return response;
         }
 
-        public void DeleteCategorie(long id)
+        /// <summary>
+        /// Supprime une catégorie
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpDelete]
+        public void Delete(long id)
         {
             _categorieBllService.DeleteCategorie(id);
         }
@@ -64,7 +83,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             categorie.Id = id;
             categorie.Libelle = libelle;
 
-            AutoMapper.Mapper.CreateMap<EvenementCategorieFront, EvenementCategorieBll>();
             EvenementCategorieBll bllEventCategorie = Mapper.Map<EvenementCategorieFront, EvenementCategorieBll>(categorie);
 
             _categorieBllService.UpdateCategorie(bllEventCategorie);

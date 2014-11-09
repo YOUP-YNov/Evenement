@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service.Evenement.ExpositionAPI.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,8 +10,14 @@ using System.Web.Routing;
 
 namespace Service.Evenement.ExpositionAPI
 {
+    /// <summary>
+    /// Application WebAPI
+    /// </summary>
     public class WebApiApplication : System.Web.HttpApplication
     {
+        /// <summary>
+        /// application start
+        /// </summary>
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -18,6 +25,7 @@ namespace Service.Evenement.ExpositionAPI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AutomapperConfig.initAutoMapper();
         }
     }
 }

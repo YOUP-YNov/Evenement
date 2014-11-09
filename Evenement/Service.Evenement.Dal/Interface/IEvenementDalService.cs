@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Service.Evenement.Dal.Dao;
 using Service.Evenement.Dal.Dao.Request;
+using Service.Evenement.Dal.Dal.EventDalServiceTableAdapters;
 
 namespace Service.Evenement.Dal.Interface
 {

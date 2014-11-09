@@ -169,14 +169,14 @@ namespace Service.Evenement.Dal
             if( request == null || location == null )
                 return null;
             // Tricks a enlever dans la version finale ( Boxing du 64 vers 32 ) Drop & Create PROC + Refresh Dataset
-            var result = LieuEventDalService.CreateLieuEvenement(
+            var result = LieuEventDalService.CreateLieu(
                                 location.Ville.ToString(),
-                                Convert.ToInt32(location.CodePostale),
+                                location.CodePostale.ToString(),
                                 location.Adresse.ToString(),
                                 location.Longitude,
                                 location.Latitude,
                                 location.Pays.ToString(),
-                                location.Nom.ToString());
+                                "tt");
 
             return result.ToEvenementDao();
         }
@@ -215,25 +215,23 @@ namespace Service.Evenement.Dal
 
         public IEnumerable<EvenementDao> UpdateEvenement ( EvenementDao Event )
         {
-            if ( Event == null || Event.EventAdresse == null || Event.Categorie == null || Event.EtatEvenement == null )
+            if ( Event == null || Event.EventAdresse == null || Event.Categorie == null)
                 return null;
-
+            string t = Event.DateFinInscription.ToString("ddMMyyyyhhmmss");
             var result = EventDalService.UpdateEvenement(
-                                Event.Id,
+                                Event.Id, 
                                 Event.EventAdresse.Id,
                                 Event.Categorie.Id,
-                                Convert.ToInt32(Event.DateEvenement.ToString("ddMMYYhhmmss")),
-                                Convert.ToInt32(Event.DateModification.ToString("ddMMYYhhmmss")),
-                                Convert.ToInt32(Event.DateFinInscription.ToString("ddMMYYhhmmss")),
+                                Event.DateEvenement,
+                                DateTime.Now,
+                                Event.DateFinInscription,
                                 Event.TitreEvenement.ToString(),
                                 Event.DescriptionEvenement.ToString(),
                                 Event.MinimumParticipant,
                                 Event.MaximumParticipant,
-                                Event.Statut,
                                 Event.Price,
                                 Event.Premium,
-                                Convert.ToInt32(Event.DateMiseEnAvant.ToString("ddMMYYhhmmss")),
-                                Event.EtatEvenement.Id);
+                                 DateTime.Now);
 
             return result.ToEvenementDao();
         }
@@ -338,6 +336,10 @@ namespace Service.Evenement.Dal
             var result = SubscriptionDalService.GetEventParticipationByUserId(request.UserId);
             return result.ToSubscriberDao();
         }
+
+
+
+
 
         #endregion
         

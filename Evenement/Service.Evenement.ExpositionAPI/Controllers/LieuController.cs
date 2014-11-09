@@ -52,7 +52,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 
         public void PostLieu(decimal latitude, decimal longitude, string adresse, string ville, string code_postale, string pays )
         {
-            Mapper.CreateMap<EventLocationFront, EventLocationBll>();
             EventLocationFront location = new EventLocationFront(latitude,longitude,adresse,pays,code_postale,ville);
             LieuBllService.PostLieu(Mapper.Map<EventLocationFront, EventLocationBll>(location));
 

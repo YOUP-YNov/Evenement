@@ -32,7 +32,7 @@ namespace Service.Evenement.Business
         public IEnumerable<EvenementCategorieBll> GetCategories()
         {
             IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest() { });
-            Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
+            
             return (result.Count() == 0 || result == null) ? null : Mapper.Map<IEnumerable<EvenementCategorieDao>, IEnumerable<EvenementCategorieBll>>(result);
         }
 
@@ -41,9 +41,8 @@ namespace Service.Evenement.Business
             Dal.Dao.EvenementCategorieDao categ = new EvenementCategorieDao();
             categ.Id = id;
             IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest() { Categorie = categ });
-            Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
+            
             return (result.Count() == 0 || result == null) ? null : Mapper.Map<EvenementCategorieDao, EvenementCategorieBll>(result.First());
-
         }
 
         public void DeleteCategorie(long id)
@@ -53,14 +52,13 @@ namespace Service.Evenement.Business
 
         public void UpdateCategorie(EvenementCategorieBll categoriebll)
         {
-            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieDao>();
-            EvenementCategorieDao daoEventCategorie = Mapper.Map<EvenementCategorieBll, EvenementCategorieDao>(categoriebll);
+             EvenementCategorieDao daoEventCategorie = Mapper.Map<EvenementCategorieBll, EvenementCategorieDao>(categoriebll);
 
             // TODO : corriger cette ligne :
             //_evenementDalService.CategorieDalService.UpdateCategorie(daoEventCategorie.Id,daoEventCategorie.Libelle.ToString());
 
             throw new NotImplementedException();
         }
-
+       
     }
 }
