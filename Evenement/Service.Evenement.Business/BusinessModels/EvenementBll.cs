@@ -1,15 +1,16 @@
-﻿namespace Service.Evenement.Dal.Dao
+﻿namespace Service.Evenement.Business
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Service.Evenement.Business.BusinessModels;
 
     /// <summary>
     /// Model d'accès au données représentant un évenement
     /// </summary>
-    public class EvenementDao
+    public class EvenementBll
     {
         /// <summary>
         /// Assigne ou récupère l'id de l'évenement.
@@ -29,17 +30,17 @@
         /// <summary>
         /// Assigne ou récupère la liste des Images associé à l'évenement
         /// </summary>
-        public IEnumerable<EventImageDao> Galleries { get; set; }
+        public IEnumerable<EventImageBll> Galleries { get; set; }
 
         /// <summary>
         /// Assigne ou récupère l'adresse de l'évenement
         /// </summary>
-        public EventLocationDao EventAdresse { get; set; }
+        public EventLocationBll EventAdresse { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la catégorie de l'évenement
         /// </summary>
-        public EvenementCategorieDao Categorie { get; set; }
+        public EvenementCategorieBll Categorie { get; set; }
         
         /// <summary>
         /// Assigne ou récupère la Date à laquelle l'évenement a lieu.
@@ -85,7 +86,7 @@
         /// <summary>
         /// Assigne ou récupère l'état de l'évenement
         /// </summary>
-        public EventStateDao EtatEvenement { get; set; }
+        public EventStateBll EtatEvenement { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le price a payé pour participé à l'évenement
@@ -108,8 +109,8 @@
         public string Statut { get; set; }
 
         /// <summary>
-        /// Assigne ou récupère la liste des participants de l'evenementss
+        /// Assigne ou récupère la liste des participants à l'évenement
         /// </summary>
-        public IEnumerable<EvenementSubcriber> Participants { get; set; }
+        public IEnumerable<EvenementSubscriberBll> Participants { get; set; }
     }
 }

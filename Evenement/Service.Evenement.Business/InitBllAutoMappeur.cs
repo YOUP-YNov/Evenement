@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Service.Evenement.Business.BusinessModels;
 
 namespace Service.Evenement.Business
 {
@@ -23,6 +24,9 @@ namespace Service.Evenement.Business
 
             Mapper.CreateMap<EventStateDao, EventStateBll>();
             Mapper.CreateMap<EventStateBll, EventStateDao>();
+
+            Mapper.CreateMap<EvenementSubcriberDao, EvenementSubscriberBll>();
+            Mapper.CreateMap<EvenementSubscriberBll, EvenementSubcriberDao>();
         }
     }
 }

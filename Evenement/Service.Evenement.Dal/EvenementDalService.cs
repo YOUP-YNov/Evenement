@@ -303,9 +303,9 @@ namespace Service.Evenement.Dal
         /// </summary>
         /// <param name="request"> Parametre de requete contenant le userId et l'evenementId</param>
         /// <returns>L'état de l'inscription du user par rapport a cette evenement</returns>
-        public IEnumerable<EvenementSubcriber> SubscribeEvenement ( EvenementDalRequest request )
+        public IEnumerable<EvenementSubcriberDao> SubscribeEvenement ( EvenementDalRequest request )
         {
-            if( request == null && request.EvenementId == null && request.UserId == null )
+            if ( request == null && request.EvenementId == 0 && request.UserId == 0 )
                 return null;
             var result = SubscriptionDalService.GetParticipationByUserAndEventId(request.EvenementId, request.UserId);
             return result.ToSubscriberDao();
@@ -316,9 +316,9 @@ namespace Service.Evenement.Dal
         /// </summary>
         /// <param name="request"> Parametre de requete contenant l'evenementId</param>
         /// <returns>La liste des personnes qui sont inscrites a l'evenement</returns>
-        public IEnumerable<EvenementSubcriber> GetSubscribersByEvent ( EvenementDalRequest request )
+        public IEnumerable<EvenementSubcriberDao> GetSubscribersByEvent ( EvenementDalRequest request )
         {
-            if ( request == null && request.EvenementId == null)
+            if ( request == null && request.EvenementId == 0 )
                 return null;
             var result = SubscriptionDalService.GetParticipantByEvent(request.EvenementId);
             return result.ToSubscriberDao();
@@ -329,9 +329,9 @@ namespace Service.Evenement.Dal
         /// </summary>
         /// <param name="request"> Parametre de requete contenant le userId</param>
         /// <returns>La liste des personnes qui sont inscrites a l'evenement</returns>
-        public IEnumerable<EvenementSubcriber> GetSubscriptionByUser ( EvenementDalRequest request )
+        public IEnumerable<EvenementSubcriberDao> GetSubscriptionByUser ( EvenementDalRequest request )
         {
-            if ( request == null && request.UserId == null )
+            if ( request == null && request.UserId == 0 )
                 return null;
             var result = SubscriptionDalService.GetEventParticipationByUserId(request.UserId);
             return result.ToSubscriberDao();

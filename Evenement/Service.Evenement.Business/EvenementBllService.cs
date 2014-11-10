@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Service.Evenement.Dal;
 using Service.Evenement.Dal.Dao.Request;
+using Service.Evenement.Business.BusinessModels;
 
 namespace Service.Evenement.Business
 {
@@ -202,6 +203,74 @@ namespace Service.Evenement.Business
             eventDao.DateModification = DateTime.Now;
 
             EvenementDalService.UpdateStateEvenement(eventDao);
+        }
+
+        /// <summary>
+        /// Permet de récupèrer la liste de toutes les inscriptions d'un utilisateur
+        /// </summary>
+        /// <param name="UserId">Id de l'utilisateur</param>
+        /// <returns>Liste des evenements souscrit par l'utilisateur</returns>
+        public IEnumerable<EvenementSubscriberBll> GetSubscriptionByUser ( int UserId )
+        {
+            IEnumerable<EvenementSubscriberBll> result = null;
+            EvenementDalRequest request = new EvenementDalRequest()
+            {
+                UserId = UserId
+            };
+
+            IEnumerable<EvenementSubcriberDao> daoResult = EvenementDalService.GetSubscriptionByUser(request);
+
+            if ( daoResult != null )
+            {
+                result = Mapper.Map<IEnumerable<EvenementSubcriberDao>, IEnumerable<EvenementSubscriberBll>>(daoResult);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Permet à un utilisateurs de s'incrire ou de se désincrire à un évènement
+        /// </summary>
+        /// <param name="UserId">Id de l'utilisateur</param>
+        /// <param name="EvenementId">Id de l'evenement</param>
+        /// <returns>L'inscription de l'utilisateur à l'évènement</returns>
+        public EvenementSubscriberBll SubscribeEvenement ( int UserId, int EvenementId )
+        {
+            EvenementDalRequest request = new EvenementDalRequest()
+            {
+                UserId = UserId,
+                EvenementId = EvenementId
+            };
+
+            var daoResult = EvenementDalService.SubscribeEvenement(request).FirstOrDefault();
+
+            if ( daoResult == null )
+                return null;
+
+            EvenementSubscriberBll result = Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(daoResult);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Permet de récupèrer la liste des personnes inscrites à un évènement
+        /// </summary>
+        /// <param name="EvenementId">Id de l'évènement</param>
+        /// <returns>Liste des inscriptions relative à cette évènement</returns>
+        public IEnumerable<EvenementSubscriberBll> GetSubscribersByEvent ( int EvenementId )
+        {
+            EvenementDalRequest request = new EvenementDalRequest()
+            {
+                EvenementId = EvenementId
+            };
+
+            var daoResult = EvenementDalService.GetSubscribersByEvent(request);
+
+            if ( daoResult == null )
+                return null;
+
+            IEnumerable<EvenementSubscriberBll> result = Mapper.Map<IEnumerable<EvenementSubcriberDao>, IEnumerable<EvenementSubscriberBll>>(daoResult);
+
+            return result;
         }
     }
 }
