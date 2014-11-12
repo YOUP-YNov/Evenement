@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Response\ResponseObject.cs" />
     <Compile Include="BusinessModels\Evenement.cs" />
     <Compile Include="BusinessModels\EvenementCategorie.cs" />
     <Compile Include="BusinessModels\EventImage.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="BusinessModels\EventState.cs" />
     <Compile Include="BusinessModels\EventStateEnum.cs" />
     <Compile Include="BusinessModels\Request\EvenementDalRequest.cs" />
+    <Compile Include="Response\ResponseState.cs" />
     <Compile Include="CategorieBllService.cs" />
     <Compile Include="EvenementBllService.cs" />
     <Compile Include="ImageBllService.cs" />

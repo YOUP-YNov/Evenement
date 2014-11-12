@@ -106,5 +106,25 @@
         /// Assigne ou récupère le statut d'un evenement
         /// </summary>
         public string Statut { get; set; }
+
+        public bool evenementUpdateIsValid()
+        {
+            if (this.Id != null && this.OrganisateurId != null && this.Categorie != null
+                && this.TitreEvenement != null && this.DescriptionEvenement != null && this.Price != null)
+            {
+                if (this.Categorie.Id != null)
+                {
+                    if (this.MaximumParticipant>this.MinimumParticipant)
+                    {
+                        if (this.DateEvenement>=this.DateFinInscription)
+                        {
+                            return true;
+                        }
+
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

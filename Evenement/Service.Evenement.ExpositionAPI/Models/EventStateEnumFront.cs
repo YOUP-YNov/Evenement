@@ -12,6 +12,7 @@ namespace Service.Evenement.ExpositionAPI.Models
         Annuler = 13,
         Signaler = 14,
         Reussi = 15,
-        Desactiver = 16
+        Desactiver = 16,
+        Unspecified
     }
 }
