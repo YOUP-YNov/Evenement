@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service.Evenement.Dal.Dao
 {
-    public class EvenementSubcriber
+    public class EvenementSubcriberDao
     {
         public long ParticipationId { get; set; }
 

@@ -71,14 +71,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Response\ResponseObject.cs" />
-    <Compile Include="BusinessModels\Evenement.cs" />
-    <Compile Include="BusinessModels\EvenementCategorie.cs" />
-    <Compile Include="BusinessModels\EventImage.cs" />
-    <Compile Include="BusinessModels\EventLocation.cs" />
-    <Compile Include="BusinessModels\EventState.cs" />
+    <Compile Include="BusinessModels\EvenementBll.cs" />
+    <Compile Include="BusinessModels\EvenementCategorieBll.cs" />
+    <Compile Include="BusinessModels\EvenementSubscriberBll.cs" />
+    <Compile Include="BusinessModels\EventImageBll.cs" />
+    <Compile Include="BusinessModels\EventLocationBll.cs" />
+    <Compile Include="BusinessModels\EventStateBll.cs" />
     <Compile Include="BusinessModels\EventStateEnum.cs" />
     <Compile Include="BusinessModels\Request\EvenementDalRequest.cs" />
+    <Compile Include="Response\ResponseObject.cs" />
     <Compile Include="Response\ResponseState.cs" />
     <Compile Include="CategorieBllService.cs" />
     <Compile Include="EvenementBllService.cs" />
