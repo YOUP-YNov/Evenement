@@ -136,7 +136,6 @@ namespace Service.Evenement.Dal
             return result.ToImageDao();
         }
 
-
         public IEnumerable<EvenementDao> GetLieuEvenementByVille ( EvenementDalRequest request )
         {
             if ( request == null )
@@ -181,9 +180,9 @@ namespace Service.Evenement.Dal
             return result.ToEvenementDao();
         }
 
-        public IEnumerable<EvenementDao> GetAllEvenement ()
+        public IEnumerable<EvenementDao> GetAllEvenement(DateTime? date_search, bool? premium, int max_result, long? categorie, long? max_id, string orderby = null, string text_search = null)
         {
-            var result = EventDalService.GetAllEvent();
+            var result = EventDalService.GetEvenements(max_id,categorie,date_search,text_search,premium,max_result);
 
             return result.ToEvenementDao();
         }
@@ -217,7 +216,6 @@ namespace Service.Evenement.Dal
         {
             if ( Event == null || Event.EventAdresse == null || Event.Categorie == null)
                 return null;
-            string t = Event.DateFinInscription.ToString("ddMMyyyyhhmmss");
             var result = EventDalService.UpdateEvenement(
                                 Event.Id, 
                                 Event.EventAdresse.Id,
@@ -231,7 +229,13 @@ namespace Service.Evenement.Dal
                                 Event.MaximumParticipant,
                                 Event.Price,
                                 Event.Premium,
-                                 DateTime.Now);
+                                DateTime.Now,
+                                Event.EventAdresse.Ville.ToString(),
+                                Event.EventAdresse.CodePostale.ToString(),
+                                Event.EventAdresse.Adresse.ToString(),
+                                Event.EventAdresse.Longitude,
+                                Event.EventAdresse.Latitude,
+                                Event.EventAdresse.Pays.ToString());
 
             return result.ToEvenementDao();
         }
@@ -251,14 +255,13 @@ namespace Service.Evenement.Dal
             if ( Event == null || request == null || Event.EventAdresse == null || Event.Categorie == null)
                 return null;
 
-            var result = EventDalService.CreateEvent(
+            var result = EventDalService.CreateEvenement(
                                 request.UserId,
-                                Event.EventAdresse.Id,
                                 Event.Categorie.Id,
-                                Convert.ToInt32(Event.DateEvenement.ToString("ddMMYYhhmmss")),
-                                Convert.ToInt32(DateTime.Now.ToString("ddMMYYhhmmss")),
-                                Convert.ToInt32(Event.DateModification.ToString("ddMMYYhhmmss")),
-                                Convert.ToInt32(Event.DateFinInscription.ToString("ddMMYYhhmmss")),
+                                Event.DateEvenement,
+                                DateTime.Now,
+                                null,
+                                Event.DateFinInscription,
                                 Event.TitreEvenement.ToString(),
                                 Event.DescriptionEvenement.ToString(),
                                 Event.MinimumParticipant,
@@ -266,8 +269,14 @@ namespace Service.Evenement.Dal
                                 Event.Statut,
                                 Event.Price,
                                 Event.Premium,
-                                Convert.ToInt32(Event.DateMiseEnAvant.ToString("ddMMYYhhmmss")),
-                                1 // A voir pour changer
+                                Event.DateMiseEnAvant,
+                                1, // A voir pour changer
+                                Event.EventAdresse.Ville.ToString(),
+                                Event.EventAdresse.CodePostale.ToString(),
+                                Event.EventAdresse.Adresse.ToString(),
+                                Event.EventAdresse.Longitude,
+                                Event.EventAdresse.Latitude,
+                                Event.EventAdresse.Pays.ToString()
                                 );
 
             return result.ToEvenementDao();

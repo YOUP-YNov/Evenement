@@ -47,5 +47,14 @@ namespace Service.Evenement.Business
         /// Assigne ou récupère le nom choisi par l'utilisateur
         /// </summary>
         public StringBuilder Nom { get; set; }
+
+        public bool IsValid()
+        {
+            if (this.Adresse != null && this.Ville != null && this.Pays != null )
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

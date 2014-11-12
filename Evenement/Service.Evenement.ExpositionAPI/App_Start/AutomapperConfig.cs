@@ -2,6 +2,7 @@
 using Service.Evenement.Business;
 using Service.Evenement.ExpositionAPI.Controllers;
 using Service.Evenement.ExpositionAPI.Models;
+using Service.Evenement.ExpositionAPI.Models.ModelsUpdate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,12 +50,26 @@ namespace Service.Evenement.ExpositionAPI.App_Start
             Mapper.CreateMap<EventLocationBll, EventLocationFront>();
             Mapper.CreateMap<EventLocationFront, EventLocationBll>();
 
+            Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
+            Mapper.CreateMap<EvenementCategorieFront,EvenementCategorieBll>();
+
+            Mapper.CreateMap<CategorieUpdate, EvenementCategorieFront>();
+            Mapper.CreateMap<EvenementCategorieFront, CategorieUpdate>();
+
+            Mapper.CreateMap<CategorieUpdate, EvenementCategorieBll>();
+            Mapper.CreateMap<EvenementCategorieBll, CategorieUpdate>();
+
+            Mapper.CreateMap<EventImageFront, EventImageBll>();
+            Mapper.CreateMap<EventImageBll, EventImageFront>();
             //création de map pour les string builder
             Mapper.CreateMap<string, StringBuilder>().ConvertUsing(s =>
             {
                 StringBuilder sb = new StringBuilder(s);
                 return sb;
             });
+
+
+           
         }
     }
 }

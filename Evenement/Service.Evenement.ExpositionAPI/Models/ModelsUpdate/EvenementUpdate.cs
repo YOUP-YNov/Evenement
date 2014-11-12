@@ -15,14 +15,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         public long Id { get; set; }
 
         /// <summary>
-        /// Assigne ou récupère l'id de l'organisateur de l'évenement.
-        /// </summary>
-        public long OrganisateurId { get; set; }
-
-        /// <summary>
         /// Assigne ou récupère la liste des HashTag associé à l'évenement
         /// </summary>
-        public IEnumerable<string> HashTag { get; set; }
+        //public IEnumerable<string> HashTag { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la catégorie de l'évenement

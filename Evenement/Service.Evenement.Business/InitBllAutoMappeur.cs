@@ -25,6 +25,19 @@ namespace Service.Evenement.Business
             Mapper.CreateMap<EventStateDao, EventStateBll>();
             Mapper.CreateMap<EventStateBll, EventStateDao>();
 
+            Mapper.CreateMap<EventImageDao, EventImageBll>();
+            Mapper.CreateMap<EventImageBll, EventImageDao>();
+
+           /* Mapper.CreateMap<EventStateEnumFront, MyClass>().ConvertUsing(c =>
+            {
+                MyAttribute attribute = c.GetCustomAttribute<MyEnum, MyAttribute>();
+                return new MyClass()
+                {
+                    Id = c.ToString(),
+                    Name = attribute == null ? c.ToString() : attribute.DisplayName
+                };
+            });*/
+
             Mapper.CreateMap<EvenementSubcriberDao, EvenementSubscriberBll>();
             Mapper.CreateMap<EvenementSubscriberBll, EvenementSubcriberDao>();
         }

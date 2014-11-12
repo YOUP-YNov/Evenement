@@ -8,6 +8,7 @@ using System.Web.Http;
 using Service.Evenement.Business;
 using AutoMapper;
 using System.Web.Http.Description;
+using Service.Evenement.Business.Response;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
@@ -37,17 +38,15 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [ResponseType(typeof(IEnumerable<EvenementCategorieFront>))]
         public HttpResponseMessage Get()
         {
-            IEnumerable<EvenementCategorieBll> result = CategorieBllService.GetCategories(); IEnumerable<EvenementCategorieFront> lst = (result == null || result.Count() == 0) ? null : Mapper.Map<IEnumerable<EvenementCategorieBll>, IEnumerable<EvenementCategorieFront>>(result);
-            HttpResponseMessage response;
-            if (lst != null)
+            ResponseObject result = CategorieBllService.GetCategories();
+            if (result.Value is IEnumerable<EvenementCategorieBll>)
             {
-                response = Request.CreateResponse(HttpStatusCode.OK, lst);
+                result.Value = Mapper.Map<IEnumerable<EvenementCategorieBll>, IEnumerable<EvenementCategorieFront>>((IEnumerable<EvenementCategorieBll>)result.Value);
             }
-            else
-            {
-                response = Request.CreateErrorResponse(HttpStatusCode.NoContent, "");
-            }
-            return response;
+
+            return GenerateResponseMessage.initResponseMessage(result);
+
+           
         }
 
         /// <summary>
@@ -60,11 +59,14 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [ResponseType(typeof(EvenementCategorieFront))]
         public HttpResponseMessage Get(long id)
         {
-            EvenementCategorieBll result = CategorieBllService.GetCategorie(id);
 
-            EvenementCategorieFront categ = (result == null ) ? null :  Mapper.Map<EvenementCategorieBll, EvenementCategorieFront>(result);
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, categ);
-            return response;
+            ResponseObject result = CategorieBllService.GetCategorie(id);
+            if (result.Value is IEnumerable<EvenementCategorieBll>)
+            {
+                result.Value = Mapper.Map<EvenementCategorieBll, EvenementCategorieFront>((EvenementCategorieBll)result.Value);
+            }
+
+            return GenerateResponseMessage.initResponseMessage(result);
         }
 
         /// <summary>

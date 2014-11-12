@@ -8,6 +8,7 @@ using Service.Evenement.Dal.Dao.Request;
 using AutoMapper;
 using Service.Evenement.Dal.Dao;
 using Service.Evenement.Dal.Interface;
+using Service.Evenement.Business.Response;
 
 namespace Service.Evenement.Business
 {
@@ -29,20 +30,38 @@ namespace Service.Evenement.Business
             }
         }
 
-        public IEnumerable<EvenementCategorieBll> GetCategories()
+        public ResponseObject GetCategories()
         {
             IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest() { });
-            
-            return (result.Count() == 0 || result == null) ? null : Mapper.Map<IEnumerable<EvenementCategorieDao>, IEnumerable<EvenementCategorieBll>>(result);
+            ResponseObject response = new ResponseObject();
+            if (result == null)
+            {
+                response.State = ResponseState.NoContent;
+            }
+            else
+            {
+                response.State = ResponseState.Ok;
+                response.Value =  Mapper.Map<IEnumerable<EvenementCategorieDao>, IEnumerable<EvenementCategorieBll>>(result);
+            }
+            return response;
         }
 
-        public EvenementCategorieBll GetCategorie(long id)
+        public ResponseObject GetCategorie(long id)
         {
             Dal.Dao.EvenementCategorieDao categ = new EvenementCategorieDao();
             categ.Id = id;
             IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest() { Categorie = categ });
-            
-            return (result.Count() == 0 || result == null) ? null : Mapper.Map<EvenementCategorieDao, EvenementCategorieBll>(result.First());
+            ResponseObject response = new ResponseObject();
+            if (result == null)
+            {
+                response.State = ResponseState.NoContent;
+            }
+            else
+            {
+                response.State = ResponseState.Ok;
+                response.Value = Mapper.Map<EvenementCategorieDao, EvenementCategorieBll>(result.First());
+            }
+            return response;
         }
 
         public void DeleteCategorie(long id)

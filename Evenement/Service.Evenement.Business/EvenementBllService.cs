@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Service.Evenement.Dal;
 using Service.Evenement.Dal.Dao.Request;
+using Service.Evenement.Business.Response;
 using Service.Evenement.Business.BusinessModels;
 
 namespace Service.Evenement.Business
@@ -34,19 +35,88 @@ namespace Service.Evenement.Business
             
         }
 
-        public void PutEvenement(EvenementBll evenementBll)
+        public ResponseObject CreateEvenement(EvenementBll evenementBll)
         {
+            ResponseObject response = new ResponseObject();
+            if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
+            {
             EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
-
-            EvenementDalService.UpdateEvenement(daoEvent);
+                IEnumerable<EvenementDao> result = EvenementDalService.CreateEvenement(new EvenementDalRequest(), daoEvent);
+                if (result.Count() > 0)
+                {
+                        response.State = ResponseState.Created;
+                }
+                else
+                {
+                        response.State = ResponseState.NotModified;
+                }
+            }
+            else
+            {
+                response.State = ResponseState.BadRequest;
+            }
+            return response;
         }
 
-        public IEnumerable<EvenementBll> GetEvenements(DateTime? date_search, int max_result, long categorie, string text_search, int max_id, string orderby, bool? premium)
+
+        public ResponseObject PutEvenement(EvenementBll evenementBll)
         {
 
-            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
+            EvenementBll evenement = (EvenementBll)(this.GetEvenementById(evenementBll.Id)).Value;
+            ResponseObject response = new ResponseObject();
+            if (evenement != null)
+            {
+                if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
+                {
+                    EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
+                    IEnumerable<EvenementDao> result = EvenementDalService.UpdateEvenement(daoEvent);
+                    if (result.Count() > 0)
+                    {
+                        response.State = ResponseState.Ok;
+        }
+                    else
+                    {
+                        response.State = ResponseState.NotModified;
+                    }
+                }
+                else
+                {
+                    response.State = ResponseState.BadRequest;
+                }
+            }
+            else
+            {
+                response.State = ResponseState.NotFound;
+            }
+            return response;
+        }
+
+        public ResponseObject GetEvenements(DateTime? date_search, int max_result, long? categorie, long? max_id, bool? premium, string text_search = null, string orderby = null)
+        {
+
+            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement(date_search,premium, max_result, categorie, max_id,text_search ,orderby);
+            IEnumerable<EvenementBll> bllEvent = Mapper.Map < IEnumerable<EvenementDao>, IEnumerable<EvenementBll>>(tmp);
+            ResponseObject response = new ResponseObject();
+            if (bllEvent != null)
+            {
+                if(bllEvent.Count()>0)
+                {
+                    response.State = ResponseState.Ok;
+                    response.Value = bllEvent;
+                }
+                else
+                {
+                    response.State = ResponseState.NoContent;
+                }
+            }
+            else
+            {
+                response.State = ResponseState.NotFound;
+            }
             
-            if (date_search != null)
+
+
+            /*if (date_search != null)
                 tmp.Where(e => e.DateEvenement == date_search  && e.Id >= (long)max_id);
 
             if (categorie != -1)
@@ -78,21 +148,38 @@ namespace Service.Evenement.Business
                 Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
                 Mapper.CreateMap<EvenementDao, EvenementBll>();
                 ret.Add(Mapper.Map<EvenementDao, EvenementBll>(item));
-            }
+            }*/
 
-            return ret;
+            return response;
         }
         
 
-        public EvenementBll GetEvenementById(long id)
+        public ResponseObject GetEvenementById(long id)
         {
-           
+            ResponseObject response = new ResponseObject();
+            if(id == null)
+            {
+                response.State = ResponseState.BadRequest;
+            }
+            else
+        {
             EvenementDalRequest request = new EvenementDalRequest();
             request.EvenementId = id;
-            var evt = _evenementDalService.getEvenementId(request);
+                var evt = EvenementDalService.getEvenementId(request);
             EvenementBll evtBLL = Mapper.Map<EvenementDao, EvenementBll>(evt);
+                if (evtBLL != null)
+                {
+                    response.State = ResponseState.Ok;
+                    response.Value = evtBLL;
+                }
+                else
+                {
+                    response.State = ResponseState.NoContent;
+                }
+            }
 
-            return evtBLL;
+
+            return response;
         }
 
         /// <summary>
@@ -100,29 +187,56 @@ namespace Service.Evenement.Business
         /// </summary>
         /// <param name="id_profil">id du profil</param>
         /// <returns>liste d'événements</returns>
-        public IEnumerable<EvenementBll> GetByProfil(int id_profil)
+        public ResponseObject GetByProfil(long id_profil)
         {
             // pour l'instant les event dont le profil est organisateur (api profil pour gerer les event ou le profil est inscrit)
-            IEnumerable<EvenementDao> daoEventList = _evenementDalService.GetEvenementByProfil((long)id_profil);
-            IEnumerable<EvenementBll> bllEventList = null;
+             ResponseObject response = new ResponseObject();
+             if (id_profil == null)
+             {
+                 response.State = ResponseState.BadRequest;
+             }
+             else
+             {
+                 IEnumerable<EvenementDao> daoEventList = EvenementDalService.GetEvenementByProfil(id_profil);
+                 if (daoEventList != null)
+                 {
+                     if (daoEventList.Count() > 0)
+                     {
+                         response.State = ResponseState.Ok;
+                         response.Value = daoEventList;
+                     }
+                     else
+                     {
+                         response.State = ResponseState.NoContent;
+                     }
+                 }
+                 else
+                 {
+
+                     response.State = ResponseState.NotFound;
+                 }
+             }
+
+             return response;
+            /*IEnumerable<EvenementBll> bllEventList = null;
             foreach (EvenementDao e in daoEventList)
             {
                 bllEventList.ToList().Add(Mapper.Map<EvenementDao, EvenementBll>(e));
             }           
-            return bllEventList;
+            return bllEventList;*/
         }
 
         /// <summary>
         /// Retourne la liste des événements signalés
         /// </summary>
         /// <returns>Liste d'événements</returns>
-        public IEnumerable<EvenementBll> GetReportedEvents()
+        public ResponseObject GetReportedEvents()
         {
-            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
-            IEnumerable<EvenementBll> events = from e in tmp
-                                                       where e.EtatEvenement.Nom == Dal.Dao.EventStateEnum.Signaler
-                                                       select Mapper.Map<EvenementDao, EvenementBll>(e);
-            return events;
+            //IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
+            //IEnumerable<EvenementBll> events = from e in tmp
+                                                      // where e.EtatEvenement.Nom == Dal.Dao.EventStateEnum.Signaler
+                                                       //select Mapper.Map<EvenementDao, EvenementBll>(e);
+            return null;
         }
 
         /// <summary>
@@ -132,7 +246,8 @@ namespace Service.Evenement.Business
         /// <returns>état de l'événement</returns>
         public EventStateBll GetEventState(int id)
         {
-            return GetEvenementById(id).EtatEvenement;
+            //return GetEvenementById(id).EtatEvenement;
+            return null;
         }
         /// <summary>
         /// Permet de modifier l'état d'un événement 

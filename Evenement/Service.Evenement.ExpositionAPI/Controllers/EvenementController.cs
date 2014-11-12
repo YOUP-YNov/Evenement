@@ -10,6 +10,8 @@ using Service.Evenement.Business;
 using AutoMapper;
 using System.Text;
 using Service.Evenement.ExpositionAPI.Models.ModelsUpdate;
+using Service.Evenement.Business.Response;
+using System.Web.Http.Description;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
@@ -44,15 +46,18 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="orderby">le nom du trie (date, categorie, disponnible)</param>
         /// <returns>la liste des événements</returns>
         [HttpGet]
-        public IEnumerable<EvenementTimelineFront> Get([FromBody]Search search,int max_result = 10, int max_id = -1)
+        [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
+        public HttpResponseMessage Get(DateTime? date_search = null, long? id_Categorie = null,  bool? prenium = null , int max_result = 10,[FromUri] long? max_id = null,string text_search = null, string orderby = null)
         {
-            if (search != null)
-            {
-                search = new Search();
-            }
-            
 
-            IEnumerable<Business.EvenementBll> list = EvenementBllService.GetEvenements(search.Date_search, max_result, search.Id_Categorie, search.Text, max_id, search.OrderBy, search.Prenium);
+            ResponseObject result = EvenementBllService.GetEvenements(date_search, max_result, id_Categorie, max_id, prenium, text_search, orderby);
+            if (result.Value != null)
+            {
+                result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementTimelineFront>>((IEnumerable<EvenementBll>)result.Value);
+            }
+
+             return GenerateResponseMessage.initResponseMessage(result);
+            /* IEnumerable<Business.EvenementBll> list = 
             List<EvenementTimelineFront> ret = new List<EvenementTimelineFront>();
 
             foreach (var item in list)
@@ -60,7 +65,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
                 ret.Add(Mapper.Map<Business.EvenementBll, EvenementTimelineFront>(item));
             }
 
-            return ret;
+            return ret;*/
         }
 
         /// <summary>
@@ -69,16 +74,24 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id_profil">id du profil</param>
         /// <returns>liste d'événements</returns>
         [HttpGet]
-        [Route("Evenements/profil")]
-        public IEnumerable<EvenementTimelineFront> GetByProfil(int id_profil)
+        [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
+        [Route("api/Profil/{id_profil}/Evenements")]
+        public HttpResponseMessage GetByProfil(int id_profil)
         {
-            IEnumerable<Business.EvenementBll> bllEventList = EvenementBllService.GetByProfil(id_profil);
+            ResponseObject result = EvenementBllService.GetByProfil(id_profil);
+            if (result.Value != null)
+            {
+                result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementTimelineFront>>((IEnumerable<EvenementBll>)result.Value);
+            }
+
+            return GenerateResponseMessage.initResponseMessage(result);
+           /* IEnumerable<EvenementBll> bllEventList = EvenementBllService.GetByProfil(id_profil);
             IEnumerable<EvenementTimelineFront> timelineFrontEventList = null;
-            foreach(var e in bllEventList)
+            foreach (var e in bllEventList)
             {
                 timelineFrontEventList.ToList().Add(Mapper.Map<Business.EvenementBll, EvenementTimelineFront>(e));
             }
-            return timelineFrontEventList;
+            return timelineFrontEventList;*/
         }
 
         /// <summary>
@@ -87,11 +100,21 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>Liste d'événements</returns>
         /// 
         [Route("api/Evenements/Reported")]
-        public IEnumerable<EvenementFront> GetReportedEvents()
+        [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
+        public HttpResponseMessage GetReportedEvents()
         {
-            IEnumerable<EvenementBll> tmp = EvenementBllService.GetReportedEvents();
+            ResponseObject result = EvenementBllService.GetReportedEvents();
+            if (result.Value != null)
+            {
+                result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementTimelineFront>>((IEnumerable<EvenementBll>)result.Value);
+            }
 
-            
+            return GenerateResponseMessage.initResponseMessage(result);
+
+
+           /* IEnumerable<EvenementBll> tmp = EvenementBllService.GetReportedEvents();
+
+
             List<EvenementFront> events = new List<EvenementFront>();
 
             foreach (EvenementBll e in tmp)
@@ -99,7 +122,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
                 events.Add(Mapper.Map<EvenementBll, EvenementFront>(e));
             }
 
-            return events;
+            return events;*/
         }
 
         /// <summary>
@@ -107,10 +130,16 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">l'id de l'événement</param>
         /// <returns>un événement</returns>
-        public Service.Evenement.ExpositionAPI.Models.EvenementFront GetEvenement(int id)
+        [HttpGet]
+        [ResponseType(typeof(EvenementFront))]
+        public HttpResponseMessage GetEvenement(long id)
         {
-            throw new NotImplementedException();
-            return null;
+            ResponseObject result =  EvenementBllService.GetEvenementById(id);
+            if (result.Value!= null)
+            {
+                result.Value = Mapper.Map<EvenementBll, EvenementFront>((EvenementBll)result.Value);
+            }
+            return GenerateResponseMessage.initResponseMessage(result);
         }
 
         /// <summary>
@@ -119,17 +148,18 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id">id de l'évènement à modifier</param>
         /// <param name="evenement">évènement</param>
         [HttpPut]
-        public void Put(int id, [FromBody]EvenementUpdate evenement)
+        public HttpResponseMessage Put(long id_evenement, [FromBody]EvenementUpdate evenement)
         {
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
-            EvenementBllService.PutEvenement(bllEvent);
+            ResponseObject response = EvenementBllService.PutEvenement(bllEvent);
+            return GenerateResponseMessage.initResponseMessage(response);
         }
         /// <summary>
         /// Permet l'inscription et la desincription
         /// </summary>
         /// <param name="idEvenement">id de l'evenement</param>
         /// <param name="idProfil">id du profil</param>
-        public void PostInscriptionDeinscription(int idEvenement, int idProfil)
+        public void PostInscriptionDeinscription(long idEvenement, long idProfil)
         {
             throw new NotImplementedException();
         }
@@ -142,25 +172,29 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id_profil">id du profil</param>
         [HttpDelete]
         [Route("Evenements/{id_evenement}/Desactiver")]
-        public void DesactivateEvenement([FromUri]int id_evenement, [FromBody] int id_profil)
+        public HttpResponseMessage DesactivateEvenement(long id_evenement, [FromBody] long id_profil)
         {
-            var evts = EvenementBllService.GetByProfil(id_profil);
+            /*var evts = EvenementBllService.GetByProfil(id_profil);
             var existsEvt = evts.FirstOrDefault(evt => evt.Id == id_evenement);
             if (existsEvt != null)
             {
                 EvenementBllService.DeactivateEvent(id_evenement);
-            }
+            }*/
+            return null;
         }
 
-       /// <summary>
-       /// fonction de création de l'évènement
-       /// </summary>
-       /// <param name="evt">l'évènement à creer</param>
-        public void CreateEvenement([FromBody] EvenementCreate evt)
+        /// <summary>
+        /// fonction de création de l'évènement
+        /// </summary>
+        /// <param name="evt">l'évènement à creer</param>
+        [HttpPost]
+        public HttpResponseMessage Create([FromBody] EvenementCreate evt)
         {
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evt.evenement);
 
-            EvenementBllService.PutEvenement(bllEvent);
+            ResponseObject response = EvenementBllService.CreateEvenement(bllEvent);
+            return GenerateResponseMessage.initResponseMessage(response);
+
 
             InviteFriends invitations = new InviteFriends();
             invitations.idEvent = bllEvent.Id;
@@ -186,7 +220,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             //GETINVITEVENT(int,int,int)
             return null;
         }
-            
+
         /// <summary>
         /// permet de modifier l'etat d'un evenement (Admin)
         /// </summary>
@@ -195,7 +229,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id_etat">id de l'etat</param>
         public void PutEvenemenntEtat(int id_profil, int id_evenement, int id_etat)
         {
-           throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         /// <summary>

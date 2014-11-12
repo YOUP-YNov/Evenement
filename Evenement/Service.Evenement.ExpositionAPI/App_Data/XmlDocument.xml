@@ -543,7 +543,7 @@
             controller d'évènement.
             </summary>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Get(Service.Evenement.ExpositionAPI.Models.Search,System.Int32,System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Get(System.Nullable{System.DateTime},System.Nullable{System.Int64},System.Nullable{System.Boolean},System.Int32,System.Nullable{System.Int64},System.String,System.String)">
             <summary>
             retourne la liste des evenements
             </summary>
@@ -569,28 +569,28 @@
             <returns>Liste d'événements</returns>
             
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenement(System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenement(System.Int64)">
             <summary>
             retourne le détail d'un événement
             </summary>
             <param name="id">l'id de l'événement</param>
             <returns>un événement</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Put(System.Int32,Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Put(System.Int64,Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate)">
             <summary>
             modification de l'évènement
             </summary>
             <param name="id">id de l'évènement à modifier</param>
             <param name="evenement">évènement</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostInscriptionDeinscription(System.Int32,System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostInscriptionDeinscription(System.Int64,System.Int64)">
             <summary>
             Permet l'inscription et la desincription
             </summary>
             <param name="idEvenement">id de l'evenement</param>
             <param name="idProfil">id du profil</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DesactivateEvenement(System.Int32,System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DesactivateEvenement(System.Int64,System.Int64)">
             <summary>
             desactivation de l'evenement 
             c'est une mise en archive. L'évenement n'est plus consultable. 
@@ -598,7 +598,7 @@
             <param name="id">id de l'evenement</param>
             <param name="id_profil">id du profil</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.CreateEvenement(Service.Evenement.ExpositionAPI.Models.EvenementCreate)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Create(Service.Evenement.ExpositionAPI.Models.EvenementCreate)">
             <summary>
             fonction de création de l'évènement
             </summary>
@@ -657,16 +657,6 @@
         <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.Id">
             <summary>
             Assigne ou récupère l'id de l'évenement.
-            </summary>
-        </member>
-        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.OrganisateurId">
-            <summary>
-            Assigne ou récupère l'id de l'organisateur de l'évenement.
-            </summary>
-        </member>
-        <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.HashTag">
-            <summary>
-            Assigne ou récupère la liste des HashTag associé à l'évenement
             </summary>
         </member>
         <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.Categorie">
