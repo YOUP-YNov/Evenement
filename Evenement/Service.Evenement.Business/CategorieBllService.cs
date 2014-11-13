@@ -48,7 +48,7 @@ namespace Service.Evenement.Business
 
         public void DeleteCategorie(long id)
         {
-            ((EvenementDalService)_evenementDalService).CategorieDalService.DeleteCategorie(id);
+            _evenementDalService.DeleteCategorie(id);
         }
 
         public void UpdateCategorie(EvenementCategorieBll categoriebll)

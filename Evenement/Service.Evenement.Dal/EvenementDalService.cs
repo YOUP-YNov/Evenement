@@ -339,6 +339,15 @@ namespace Service.Evenement.Dal
             return result.ToSubscriberDao();
         }
 
+        /// <summary>
+        /// Supprime une catégorie
+        /// </summary>
+
+        public void DeleteCategorie(long id)
+        {
+            CategorieDalService.DeleteCategorie(id);
+
+        }
         #endregion
         
         #region IDisposable

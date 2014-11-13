@@ -119,9 +119,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             });
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
 
-
-
-
             EvenementBllService.PutEvenement(bllEvent);
 
         }
