@@ -8,6 +8,7 @@ using Service.Evenement.Dal.Dao.Request;
 using AutoMapper;
 using Service.Evenement.Dal.Dao;
 using Service.Evenement.Dal.Interface;
+using Service.Evenement.Business.Response;
 
 namespace Service.Evenement.Business
 {
@@ -19,7 +20,7 @@ namespace Service.Evenement.Business
         {
             get
             {
-                if ( _evenementDalService == null )
+                if (_evenementDalService == null)
                     _evenementDalService = new EvenementDalService();
                 return _evenementDalService;
             }
@@ -29,34 +30,53 @@ namespace Service.Evenement.Business
             }
         }
 
-        public IEnumerable<EvenementCategorieBll> GetCategories()
+        public ResponseObject GetCategories()
         {
-            IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest() {});
-            Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
-            return (result.Count() == 0 || result == null) ? null : Mapper.Map<IEnumerable<EvenementCategorieDao>, IEnumerable<EvenementCategorieBll>>(result);
+            IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest() { });
+            ResponseObject response = new ResponseObject();
+            if (result == null)
+            {
+                response.State = ResponseState.NoContent;
+            }
+            else
+            {
+                response.State = ResponseState.Ok;
+                response.Value =  Mapper.Map<IEnumerable<EvenementCategorieDao>, IEnumerable<EvenementCategorieBll>>(result);
+            }
+            return response;
         }
 
-        public EvenementCategorieBll GetCategorie(long id)
+        public ResponseObject GetCategorie(long id)
         {
-            Dal.Dao.EvenementCategorieDao categ = new  EvenementCategorieDao();
+            Dal.Dao.EvenementCategorieDao categ = new EvenementCategorieDao();
             categ.Id = id;
-            IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest(){ Categorie = categ});
-            Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
-            return (result.Count() == 0 || result == null) ? null :  Mapper.Map<EvenementCategorieDao, EvenementCategorieBll>(result.First());
-
+            IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest() { Categorie = categ });
+            ResponseObject response = new ResponseObject();
+            if (result == null)
+            {
+                response.State = ResponseState.NoContent;
+            }
+            else
+            {
+                response.State = ResponseState.Ok;
+                response.Value = Mapper.Map<EvenementCategorieDao, EvenementCategorieBll>(result.First());
+            }
+            return response;
         }
 
         public void DeleteCategorie(long id)
         {
-            _evenementDalService.DeleteCategorie(id);
+            ((EvenementDalService)_evenementDalService).CategorieDalService.DeleteCategorie(id);
         }
 
         public void UpdateCategorie(EvenementCategorieBll categoriebll)
         {
-             Mapper.CreateMap<EvenementCategorieBll,EvenementCategorieDao>();
              EvenementCategorieDao daoEventCategorie = Mapper.Map<EvenementCategorieBll, EvenementCategorieDao>(categoriebll);
 
-             _evenementDalService.CategorieDalService.UpdateCategorie(daoEventCategorie.Id,daoEventCategorie.Libelle.ToString());
+            // TODO : corriger cette ligne :
+            //_evenementDalService.CategorieDalService.UpdateCategorie(daoEventCategorie.Id,daoEventCategorie.Libelle.ToString());
+
+            throw new NotImplementedException();
         }
        
     }

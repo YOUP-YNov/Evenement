@@ -242,16 +242,16 @@ namespace Service.Evenement.Dal.Mappeur
 
         #region SubcriptionUser
 
-        internal static IEnumerable<EvenementSubcriber> ToSubscriberDao ( this SubcriptionUsersTable SubcribersTable )
+        internal static IEnumerable<EvenementSubcriberDao> ToSubscriberDao ( this SubcriptionUsersTable SubcribersTable )
         {
             if ( SubcribersTable == null && SubcribersTable.Rows == null )
                 return null;
 
-            List<EvenementSubcriber> result = new List<EvenementSubcriber>();
+            List<EvenementSubcriberDao> result = new List<EvenementSubcriberDao>();
 
             foreach ( SubcriptionUsersRow EventRow in SubcribersTable )
             {
-                EvenementSubcriber daoResult = EventRow.ToSubscriberDao();
+                EvenementSubcriberDao daoResult = EventRow.ToSubscriberDao();
                 if ( daoResult != null )
                     result.Add(daoResult);
             }
@@ -259,12 +259,12 @@ namespace Service.Evenement.Dal.Mappeur
             return result;
         }
 
-        internal static EvenementSubcriber ToSubscriberDao ( this SubcriptionUsersRow SubcriptionUser )
+        internal static EvenementSubcriberDao ToSubscriberDao ( this SubcriptionUsersRow SubcriptionUser )
         {
             if ( SubcriptionUser == null )
                 return null;
 
-            EvenementSubcriber result = new EvenementSubcriber();
+            EvenementSubcriberDao result = new EvenementSubcriberDao();
 
             result.DateAnnulation = SubcriptionUser.IsDateAnnulationNull() ? new DateTime() : SubcriptionUser.DateAnnulation;
             result.DateInscription = SubcriptionUser.DateAnnulation;

@@ -1,4 +1,5 @@
 ﻿using Service.Evenement.ExpositionAPI.Models;
+using Service.Evenement.ExpositionAPI.Models.ModelsUpdate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +15,14 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         public long Id { get; set; }
 
         /// <summary>
-        /// Assigne ou récupère l'id de l'organisateur de l'évenement.
-        /// </summary>
-        public long OrganisateurId { get; set; }
-
-        /// <summary>
         /// Assigne ou récupère la liste des HashTag associé à l'évenement
         /// </summary>
-        public IEnumerable<string> HashTag { get; set; }
+        //public IEnumerable<string> HashTag { get; set; }
 
+        /// <summary>
+        /// Assigne ou récupère la catégorie de l'évenement
+        /// </summary>
+        public CategorieUpdate Categorie { get; set; }
 
         /// <summary>
         /// Assigne ou récupère l'adresse de l'évenement
@@ -69,6 +69,11 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// Assigne ou récupère la visibilité de l'évènement
         /// </summary>
         public bool Public { get; set; }
+
+        /// <summary>
+        /// Assigne ou récupère la Date à laquelle l'évenement a lieu.
+        /// </summary>
+        public DateTime DateEvenement { get; set; }
 
     }
 }

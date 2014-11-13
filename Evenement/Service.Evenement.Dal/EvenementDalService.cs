@@ -136,7 +136,6 @@ namespace Service.Evenement.Dal
             return result.ToImageDao();
         }
 
-
         public IEnumerable<EvenementDao> GetLieuEvenementByVille ( EvenementDalRequest request )
         {
             if ( request == null )
@@ -169,21 +168,21 @@ namespace Service.Evenement.Dal
             if( request == null || location == null )
                 return null;
             // Tricks a enlever dans la version finale ( Boxing du 64 vers 32 ) Drop & Create PROC + Refresh Dataset
-            var result = LieuEventDalService.CreateLieuEvenement(
+            var result = LieuEventDalService.CreateLieu(
                                 location.Ville.ToString(),
-                                Convert.ToInt32(location.CodePostale),
+                                location.CodePostale.ToString(),
                                 location.Adresse.ToString(),
                                 location.Longitude,
                                 location.Latitude,
                                 location.Pays.ToString(),
-                                location.Nom.ToString());
+                                "tt");
 
             return result.ToEvenementDao();
         }
 
-        public IEnumerable<EvenementDao> GetAllEvenement ()
+        public IEnumerable<EvenementDao> GetAllEvenement(DateTime? date_search, bool? premium, int max_result, long? categorie, long? max_id, string orderby = null, string text_search = null)
         {
-            var result = EventDalService.GetAllEvent();
+            var result = EventDalService.GetEvenements(max_id,categorie,date_search,text_search,premium,max_result);
 
             return result.ToEvenementDao();
         }
@@ -215,25 +214,28 @@ namespace Service.Evenement.Dal
 
         public IEnumerable<EvenementDao> UpdateEvenement ( EvenementDao Event )
         {
-            if ( Event == null || Event.EventAdresse == null || Event.Categorie == null || Event.EtatEvenement == null )
+            if ( Event == null || Event.EventAdresse == null || Event.Categorie == null)
                 return null;
-
             var result = EventDalService.UpdateEvenement(
-                                Event.Id,
+                                Event.Id, 
                                 Event.EventAdresse.Id,
                                 Event.Categorie.Id,
-                                Convert.ToInt32(Event.DateEvenement.ToString("ddMMYYhhmmss")),
-                                Convert.ToInt32(Event.DateModification.ToString("ddMMYYhhmmss")),
-                                Convert.ToInt32(Event.DateFinInscription.ToString("ddMMYYhhmmss")),
+                                Event.DateEvenement,
+                                DateTime.Now,
+                                Event.DateFinInscription,
                                 Event.TitreEvenement.ToString(),
                                 Event.DescriptionEvenement.ToString(),
                                 Event.MinimumParticipant,
                                 Event.MaximumParticipant,
-                                Event.Statut,
                                 Event.Price,
                                 Event.Premium,
-                                Convert.ToInt32(Event.DateMiseEnAvant.ToString("ddMMYYhhmmss")),
-                                Event.EtatEvenement.Id);
+                                DateTime.Now,
+                                Event.EventAdresse.Ville.ToString(),
+                                Event.EventAdresse.CodePostale.ToString(),
+                                Event.EventAdresse.Adresse.ToString(),
+                                Event.EventAdresse.Longitude,
+                                Event.EventAdresse.Latitude,
+                                Event.EventAdresse.Pays.ToString());
 
             return result.ToEvenementDao();
         }
@@ -253,14 +255,13 @@ namespace Service.Evenement.Dal
             if ( Event == null || request == null || Event.EventAdresse == null || Event.Categorie == null)
                 return null;
 
-            var result = EventDalService.CreateEvent(
+            var result = EventDalService.CreateEvenement(
                                 request.UserId,
-                                Event.EventAdresse.Id,
                                 Event.Categorie.Id,
-                                Convert.ToInt32(Event.DateEvenement.ToString("ddMMYYhhmmss")),
-                                Convert.ToInt32(DateTime.Now.ToString("ddMMYYhhmmss")),
-                                Convert.ToInt32(Event.DateModification.ToString("ddMMYYhhmmss")),
-                                Convert.ToInt32(Event.DateFinInscription.ToString("ddMMYYhhmmss")),
+                                Event.DateEvenement,
+                                DateTime.Now,
+                                null,
+                                Event.DateFinInscription,
                                 Event.TitreEvenement.ToString(),
                                 Event.DescriptionEvenement.ToString(),
                                 Event.MinimumParticipant,
@@ -268,8 +269,14 @@ namespace Service.Evenement.Dal
                                 Event.Statut,
                                 Event.Price,
                                 Event.Premium,
-                                Convert.ToInt32(Event.DateMiseEnAvant.ToString("ddMMYYhhmmss")),
-                                1 // A voir pour changer
+                                Event.DateMiseEnAvant,
+                                1, // A voir pour changer
+                                Event.EventAdresse.Ville.ToString(),
+                                Event.EventAdresse.CodePostale.ToString(),
+                                Event.EventAdresse.Adresse.ToString(),
+                                Event.EventAdresse.Longitude,
+                                Event.EventAdresse.Latitude,
+                                Event.EventAdresse.Pays.ToString()
                                 );
 
             return result.ToEvenementDao();
@@ -305,9 +312,9 @@ namespace Service.Evenement.Dal
         /// </summary>
         /// <param name="request"> Parametre de requete contenant le userId et l'evenementId</param>
         /// <returns>L'état de l'inscription du user par rapport a cette evenement</returns>
-        public IEnumerable<EvenementSubcriber> SubscribeEvenement ( EvenementDalRequest request )
+        public IEnumerable<EvenementSubcriberDao> SubscribeEvenement ( EvenementDalRequest request )
         {
-            if( request == null && request.EvenementId == null && request.UserId == null )
+            if ( request == null && request.EvenementId == 0 && request.UserId == 0 )
                 return null;
             var result = SubscriptionDalService.GetParticipationByUserAndEventId(request.EvenementId, request.UserId);
             return result.ToSubscriberDao();
@@ -318,9 +325,9 @@ namespace Service.Evenement.Dal
         /// </summary>
         /// <param name="request"> Parametre de requete contenant l'evenementId</param>
         /// <returns>La liste des personnes qui sont inscrites a l'evenement</returns>
-        public IEnumerable<EvenementSubcriber> GetSubscribersByEvent ( EvenementDalRequest request )
+        public IEnumerable<EvenementSubcriberDao> GetSubscribersByEvent ( EvenementDalRequest request )
         {
-            if ( request == null && request.EvenementId == null)
+            if ( request == null && request.EvenementId == 0 )
                 return null;
             var result = SubscriptionDalService.GetParticipantByEvent(request.EvenementId);
             return result.ToSubscriberDao();
@@ -331,23 +338,18 @@ namespace Service.Evenement.Dal
         /// </summary>
         /// <param name="request"> Parametre de requete contenant le userId</param>
         /// <returns>La liste des personnes qui sont inscrites a l'evenement</returns>
-        public IEnumerable<EvenementSubcriber> GetSubscriptionByUser ( EvenementDalRequest request )
+        public IEnumerable<EvenementSubcriberDao> GetSubscriptionByUser ( EvenementDalRequest request )
         {
-            if ( request == null && request.UserId == null )
+            if ( request == null && request.UserId == 0 )
                 return null;
             var result = SubscriptionDalService.GetEventParticipationByUserId(request.UserId);
             return result.ToSubscriberDao();
         }
 
-        /// <summary>
-        /// Supprime une catégorie
-        /// </summary>
 
-        public void DeleteCategorie(long id)
-        {
-            CategorieDalService.DeleteCategorie(id);
 
-        }
+
+
         #endregion
         
         #region IDisposable

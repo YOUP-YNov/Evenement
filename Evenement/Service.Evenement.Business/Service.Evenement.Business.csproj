@@ -71,23 +71,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessModels\Evenement.cs" />
-    <Compile Include="BusinessModels\EvenementCategorie.cs" />
-    <Compile Include="BusinessModels\EventImage.cs" />
-    <Compile Include="BusinessModels\EventLocation.cs" />
-    <Compile Include="BusinessModels\EventState.cs" />
+    <Compile Include="BusinessModels\EvenementBll.cs" />
+    <Compile Include="BusinessModels\EvenementCategorieBll.cs" />
+    <Compile Include="BusinessModels\EvenementSubscriberBll.cs" />
+    <Compile Include="BusinessModels\EventImageBll.cs" />
+    <Compile Include="BusinessModels\EventLocationBll.cs" />
+    <Compile Include="BusinessModels\EventStateBll.cs" />
     <Compile Include="BusinessModels\EventStateEnum.cs" />
     <Compile Include="BusinessModels\Request\EvenementDalRequest.cs" />
+    <Compile Include="Response\ResponseObject.cs" />
+    <Compile Include="Response\ResponseState.cs" />
     <Compile Include="CategorieBllService.cs" />
     <Compile Include="EvenementBllService.cs" />
     <Compile Include="ImageBllService.cs" />
+    <Compile Include="InitBllAutoMappeur.cs" />
     <Compile Include="Interface\ICategorieBllService.cs" />
     <Compile Include="Interface\IEvenementBllService.cs" />
     <Compile Include="Interface\IImageBllService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

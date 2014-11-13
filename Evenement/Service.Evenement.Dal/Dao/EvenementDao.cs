@@ -1,4 +1,4 @@
-﻿namespace Service.Evenement.Business
+﻿namespace Service.Evenement.Dal.Dao
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,7 @@
     /// <summary>
     /// Model d'accès au données représentant un évenement
     /// </summary>
-    public class EvenementBll
+    public class EvenementDao
     {
         /// <summary>
         /// Assigne ou récupère l'id de l'évenement.
@@ -29,17 +29,17 @@
         /// <summary>
         /// Assigne ou récupère la liste des Images associé à l'évenement
         /// </summary>
-        public IEnumerable<EventImageBll> Galleries { get; set; }
+        public IEnumerable<EventImageDao> Galleries { get; set; }
 
         /// <summary>
         /// Assigne ou récupère l'adresse de l'évenement
         /// </summary>
-        public EventLocationBll EventAdresse { get; set; }
+        public EventLocationDao EventAdresse { get; set; }
 
         /// <summary>
         /// Assigne ou récupère la catégorie de l'évenement
         /// </summary>
-        public EvenementCategorieBll Categorie { get; set; }
+        public EvenementCategorieDao Categorie { get; set; }
         
         /// <summary>
         /// Assigne ou récupère la Date à laquelle l'évenement a lieu.
@@ -85,7 +85,7 @@
         /// <summary>
         /// Assigne ou récupère l'état de l'évenement
         /// </summary>
-        public EventStateBll EtatEvenement { get; set; }
+        public EventStateDao EtatEvenement { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le price a payé pour participé à l'évenement
@@ -106,5 +106,10 @@
         /// Assigne ou récupère le statut d'un evenement
         /// </summary>
         public string Statut { get; set; }
+
+        /// <summary>
+        /// Assigne ou récupère la liste des participants de l'evenementss
+        /// </summary>
+        public IEnumerable<EvenementSubcriberDao> Participants { get; set; }
     }
 }

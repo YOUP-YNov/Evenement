@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Service.Evenement.Dal.Dao;
 using Service.Evenement.Dal.Dao.Request;
+using Service.Evenement.Dal.Dal.EventDalServiceTableAdapters;
 
 namespace Service.Evenement.Dal.Interface
 {
@@ -17,7 +18,7 @@ namespace Service.Evenement.Dal.Interface
         IEnumerable<EvenementDao> GetLieuEvenementByCP ( EvenementDalRequest request );
         IEnumerable<EvenementDao> GetLieuEvenementById ( EvenementDalRequest request );
         IEnumerable<EvenementDao> CreateLieuEvenement ( EvenementDalRequest request, EventLocationDao location );
-        IEnumerable<EvenementDao> GetAllEvenement ();
+        IEnumerable<EvenementDao> GetAllEvenement(DateTime? date_search, bool? premium, int max_result, long? categorie, long? max_id, string orderby = null, string text_search = null);
         IEnumerable<EvenementDao> GetEvenementByCPAndCategorie ( EvenementDalRequest request );
         IEnumerable<EvenementDao> GetEvenementByCP ( EvenementDalRequest request );
         IEnumerable<EvenementDao> UpdateEvenement ( EvenementDao Event );
