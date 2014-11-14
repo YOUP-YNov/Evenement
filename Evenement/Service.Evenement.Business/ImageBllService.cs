@@ -15,6 +15,7 @@ using System.Collections.Specialized;
 using Service.Evenement.Dal.Dao.Request;
 using Service.Evenement.Dal.Dao;
 using AutoMapper;
+using Service.Evenement.Business.BusinessModels;
 
 namespace Service.Evenement.Business
 {
@@ -140,6 +141,33 @@ namespace Service.Evenement.Business
             var result = EvenementDalService.GetImageByEventId(request);
 
             return Mapper.Map<IEnumerable<EventImageDao>, IEnumerable<EventImageBll>>(result);
+        }
+
+        public ImageDeleteEnum DeleteImage ( long? ImageId )
+        {
+            if ( !ImageId.HasValue )
+                return ImageDeleteEnum.RequestError;
+
+            EvenementDalRequest request = new EvenementDalRequest()
+            {
+                ImageId = ImageId.Value
+            };
+
+            var result = EvenementDalService.DeleteImage(request);
+
+            switch ( result )
+            {
+                case 1:
+                    return ImageDeleteEnum.Deleted;
+                case 2:
+                    return ImageDeleteEnum.RequestError;
+                case 3:
+                    return ImageDeleteEnum.ExceptionError;
+                case 0:
+                    return ImageDeleteEnum.UnknowError;
+                default:
+                    return ImageDeleteEnum.UnknowError;
+            }
         }
     }
 }

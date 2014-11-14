@@ -136,6 +136,25 @@ namespace Service.Evenement.Dal
             return result.ToImageDao();
         }
 
+        public int DeleteImage ( EvenementDalRequest request )
+        {
+            if ( request == null || request.ImageId == 0)
+                return 2;
+
+            int result = 0;
+            // Tricks a enlever dans la version finale ( Boxing du 64 vers 32 ) Drop & Create PROC + Refresh Dataset
+            try
+            {
+                result = ImageDalService.DeleteImage(request.ImageId);
+            }
+            catch(Exception e)
+            {
+                result = 3;
+            }
+            
+            return result;
+        }
+
         public IEnumerable<EvenementDao> GetLieuEvenementByVille ( EvenementDalRequest request )
         {
             if ( request == null )

@@ -670,6 +670,13 @@
             <param name="content">byte array de l'image</param>
             <returns>Image uploadé</returns>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.ImageController.PostImage(System.Int64)">
+            <summary>
+            Permet de delete une image associé a un évènement
+            </summary>
+            <param name="ImageId">Id de l'image</param>
+            <returns>CodeEnum de résultat</returns>
+        </member>
         <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.Id">
             <summary>
             Assigne ou récupère l'id de l'évenement.
