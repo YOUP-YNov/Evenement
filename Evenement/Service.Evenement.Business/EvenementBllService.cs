@@ -91,7 +91,7 @@ namespace Service.Evenement.Business
             return response;
         }
 
-        public ResponseObject GetEvenements(DateTime? date_search, int max_result, long? categorie, long? max_id, bool? premium, string text_search = null, string orderby = null)
+        public ResponseObject GetEvenements(DateTime? date_search = null, int max_result = 10, long? categorie = -1, long? max_id = null, bool? premium = null, string text_search = null, string orderby = null)
         {
 
             IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement(date_search,premium, max_result, categorie, max_id,text_search ,orderby);
@@ -113,43 +113,6 @@ namespace Service.Evenement.Business
             {
                 response.State = ResponseState.NotFound;
             }
-            
-
-
-            /*if (date_search != null)
-                tmp.Where(e => e.DateEvenement == date_search  && e.Id >= (long)max_id);
-
-            if (categorie != -1)
-                tmp.Where(e => e.Categorie.Id == (long)categorie);
-
-            if (text_search != null)
-                tmp = tmp.Where(e => e.TitreEvenement.ToString().Contains(text_search));
-
-            if (premium != null)
-                tmp = tmp.Where(e => e.Premium == premium);
-
-            if (orderby != null)
-                switch (orderby)
-                {
-                    case "Id": tmp = tmp.OrderBy(e => e.Id); break;
-                    case "OrganisateurId": tmp = tmp.OrderBy(e => e.OrganisateurId); break;
-                    case "Categorie": tmp = tmp.OrderBy(e => e.Categorie); break;
-                    case "DateEvenement": tmp = tmp.OrderBy(e => e.DateEvenement); break;
-                    case "TitreEvenement": tmp = tmp.OrderBy(e => e.TitreEvenement); break;
-                    case "Price": tmp = tmp.OrderBy(e => e.Price); break;
-                    default: break;
-                }
-            List<EvenementBll> ret = new List<EvenementBll>();
-            
-
-            foreach (var item in tmp)
-            {
-                Mapper.CreateMap<EventLocationDao, EventLocationBll>();
-                Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
-                Mapper.CreateMap<EvenementDao, EvenementBll>();
-                ret.Add(Mapper.Map<EvenementDao, EvenementBll>(item));
-            }*/
-
             return response;
         }
         
