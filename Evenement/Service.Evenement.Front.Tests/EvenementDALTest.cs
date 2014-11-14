@@ -36,14 +36,6 @@ namespace Service.Evenement.Front.Tests
             var test = service.GetCategories();
         }
 
-        [TestMethod]
-        public void TestGetAllEvenementBusiness()
-        {
-            EvenementBllService serv = new EvenementBllService();
-            List<EvenementBll> test = new List<EvenementBll>(serv.GetEvenements(null, 10, -1, null, 10, null, null));
 
-            Assert.IsNotNull(test);
-            Assert.AreEqual(10, test.Count);
-        }
     }
 }
