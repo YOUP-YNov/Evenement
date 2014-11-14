@@ -7,13 +7,26 @@ using Service.Evenement.Dal;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
-using System.Configuration;
 using Service.Evenement.Business.Interface;
+using System.IO;
+using System.Drawing;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace Service.Evenement.Business
 {
     public class ImageBllService : IImageBllService
     {
+        public ImageBllService ()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString;
+            AccountName = ConfigurationManager.AppSettings["StorageAccount"];
+            StoragePassword = ConfigurationManager.AppSettings["StoragePassword"];
+            UriHost = ConfigurationManager.AppSettings["UriHost"];
+            //credentials = new StorageCredentials(AccountName, StoragePassword);
+            account = CloudStorageAccount.Parse(ConnectionString);
+        }
+
         private EvenementDalService _evenementDalService;
 
         public EvenementDalService EvenementDalService
@@ -30,32 +43,65 @@ namespace Service.Evenement.Business
             }
         }
 
-        private static string UriHost = ConfigurationSettings.AppSettings.Get("UriHost");
+        private const string UriImageTemplate = "{0}{1}/{2}";
 
-        private static string AccountName = ConfigurationSettings.AppSettings.Get("StorageAccount");
+        private StorageCredentials credentials;
 
-        private static string StoragePassword = ConfigurationSettings.AppSettings.Get("StoragePassword");
+        private string UriHost;
+
+        private string ConnectionString;
+
+        private string AccountName;
+
+        private string StoragePassword;
 
         // A stocké dans le fichier de conf encodé en MD5
-        private static StorageCredentials credentials = new StorageCredentials(AccountName, StoragePassword);
-
-        private static CloudStorageAccount account = new CloudStorageAccount(credentials, true);
+        private CloudStorageAccount account;
 
         private const string ContainerName = "pictures";
 
         private CloudBlobClient blob;
 
-        private string SaveImage ( string fileName, byte[] content )
+        public string SaveImage ( string fileName, byte[] content )
         {
             blob = account.CreateCloudBlobClient();
 
             var container = blob.GetContainerReference(ContainerName);
 
-            var blobFromSasCredential = container.GetBlockBlobReference(fileName);
+            string fileNameKey = DateTime.UtcNow + "-" + fileName;
 
-            blobFromSasCredential.UploadFromByteArray(content, 0, content.Length);
+            var blobFromSasCredential = container.GetBlockBlobReference(fileNameKey);
 
-            return blobFromSasCredential.Uri.ToString();
+            try
+            {
+                blobFromSasCredential.UploadFromByteArray(content, 0, content.Length);
+            }
+            catch ( Microsoft.WindowsAzure.Storage.StorageException e )
+            {
+                //LOGERoor
+            }
+            return String.Format(UriImageTemplate, UriHost, ContainerName, fileNameKey);
+        }
+
+        public IEnumerable<IListBlobItem> getBlobList ()
+        {
+            blob = account.CreateCloudBlobClient();
+
+            var container = blob.GetContainerReference(ContainerName);
+
+            return container.ListBlobs(null, false);
+        }
+
+        public byte[] GetImageFromFile ( string path )
+        {
+            byte[] arr;
+            using ( MemoryStream ms = new MemoryStream() )
+            {
+                Bitmap image1 = (Bitmap) Image.FromFile(path, true);
+                image1.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                arr = ms.ToArray();
+            }
+            return arr;
         }
     }
 }
