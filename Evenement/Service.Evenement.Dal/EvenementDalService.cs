@@ -194,6 +194,13 @@ namespace Service.Evenement.Dal
             return result.ToEvenementDao();
         }
 
+        public IEnumerable<EvenementDao> GetEvenementByState(EventStateDao state)
+        {
+            var result = EventDalService.GetEventByState(state.Id);
+
+            return result.ToEvenementDao();
+        }
+
         public IEnumerable<EvenementDao> GetEvenementByCPAndCategorie ( EvenementDalRequest request )
         {
             if ( request == null )
