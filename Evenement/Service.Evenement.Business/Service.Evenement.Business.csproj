@@ -80,6 +80,7 @@
     <Compile Include="BusinessModels\EventLocationBll.cs" />
     <Compile Include="BusinessModels\EventStateBll.cs" />
     <Compile Include="BusinessModels\EventStateEnum.cs" />
+    <Compile Include="BusinessModels\ImageDeleteEnum.cs" />
     <Compile Include="BusinessModels\Request\EvenementDalRequest.cs" />
     <Compile Include="Response\ResponseObject.cs" />
     <Compile Include="Response\ResponseState.cs" />

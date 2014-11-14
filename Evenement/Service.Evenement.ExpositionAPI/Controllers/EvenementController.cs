@@ -116,6 +116,24 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
+        /// retourne les évènements d'un département 
+        /// </summary>
+        /// <param name="dept"></param>
+        /// <returns>liste d'évènements</returns>
+        [HttpGet]
+        [ResponseType(typeof(EvenementFront))]
+        public HttpResponseMessage GetEvenement(int dept)
+        {
+            ResponseObject result = EvenementBllService.GetEvenementByDept( dept );
+            if (result.Value != null)
+            {
+                result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementTimelineFront>>((IEnumerable<EvenementBll>)result.Value);
+            }
+
+            return GenerateResponseMessage.initResponseMessage(result);
+        }
+
+        /// <summary>
         /// modification de l'évènement
         /// </summary>
         /// <param name="id">id de l'évènement à modifier</param>

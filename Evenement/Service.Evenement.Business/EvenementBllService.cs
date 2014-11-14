@@ -90,7 +90,17 @@ namespace Service.Evenement.Business
             }
             return response;
         }
-
+        /// <summary>
+        /// retourne la liste des évènements en fonction d'une date, d'une catégorie, de son statut, de son nom.
+        /// </summary>
+        /// <param name="date_search"></param>
+        /// <param name="max_result"></param>
+        /// <param name="categorie"></param>
+        /// <param name="max_id"></param>
+        /// <param name="premium"></param>
+        /// <param name="text_search"></param>
+        /// <param name="orderby"></param>
+        /// <returns>liste d'évènements</returns>
         public ResponseObject GetEvenements(DateTime? date_search = null, int max_result = 10, long? categorie = -1, long? max_id = null, bool? premium = null, string text_search = null, string orderby = null)
         {
 
@@ -116,7 +126,11 @@ namespace Service.Evenement.Business
             return response;
         }
         
-
+        /// <summary>
+        /// retourne un évènement par rapport à son ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>évènement</returns>
         public ResponseObject GetEvenementById(long id)
         {
             ResponseObject response = new ResponseObject();
@@ -144,6 +158,29 @@ namespace Service.Evenement.Business
 
             return response;
         }
+        /// <summary>
+        /// retourne la liste des évènements d'un département
+        /// </summary>
+        /// <param name="dept"></param>
+        /// <returns>liste d'évènements</returns>
+        public ResponseObject GetEvenementByDept( int dept )
+        {
+            ResponseObject response = new ResponseObject();
+            if (dept == default(int))
+                response.State = ResponseState.BadRequest;
+            else
+            {
+                var evt = EvenementDalService.GetEvenementByDept(dept);
+                IEnumerable<EvenementBll> evtBLL = Mapper.Map<IEnumerable<EvenementDao>, IEnumerable<EvenementBll>>(evt);
+                if (evtBLL != null)
+                {
+                    response.State = ResponseState.Ok;
+                    response.Value = evtBLL;
+                }
+                else response.State = ResponseState.NoContent;
+            }
+            return response;
+        }
 
         /// <summary>
         /// retourne la liste des événements d'un profil 
@@ -154,7 +191,7 @@ namespace Service.Evenement.Business
         {
             // pour l'instant les event dont le profil est organisateur (api profil pour gerer les event ou le profil est inscrit)
              ResponseObject response = new ResponseObject();
-             if (id_profil == null)
+             if (id_profil == default(long))
              {
                  response.State = ResponseState.BadRequest;
              }
@@ -181,13 +218,7 @@ namespace Service.Evenement.Business
              }
 
              return response;
-            /*IEnumerable<EvenementBll> bllEventList = null;
-            foreach (EvenementDao e in daoEventList)
-            {
-                bllEventList.ToList().Add(Mapper.Map<EvenementDao, EvenementBll>(e));
             }           
-            return bllEventList;*/
-        }
 
         /// <summary>
         /// Retourne la liste des événements signalés
@@ -335,7 +366,7 @@ namespace Service.Evenement.Business
             }
             else
             {
-                throw new System.InvalidOperationException("Le nombre d'utilisateurs maximum est déjà atteint.");
+                throw new System.InvalidOperationException("Le nombre d'utilisateurs maximum est déjà atteint");
             }
 
         }
