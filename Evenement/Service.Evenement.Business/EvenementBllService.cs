@@ -154,7 +154,7 @@ namespace Service.Evenement.Business
         {
             // pour l'instant les event dont le profil est organisateur (api profil pour gerer les event ou le profil est inscrit)
              ResponseObject response = new ResponseObject();
-             if (id_profil == null)
+             if (id_profil == default(long))
              {
                  response.State = ResponseState.BadRequest;
              }
@@ -195,11 +195,34 @@ namespace Service.Evenement.Business
         /// <returns>Liste d'événements</returns>
         public ResponseObject GetReportedEvents()
         {
+            IEnumerable<EvenementDao> daoEventList = EvenementDalService.GetEvenementByState(new EventStateDao(Dal.Dao.EventStateEnum.Signaler));
+            ResponseObject response = new ResponseObject();
+           
+            if (daoEventList != null)
+            {
+                if (daoEventList.Count() > 0)
+                {
+                    response.State = ResponseState.Ok;
+                    response.Value = Mapper.Map<IEnumerable<EvenementDao>, IEnumerable<EvenementBll>>(daoEventList);
+                }
+                else
+                {
+                    response.State = ResponseState.NoContent;
+                }
+            }
+            else
+            {
+
+                response.State = ResponseState.NotFound;
+            }
+            
+
+            return response;
             //IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
             //IEnumerable<EvenementBll> events = from e in tmp
                                                       // where e.EtatEvenement.Nom == Dal.Dao.EventStateEnum.Signaler
                                                        //select Mapper.Map<EvenementDao, EvenementBll>(e);
-            return null;
+            //return null;
         }
 
         /// <summary>
