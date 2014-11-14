@@ -311,22 +311,33 @@ namespace Service.Evenement.Business
         /// <param name="UserId">Id de l'utilisateur</param>
         /// <param name="EvenementId">Id de l'evenement</param>
         /// <returns>L'inscription de l'utilisateur à l'évènement</returns>
-        public EvenementSubscriberBll SubscribeEvenement ( int UserId, int EvenementId )
+        public EvenementSubscriberBll SubscribeEvenement ( int UserId, int _evenementId )
         {
             EvenementDalRequest request = new EvenementDalRequest()
             {
                 UserId = UserId,
-                EvenementId = EvenementId
+                EvenementId = _evenementId
             };
+            //On récupère le nombre d'utilisateurs déjà inscrits et le nombre d'utilsateurs
+            //max pour vérifier s'il reste de la place sur l'événement
+            EvenementDalRequest requestNombreUtilisateurs = new EvenementDalRequest() { EvenementId = _evenementId };
+            var nombreUtilisateurs = EvenementDalService.getEvenementId(requestNombreUtilisateurs).Participants.Count();
+            EvenementDalRequest requestNombreMax = new EvenementDalRequest() { EvenementId = _evenementId };
+            var nombreMax = EvenementDalService.getEvenementId(requestNombreMax).MaximumParticipant;
 
-            var daoResult = EvenementDalService.SubscribeEvenement(request).FirstOrDefault();
+            if (nombreUtilisateurs < nombreMax)
+            {
+                var daoResult = EvenementDalService.SubscribeEvenement(request).FirstOrDefault();
+                if (daoResult == null)
+                    return null;
+                EvenementSubscriberBll result = Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(daoResult);
+                return result;
+            }
+            else
+            {
+                throw new System.InvalidOperationException("Le nombre d'utilisateurs maximum est déjà atteint");
+            }
 
-            if ( daoResult == null )
-                return null;
-
-            EvenementSubscriberBll result = Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(daoResult);
-
-            return result;
         }
 
         /// <summary>

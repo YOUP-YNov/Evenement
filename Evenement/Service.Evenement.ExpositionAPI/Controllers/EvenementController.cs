@@ -185,12 +185,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 
             ResponseObject response = EvenementBllService.CreateEvenement(bllEvent);
             return GenerateResponseMessage.initResponseMessage(response);
-
-
-            InviteFriends invitations = new InviteFriends();
-            invitations.idEvent = bllEvent.Id;
-            invitations.idUser = bllEvent.OrganisateurId;
-            invitations.idFriends = evt.friends;
         }
 
         private void InviteFriends(InviteFriends invitations)
