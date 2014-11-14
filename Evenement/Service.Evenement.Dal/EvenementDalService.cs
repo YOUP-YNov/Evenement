@@ -186,6 +186,12 @@ namespace Service.Evenement.Dal
 
             return result.ToEvenementDao();
         }
+        public IEnumerable<EvenementDao> GetEvenementByDept(int dept)
+        {
+            var result = EventDalService.GetEvenementByDept(dept.ToString());
+
+            return result.ToEvenementDao();
+        }
 
         public IEnumerable<EvenementDao> GetEvenementByProfil(long id_profil)
         {

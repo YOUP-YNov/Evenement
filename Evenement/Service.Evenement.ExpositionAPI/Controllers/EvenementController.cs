@@ -76,13 +76,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             }
 
             return GenerateResponseMessage.initResponseMessage(result);
-           /* IEnumerable<EvenementBll> bllEventList = EvenementBllService.GetByProfil(id_profil);
-            IEnumerable<EvenementTimelineFront> timelineFrontEventList = null;
-            foreach (var e in bllEventList)
-            {
-                timelineFrontEventList.ToList().Add(Mapper.Map<Business.EvenementBll, EvenementTimelineFront>(e));
-            }
-            return timelineFrontEventList;*/
         }
 
         /// <summary>
@@ -101,19 +94,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             }
 
             return GenerateResponseMessage.initResponseMessage(result);
-
-
-           /* IEnumerable<EvenementBll> tmp = EvenementBllService.GetReportedEvents();
-
-
-            List<EvenementFront> events = new List<EvenementFront>();
-
-            foreach (EvenementBll e in tmp)
-            {
-                events.Add(Mapper.Map<EvenementBll, EvenementFront>(e));
-            }
-
-            return events;*/
         }
 
         /// <summary>
@@ -130,6 +110,24 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             {
                 result.Value = Mapper.Map<EvenementBll, EvenementFront>((EvenementBll)result.Value);
             }
+            return GenerateResponseMessage.initResponseMessage(result);
+        }
+
+        /// <summary>
+        /// retourne les évènements d'un département 
+        /// </summary>
+        /// <param name="dept"></param>
+        /// <returns>liste d'évènements</returns>
+        [HttpGet]
+        [ResponseType(typeof(EvenementFront))]
+        public HttpResponseMessage GetEvenement(int dept)
+        {
+            ResponseObject result = EvenementBllService.GetEvenementByDept( dept );
+            if (result.Value != null)
+            {
+                result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementTimelineFront>>((IEnumerable<EvenementBll>)result.Value);
+            }
+
             return GenerateResponseMessage.initResponseMessage(result);
         }
 

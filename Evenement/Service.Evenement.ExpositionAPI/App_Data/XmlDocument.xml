@@ -576,6 +576,13 @@
             <param name="id">l'id de l'événement</param>
             <returns>un événement</returns>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenement(System.Int32)">
+            <summary>
+            retourne les évènements d'un département 
+            </summary>
+            <param name="dept"></param>
+            <returns>liste d'évènements</returns>
+        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Put(System.Int64,Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate)">
             <summary>
             modification de l'évènement
