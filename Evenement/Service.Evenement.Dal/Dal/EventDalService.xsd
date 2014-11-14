@@ -2,14 +2,16 @@
 <xs:schema id="EventDalService" targetNamespace="http://tempuri.org/EventDalService.xsd" xmlns:mstns="http://tempuri.org/EventDalService.xsd" xmlns="http://tempuri.org/EventDalService.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="2" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
           <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="YoupDEVConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="YoupDEVConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Service.Evenement.Dal.Properties.Settings.GlobalReference.Default.YoupDEVConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="YoupDEVConnectionStringLucas" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="YoupDEVConnectionStringLucas (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Service.Evenement.Dal.Properties.Settings.GlobalReference.Default.YoupDEVConnectionStringLucas" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Service.Evenement.Dal.Properties.Settings.GlobalReference.Default.ConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EvenementTableAdapter" GeneratorDataComponentClassName="EvenementTableAdapter" Name="Evenement" UserDataComponentName="EvenementTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetAllEvenement" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetAllEvent" GetMethodModifier="Public" GetMethodName="GetAllEvent" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetAllEvent" UserSourceName="GetAllEvent">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetAllEvenement" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetAllEvent" GetMethodModifier="Public" GetMethodName="GetAllEvent" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetAllEvent" UserSourceName="GetAllEvent">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetAllEvenement</CommandText>
@@ -49,7 +51,7 @@
               <Mapping SourceColumn="Libelle" DataSetColumn="Libelle" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_CreateEvenement" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="CreateEvenement" GetMethodModifier="Public" GetMethodName="CreateEvenement" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="CreateEvenement" UserSourceName="CreateEvenement">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_CreateEvenement" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="CreateEvenement" GetMethodModifier="Public" GetMethodName="CreateEvenement" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="CreateEvenement" UserSourceName="CreateEvenement">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_CreateEvenement</CommandText>
@@ -80,7 +82,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetEvenementById" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEvenementById" GetMethodModifier="Public" GetMethodName="GetEvenementById" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEvenementById" UserSourceName="GetEvenementById">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetEvenementById" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEvenementById" GetMethodModifier="Public" GetMethodName="GetEvenementById" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEvenementById" UserSourceName="GetEvenementById">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetEvenementById</CommandText>
@@ -91,7 +93,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetEvenements" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEvenements" GetMethodModifier="Public" GetMethodName="GetEvenements" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEvenements" UserSourceName="GetEvenements">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetEvenements" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEvenements" GetMethodModifier="Public" GetMethodName="GetEvenements" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEvenements" UserSourceName="GetEvenements">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetEvenements</CommandText>
@@ -107,7 +109,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetEventByCP" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEventByCP" GetMethodModifier="Public" GetMethodName="GetEventByCP" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEventByCP" UserSourceName="GetEventByCP">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetEventByCP" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEventByCP" GetMethodModifier="Public" GetMethodName="GetEventByCP" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEventByCP" UserSourceName="GetEventByCP">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetEventByCP</CommandText>
@@ -118,7 +120,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetEventByCategAndCP" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEventByCPAndCateg" GetMethodModifier="Public" GetMethodName="GetEventByCPAndCateg" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEventByCPAndCateg" UserSourceName="GetEventByCPAndCateg">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetEventByCategAndCP" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEventByCPAndCateg" GetMethodModifier="Public" GetMethodName="GetEventByCPAndCateg" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEventByCPAndCateg" UserSourceName="GetEventByCPAndCateg">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetEventByCategAndCP</CommandText>
@@ -130,7 +132,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetEventByProfil" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEventByProfil" GetMethodModifier="Public" GetMethodName="GetEventByProfil" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEventByProfil" UserSourceName="GetEventByProfil">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetEventByProfil" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEventByProfil" GetMethodModifier="Public" GetMethodName="GetEventByProfil" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEventByProfil" UserSourceName="GetEventByProfil">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetEventByProfil</CommandText>
@@ -141,7 +143,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_UpdateEvenement" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="UpdateEvenement" GetMethodModifier="Public" GetMethodName="UpdateEvenement" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="UpdateEvenement" UserSourceName="UpdateEvenement">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_UpdateEvenement" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="UpdateEvenement" GetMethodModifier="Public" GetMethodName="UpdateEvenement" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="UpdateEvenement" UserSourceName="UpdateEvenement">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_UpdateEvenement</CommandText>
@@ -170,7 +172,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_UpdateEventState" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="UpdateStateEvent" GetMethodModifier="Public" GetMethodName="UpdateStateEvent" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="UpdateStateEvent" UserSourceName="UpdateStateEvent">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_UpdateEventState" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="UpdateStateEvent" GetMethodModifier="Public" GetMethodName="UpdateStateEvent" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="UpdateStateEvent" UserSourceName="UpdateStateEvent">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_UpdateEventState</CommandText>
@@ -187,7 +189,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="LieuEvenementTableAdapter" GeneratorDataComponentClassName="LieuEvenementTableAdapter" Name="LieuEvenement" UserDataComponentName="LieuEvenementTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetLieuEvenementByVille" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetLieuEvenementByVille" GetMethodModifier="Public" GetMethodName="GetLieuEvenementByVille" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetLieuEvenementByVille" UserSourceName="GetLieuEvenementByVille">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetLieuEvenementByVille" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetLieuEvenementByVille" GetMethodModifier="Public" GetMethodName="GetLieuEvenementByVille" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetLieuEvenementByVille" UserSourceName="GetLieuEvenementByVille">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetLieuEvenementByVille</CommandText>
@@ -210,7 +212,7 @@
               <Mapping SourceColumn="Nom" DataSetColumn="Nom" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_AddLieuEvenement" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="CreateLieu" GetMethodModifier="Public" GetMethodName="CreateLieu" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="CreateLieu" UserSourceName="CreateLieu">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_AddLieuEvenement" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="CreateLieu" GetMethodModifier="Public" GetMethodName="CreateLieu" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="CreateLieu" UserSourceName="CreateLieu">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_AddLieuEvenement</CommandText>
@@ -227,7 +229,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetLieuEvenementByCodePostale" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetLieuEvenementByCP" GetMethodModifier="Public" GetMethodName="GetLieuEvenementByCP" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetLieuEvenementByCP" UserSourceName="GetLieuEvenementByCP">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetLieuEvenementByCodePostale" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetLieuEvenementByCP" GetMethodModifier="Public" GetMethodName="GetLieuEvenementByCP" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetLieuEvenementByCP" UserSourceName="GetLieuEvenementByCP">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetLieuEvenementByCodePostale</CommandText>
@@ -238,7 +240,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetLieuEvenementById" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetLieuEvenementById" GetMethodModifier="Public" GetMethodName="GetLieuEvenementById" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetLieuEvenementById" UserSourceName="GetLieuEvenementById">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetLieuEvenementById" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetLieuEvenementById" GetMethodModifier="Public" GetMethodName="GetLieuEvenementById" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetLieuEvenementById" UserSourceName="GetLieuEvenementById">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetLieuEvenementById</CommandText>
@@ -249,7 +251,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_LocationExist" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetLieuExist" GetMethodModifier="Public" GetMethodName="GetLieuExist" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetLieuExist" UserSourceName="GetLieuExist">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_LocationExist" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetLieuExist" GetMethodModifier="Public" GetMethodName="GetLieuExist" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetLieuExist" UserSourceName="GetLieuExist">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_LocationExist</CommandText>
@@ -265,13 +267,13 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ImageTableAdapter" GeneratorDataComponentClassName="ImageTableAdapter" Name="Image" UserDataComponentName="ImageTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetImage" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetImagesByEventId" GetMethodModifier="Public" GetMethodName="GetImagesByEventId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetImagesByEventId" UserSourceName="GetImagesByEventId">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetImage" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetImagesByEventId" GetMethodModifier="Public" GetMethodName="GetImagesByEventId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetImagesByEventId" UserSourceName="GetImagesByEventId">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetImage</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="ReturnValue" ParameterName="@RETURN_VALUE" Precision="10" ProviderType="Int" Scale="0" Size="4" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@EventId" Precision="10" ProviderType="Int" Scale="0" Size="4" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DataTypeServer="bigint" DbType="Int64" Direction="Input" ParameterName="@EventId" Precision="19" ProviderType="BigInt" Scale="0" Size="8" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
                 </SelectCommand>
@@ -280,15 +282,16 @@
             <Mappings>
               <Mapping SourceColumn="Adresse" DataSetColumn="Adresse" />
               <Mapping SourceColumn="EvenementPhoto_id" DataSetColumn="EvenementPhoto_id" />
+              <Mapping SourceColumn="Evenement_id" DataSetColumn="Evenement_id" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_AddPhotoToEvent" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="AddImageToEvent" GetMethodModifier="Public" GetMethodName="AddImageToEvent" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="AddImageToEvent" UserSourceName="AddImageToEvent">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_AddPhotoToEvent" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="AddPhotoToEvent" GetMethodModifier="Public" GetMethodName="AddPhotoToEvent" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="AddPhotoToEvent" UserSourceName="AddPhotoToEvent">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_AddPhotoToEvent</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="ReturnValue" ParameterName="@RETURN_VALUE" Precision="10" ProviderType="Int" Scale="0" Size="4" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@EventId" Precision="10" ProviderType="Int" Scale="0" Size="4" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DataTypeServer="bigint" DbType="Int64" Direction="Input" ParameterName="@EventId" Precision="19" ProviderType="BigInt" Scale="0" Size="8" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DataTypeServer="nvarchar" DbType="String" Direction="Input" ParameterName="@PhotoURL" Precision="0" ProviderType="NVarChar" Scale="0" Size="500" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
@@ -298,7 +301,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CategorieTableAdapter" GeneratorDataComponentClassName="CategorieTableAdapter" Name="Categorie" UserDataComponentName="CategorieTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetAllCategorie" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetEvenementCategorie" GetMethodModifier="Public" GetMethodName="GetEvenementCategorie" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetEvenementCategorie" UserSourceName="GetEvenementCategorie">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetAllCategorie" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetEvenementCategorie" GetMethodModifier="Public" GetMethodName="GetEvenementCategorie" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetEvenementCategorie" UserSourceName="GetEvenementCategorie">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetAllCategorie</CommandText>
@@ -315,7 +318,7 @@
               <Mapping SourceColumn="Libelle" DataSetColumn="Libelle" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_DeleteCategorie" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="DeleteCategorie" GetMethodModifier="Public" GetMethodName="DeleteCategorie" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="DeleteCategorie" UserSourceName="DeleteCategorie">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_DeleteCategorie" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="DeleteCategorie" GetMethodModifier="Public" GetMethodName="DeleteCategorie" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="DeleteCategorie" UserSourceName="DeleteCategorie">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_DeleteCategorie</CommandText>
@@ -326,7 +329,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_UpdateCategorie" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="UpdateCategorie" GetMethodModifier="Public" GetMethodName="UpdateCategorie" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="UpdateCategorie" UserSourceName="UpdateCategorie">
+              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_UpdateCategorie" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="UpdateCategorie" GetMethodModifier="Public" GetMethodName="UpdateCategorie" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="UpdateCategorie" UserSourceName="UpdateCategorie">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_UpdateCategorie</CommandText>
@@ -342,7 +345,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SubscriptionEventTableAdapter" GeneratorDataComponentClassName="SubscriptionEventTableAdapter" Name="SubscriptionEvent" UserDataComponentName="SubscriptionEventTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_ParticipeToEvenementOrCancel" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetParticipationByUserAndEventId" GetMethodModifier="Public" GetMethodName="GetParticipationByUserAndEventId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetParticipationByUserAndEventId" UserSourceName="GetParticipationByUserAndEventId">
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetParticipationByUserAndEventId" GetMethodModifier="Public" GetMethodName="GetParticipationByUserAndEventId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetParticipationByUserAndEventId" UserSourceName="GetParticipationByUserAndEventId">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_ParticipeToEvenementOrCancel</CommandText>
@@ -364,7 +367,7 @@
               <Mapping SourceColumn="Annulation" DataSetColumn="Annulation" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetParticipationByUser" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEventParticipationByUserId" GetMethodModifier="Public" GetMethodName="GetEventParticipationByUserId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEventParticipationByUserId" UserSourceName="GetEventParticipationByUserId">
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEventParticipationByUserId" GetMethodModifier="Public" GetMethodName="GetEventParticipationByUserId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEventParticipationByUserId" UserSourceName="GetEventParticipationByUserId">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetParticipationByUser</CommandText>
@@ -375,7 +378,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionString (Settings)" DbObjectName="YoupDEV.dbo.ps_GetParticipantByEvent" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetParticipantByEvent" GetMethodModifier="Public" GetMethodName="GetParticipantByEvent" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetParticipantByEvent" UserSourceName="GetParticipantByEvent">
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetParticipantByEvent" GetMethodModifier="Public" GetMethodName="GetParticipantByEvent" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetParticipantByEvent" UserSourceName="GetParticipantByEvent">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetParticipantByEvent</CommandText>
@@ -396,90 +399,6 @@
   <xs:element name="EventDalService" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="EventDalService" msprop:Generator_UserDSName="EventDalService">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="LieuEvenement" msprop:Generator_TableClassName="LieuEvenementDataTable" msprop:Generator_TableVarName="tableLieuEvenement" msprop:Generator_TablePropName="LieuEvenement" msprop:Generator_RowDeletingName="LieuEvenementRowDeleting" msprop:Generator_RowChangingName="LieuEvenementRowChanging" msprop:Generator_RowEvHandlerName="LieuEvenementRowChangeEventHandler" msprop:Generator_RowDeletedName="LieuEvenementRowDeleted" msprop:Generator_UserTableName="LieuEvenement" msprop:Generator_RowChangedName="LieuEvenementRowChanged" msprop:Generator_RowEvArgName="LieuEvenementRowChangeEvent" msprop:Generator_RowClassName="LieuEvenementRow">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="LieuEvenement_id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnLieuEvenement_id" msprop:Generator_ColumnPropNameInRow="LieuEvenement_id" msprop:Generator_ColumnPropNameInTable="LieuEvenement_idColumn" msprop:Generator_UserColumnName="LieuEvenement_id" type="xs:long" />
-              <xs:element name="Ville" msprop:Generator_ColumnVarNameInTable="columnVille" msprop:Generator_ColumnPropNameInRow="Ville" msprop:Generator_ColumnPropNameInTable="VilleColumn" msprop:Generator_UserColumnName="Ville">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="100" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="CodePostale" msprop:Generator_ColumnVarNameInTable="columnCodePostale" msprop:Generator_ColumnPropNameInRow="CodePostale" msprop:Generator_ColumnPropNameInTable="CodePostaleColumn" msprop:Generator_UserColumnName="CodePostale" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="10" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="Adresse" msprop:Generator_ColumnVarNameInTable="columnAdresse" msprop:Generator_ColumnPropNameInRow="Adresse" msprop:Generator_ColumnPropNameInTable="AdresseColumn" msprop:Generator_UserColumnName="Adresse">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="200" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="Longitude" msprop:Generator_ColumnVarNameInTable="columnLongitude" msprop:Generator_ColumnPropNameInRow="Longitude" msprop:Generator_ColumnPropNameInTable="LongitudeColumn" msprop:Generator_UserColumnName="Longitude" type="xs:decimal" minOccurs="0" />
-              <xs:element name="Latitude" msprop:Generator_ColumnVarNameInTable="columnLatitude" msprop:Generator_ColumnPropNameInRow="Latitude" msprop:Generator_ColumnPropNameInTable="LatitudeColumn" msprop:Generator_UserColumnName="Latitude" type="xs:decimal" minOccurs="0" />
-              <xs:element name="Pays" msprop:Generator_ColumnVarNameInTable="columnPays" msprop:Generator_ColumnPropNameInRow="Pays" msprop:Generator_ColumnPropNameInTable="PaysColumn" msprop:Generator_UserColumnName="Pays">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="50" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="Nom" msprop:Generator_ColumnVarNameInTable="columnNom" msprop:Generator_ColumnPropNameInRow="Nom" msprop:Generator_ColumnPropNameInTable="NomColumn" msprop:Generator_UserColumnName="Nom" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="50" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="Image" msprop:Generator_TableClassName="ImageDataTable" msprop:Generator_TableVarName="tableImage" msprop:Generator_RowChangedName="ImageRowChanged" msprop:Generator_TablePropName="Image" msprop:Generator_RowDeletingName="ImageRowDeleting" msprop:Generator_RowChangingName="ImageRowChanging" msprop:Generator_RowEvHandlerName="ImageRowChangeEventHandler" msprop:Generator_RowDeletedName="ImageRowDeleted" msprop:Generator_RowClassName="ImageRow" msprop:Generator_UserTableName="Image" msprop:Generator_RowEvArgName="ImageRowChangeEvent">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="Adresse" msprop:Generator_ColumnVarNameInTable="columnAdresse" msprop:Generator_ColumnPropNameInRow="Adresse" msprop:Generator_ColumnPropNameInTable="AdresseColumn" msprop:Generator_UserColumnName="Adresse">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="400" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="EvenementPhoto_id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnEvenementPhoto_id" msprop:Generator_ColumnPropNameInRow="EvenementPhoto_id" msprop:Generator_ColumnPropNameInTable="EvenementPhoto_idColumn" msprop:Generator_UserColumnName="EvenementPhoto_id" type="xs:long" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="Categorie" msprop:Generator_TableClassName="CategorieDataTable" msprop:Generator_TableVarName="tableCategorie" msprop:Generator_RowChangedName="CategorieRowChanged" msprop:Generator_TablePropName="Categorie" msprop:Generator_RowDeletingName="CategorieRowDeleting" msprop:Generator_RowChangingName="CategorieRowChanging" msprop:Generator_RowEvHandlerName="CategorieRowChangeEventHandler" msprop:Generator_RowDeletedName="CategorieRowDeleted" msprop:Generator_RowClassName="CategorieRow" msprop:Generator_UserTableName="Categorie" msprop:Generator_RowEvArgName="CategorieRowChangeEvent">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="Categorie_id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnCategorie_id" msprop:Generator_ColumnPropNameInRow="Categorie_id" msprop:Generator_ColumnPropNameInTable="Categorie_idColumn" msprop:Generator_UserColumnName="Categorie_id" type="xs:long" />
-              <xs:element name="Libelle" msprop:Generator_ColumnVarNameInTable="columnLibelle" msprop:Generator_ColumnPropNameInRow="Libelle" msprop:Generator_ColumnPropNameInTable="LibelleColumn" msprop:Generator_UserColumnName="Libelle">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="50" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="SubscriptionEvent" msprop:Generator_TableClassName="SubscriptionEventDataTable" msprop:Generator_TableVarName="tableSubscriptionEvent" msprop:Generator_RowChangedName="SubscriptionEventRowChanged" msprop:Generator_TablePropName="SubscriptionEvent" msprop:Generator_RowDeletingName="SubscriptionEventRowDeleting" msprop:Generator_RowChangingName="SubscriptionEventRowChanging" msprop:Generator_RowEvHandlerName="SubscriptionEventRowChangeEventHandler" msprop:Generator_RowDeletedName="SubscriptionEventRowDeleted" msprop:Generator_RowClassName="SubscriptionEventRow" msprop:Generator_UserTableName="SubscriptionEvent" msprop:Generator_RowEvArgName="SubscriptionEventRowChangeEvent">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="Participe_id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnParticipe_id" msprop:Generator_ColumnPropNameInRow="Participe_id" msprop:Generator_ColumnPropNameInTable="Participe_idColumn" msprop:Generator_UserColumnName="Participe_id" type="xs:long" />
-              <xs:element name="Evenement_id" msprop:Generator_ColumnVarNameInTable="columnEvenement_id" msprop:Generator_ColumnPropNameInRow="Evenement_id" msprop:Generator_ColumnPropNameInTable="Evenement_idColumn" msprop:Generator_UserColumnName="Evenement_id" type="xs:long" />
-              <xs:element name="Utilisateur_id" msprop:Generator_ColumnVarNameInTable="columnUtilisateur_id" msprop:Generator_ColumnPropNameInRow="Utilisateur_id" msprop:Generator_ColumnPropNameInTable="Utilisateur_idColumn" msprop:Generator_UserColumnName="Utilisateur_id" type="xs:long" />
-              <xs:element name="DateInscription" msprop:Generator_ColumnVarNameInTable="columnDateInscription" msprop:Generator_ColumnPropNameInRow="DateInscription" msprop:Generator_ColumnPropNameInTable="DateInscriptionColumn" msprop:Generator_UserColumnName="DateInscription" type="xs:dateTime" />
-              <xs:element name="DateAnnulation" msprop:Generator_ColumnVarNameInTable="columnDateAnnulation" msprop:Generator_ColumnPropNameInRow="DateAnnulation" msprop:Generator_ColumnPropNameInTable="DateAnnulationColumn" msprop:Generator_UserColumnName="DateAnnulation" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="Annulation" msprop:Generator_ColumnVarNameInTable="columnAnnulation" msprop:Generator_ColumnPropNameInRow="Annulation" msprop:Generator_ColumnPropNameInTable="AnnulationColumn" msprop:Generator_UserColumnName="Annulation" type="xs:boolean" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
         <xs:element name="Evenement" msprop:Generator_TableClassName="EvenementDataTable" msprop:Generator_TableVarName="tableEvenement" msprop:Generator_TablePropName="Evenement" msprop:Generator_RowDeletingName="EvenementRowDeleting" msprop:Generator_RowChangingName="EvenementRowChanging" msprop:Generator_RowEvHandlerName="EvenementRowChangeEventHandler" msprop:Generator_RowDeletedName="EvenementRowDeleted" msprop:Generator_UserTableName="Evenement" msprop:Generator_RowChangedName="EvenementRowChanged" msprop:Generator_RowEvArgName="EvenementRowChangeEvent" msprop:Generator_RowClassName="EvenementRow">
           <xs:complexType>
             <xs:sequence>
@@ -569,6 +488,91 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LieuEvenement" msprop:Generator_TableClassName="LieuEvenementDataTable" msprop:Generator_TableVarName="tableLieuEvenement" msprop:Generator_TablePropName="LieuEvenement" msprop:Generator_RowDeletingName="LieuEvenementRowDeleting" msprop:Generator_RowChangingName="LieuEvenementRowChanging" msprop:Generator_RowEvHandlerName="LieuEvenementRowChangeEventHandler" msprop:Generator_RowDeletedName="LieuEvenementRowDeleted" msprop:Generator_UserTableName="LieuEvenement" msprop:Generator_RowChangedName="LieuEvenementRowChanged" msprop:Generator_RowEvArgName="LieuEvenementRowChangeEvent" msprop:Generator_RowClassName="LieuEvenementRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="LieuEvenement_id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnLieuEvenement_id" msprop:Generator_ColumnPropNameInRow="LieuEvenement_id" msprop:Generator_ColumnPropNameInTable="LieuEvenement_idColumn" msprop:Generator_UserColumnName="LieuEvenement_id" type="xs:long" />
+              <xs:element name="Ville" msprop:Generator_ColumnVarNameInTable="columnVille" msprop:Generator_ColumnPropNameInRow="Ville" msprop:Generator_ColumnPropNameInTable="VilleColumn" msprop:Generator_UserColumnName="Ville">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodePostale" msprop:Generator_ColumnVarNameInTable="columnCodePostale" msprop:Generator_ColumnPropNameInRow="CodePostale" msprop:Generator_ColumnPropNameInTable="CodePostaleColumn" msprop:Generator_UserColumnName="CodePostale" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Adresse" msprop:Generator_ColumnVarNameInTable="columnAdresse" msprop:Generator_ColumnPropNameInRow="Adresse" msprop:Generator_ColumnPropNameInTable="AdresseColumn" msprop:Generator_UserColumnName="Adresse">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Longitude" msprop:Generator_ColumnVarNameInTable="columnLongitude" msprop:Generator_ColumnPropNameInRow="Longitude" msprop:Generator_ColumnPropNameInTable="LongitudeColumn" msprop:Generator_UserColumnName="Longitude" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Latitude" msprop:Generator_ColumnVarNameInTable="columnLatitude" msprop:Generator_ColumnPropNameInRow="Latitude" msprop:Generator_ColumnPropNameInTable="LatitudeColumn" msprop:Generator_UserColumnName="Latitude" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Pays" msprop:Generator_ColumnVarNameInTable="columnPays" msprop:Generator_ColumnPropNameInRow="Pays" msprop:Generator_ColumnPropNameInTable="PaysColumn" msprop:Generator_UserColumnName="Pays">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Nom" msprop:Generator_ColumnVarNameInTable="columnNom" msprop:Generator_ColumnPropNameInRow="Nom" msprop:Generator_ColumnPropNameInTable="NomColumn" msprop:Generator_UserColumnName="Nom" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Image" msprop:Generator_TableClassName="ImageDataTable" msprop:Generator_TableVarName="tableImage" msprop:Generator_RowChangedName="ImageRowChanged" msprop:Generator_TablePropName="Image" msprop:Generator_RowDeletingName="ImageRowDeleting" msprop:Generator_RowChangingName="ImageRowChanging" msprop:Generator_RowEvHandlerName="ImageRowChangeEventHandler" msprop:Generator_RowDeletedName="ImageRowDeleted" msprop:Generator_RowClassName="ImageRow" msprop:Generator_UserTableName="Image" msprop:Generator_RowEvArgName="ImageRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Adresse" msprop:Generator_ColumnVarNameInTable="columnAdresse" msprop:Generator_ColumnPropNameInRow="Adresse" msprop:Generator_ColumnPropNameInTable="AdresseColumn" msprop:Generator_UserColumnName="Adresse">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="400" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EvenementPhoto_id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnEvenementPhoto_id" msprop:Generator_ColumnPropNameInRow="EvenementPhoto_id" msprop:Generator_ColumnPropNameInTable="EvenementPhoto_idColumn" msprop:Generator_UserColumnName="EvenementPhoto_id" type="xs:long" />
+              <xs:element name="Evenement_id" msprop:Generator_ColumnVarNameInTable="columnEvenement_id" msprop:Generator_ColumnPropNameInRow="Evenement_id" msprop:Generator_ColumnPropNameInTable="Evenement_idColumn" msprop:Generator_UserColumnName="Evenement_id" type="xs:long" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Categorie" msprop:Generator_TableClassName="CategorieDataTable" msprop:Generator_TableVarName="tableCategorie" msprop:Generator_RowChangedName="CategorieRowChanged" msprop:Generator_TablePropName="Categorie" msprop:Generator_RowDeletingName="CategorieRowDeleting" msprop:Generator_RowChangingName="CategorieRowChanging" msprop:Generator_RowEvHandlerName="CategorieRowChangeEventHandler" msprop:Generator_RowDeletedName="CategorieRowDeleted" msprop:Generator_RowClassName="CategorieRow" msprop:Generator_UserTableName="Categorie" msprop:Generator_RowEvArgName="CategorieRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Categorie_id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnCategorie_id" msprop:Generator_ColumnPropNameInRow="Categorie_id" msprop:Generator_ColumnPropNameInTable="Categorie_idColumn" msprop:Generator_UserColumnName="Categorie_id" type="xs:long" />
+              <xs:element name="Libelle" msprop:Generator_ColumnVarNameInTable="columnLibelle" msprop:Generator_ColumnPropNameInRow="Libelle" msprop:Generator_ColumnPropNameInTable="LibelleColumn" msprop:Generator_UserColumnName="Libelle">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SubscriptionEvent" msprop:Generator_TableClassName="SubscriptionEventDataTable" msprop:Generator_TableVarName="tableSubscriptionEvent" msprop:Generator_RowChangedName="SubscriptionEventRowChanged" msprop:Generator_TablePropName="SubscriptionEvent" msprop:Generator_RowDeletingName="SubscriptionEventRowDeleting" msprop:Generator_RowChangingName="SubscriptionEventRowChanging" msprop:Generator_RowEvHandlerName="SubscriptionEventRowChangeEventHandler" msprop:Generator_RowDeletedName="SubscriptionEventRowDeleted" msprop:Generator_RowClassName="SubscriptionEventRow" msprop:Generator_UserTableName="SubscriptionEvent" msprop:Generator_RowEvArgName="SubscriptionEventRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Participe_id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnParticipe_id" msprop:Generator_ColumnPropNameInRow="Participe_id" msprop:Generator_ColumnPropNameInTable="Participe_idColumn" msprop:Generator_UserColumnName="Participe_id" type="xs:long" />
+              <xs:element name="Evenement_id" msprop:Generator_ColumnVarNameInTable="columnEvenement_id" msprop:Generator_ColumnPropNameInRow="Evenement_id" msprop:Generator_ColumnPropNameInTable="Evenement_idColumn" msprop:Generator_UserColumnName="Evenement_id" type="xs:long" />
+              <xs:element name="Utilisateur_id" msprop:Generator_ColumnVarNameInTable="columnUtilisateur_id" msprop:Generator_ColumnPropNameInRow="Utilisateur_id" msprop:Generator_ColumnPropNameInTable="Utilisateur_idColumn" msprop:Generator_UserColumnName="Utilisateur_id" type="xs:long" />
+              <xs:element name="DateInscription" msprop:Generator_ColumnVarNameInTable="columnDateInscription" msprop:Generator_ColumnPropNameInRow="DateInscription" msprop:Generator_ColumnPropNameInTable="DateInscriptionColumn" msprop:Generator_UserColumnName="DateInscription" type="xs:dateTime" />
+              <xs:element name="DateAnnulation" msprop:Generator_ColumnVarNameInTable="columnDateAnnulation" msprop:Generator_ColumnPropNameInRow="DateAnnulation" msprop:Generator_ColumnPropNameInTable="DateAnnulationColumn" msprop:Generator_UserColumnName="DateAnnulation" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Annulation" msprop:Generator_ColumnVarNameInTable="columnAnnulation" msprop:Generator_ColumnPropNameInRow="Annulation" msprop:Generator_ColumnPropNameInTable="AnnulationColumn" msprop:Generator_UserColumnName="Annulation" type="xs:boolean" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

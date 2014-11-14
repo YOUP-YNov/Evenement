@@ -163,6 +163,7 @@
     <Compile Include="Controllers\EvenementController.cs" />
     <Compile Include="Controllers\EvenementEtatController.cs" />
     <Compile Include="Controllers\GenerateResponseMessage.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Models\ModelsUpdate\CategorieUpdate.cs" />
     <Compile Include="Models\ModelsUpdate\EvenementUpdate.cs" />
     <Compile Include="Models\EvenementCreate.cs" />
@@ -246,6 +247,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Image\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -57,15 +57,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             }
 
              return GenerateResponseMessage.initResponseMessage(result);
-            /* IEnumerable<Business.EvenementBll> list = 
-            List<EvenementTimelineFront> ret = new List<EvenementTimelineFront>();
-
-            foreach (var item in list)
-            {
-                ret.Add(Mapper.Map<Business.EvenementBll, EvenementTimelineFront>(item));
-            }
-
-            return ret;*/
         }
 
         /// <summary>

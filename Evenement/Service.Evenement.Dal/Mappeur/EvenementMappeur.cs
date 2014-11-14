@@ -187,6 +187,7 @@ namespace Service.Evenement.Dal.Mappeur
 
             result.Id = ImageRow.EvenementPhoto_id;
             result.Url = new StringBuilder(ImageRow.Adresse);
+            result.EvenementId = ImageRow.Evenement_id;
 
             return result;
         }
