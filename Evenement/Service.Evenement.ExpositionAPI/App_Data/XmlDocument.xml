@@ -661,12 +661,21 @@
             <param name="id">id de l'evenement</param>
             <returns></returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.ImageController.GetImageEvenement(System.Int64)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.ImageController.GetImagesEvenement(System.Int64)">
             <summary>
-            retourne le détail d'un événement
+            retourne les détail des images d'un evenement
             </summary>
             <param name="id">l'id de l'événement</param>
             <returns>un événement</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.ImageController.PostImage(System.String,System.Int64,System.Byte[])">
+            <summary>
+            Associe une image a un evenement
+            </summary>
+            <param name="fileName">nom du fichier</param>
+            <param name="evenement_id">id de l'évènement</param>
+            <param name="content">byte array de l'image</param>
+            <returns>Image uploadé</returns>
         </member>
         <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.Id">
             <summary>
