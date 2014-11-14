@@ -19,5 +19,7 @@ namespace Service.Evenement.Dal.Dao.Request
         public long LieuEvenementId { get; set; }
 
         public long UserId { get; set; }
+
+        public long ImageId { get; set; }
     }
 }

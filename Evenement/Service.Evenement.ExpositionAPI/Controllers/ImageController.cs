@@ -67,5 +67,19 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             }
             return GenerateResponseMessage.initResponseMessage(result);
         }
+
+        /// <summary>
+        /// Permet de delete une image associé a un évènement
+        /// </summary>
+        /// <param name="ImageId">Id de l'image</param>
+        /// <returns>CodeEnum de résultat</returns>
+        [HttpDelete]
+        [ResponseType(typeof(string))]
+        public HttpResponseMessage PostImage ( long ImageId )
+        {
+            long? imageId = ImageId;
+            ResponseObject result = new ResponseObject() { Value = EvenementBllService.DeleteImage(imageId).ToString() };
+            return GenerateResponseMessage.initResponseMessage(result);
+        }
     }
 }
