@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategorieDalService.cs" />
     <Compile Include="Dal\EventDalService.cs">
       <DependentUpon>EventDalService.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -58,6 +59,7 @@
     <Compile Include="Dao\EventStateEnum.cs" />
     <Compile Include="Dao\Request\EvenementDalRequest.cs" />
     <Compile Include="EvenementDalService.cs" />
+    <Compile Include="Interface\ICategorieDalService.cs" />
     <Compile Include="Interface\IEvenementDalService.cs" />
     <Compile Include="Mappeur\EvenementMappeur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
