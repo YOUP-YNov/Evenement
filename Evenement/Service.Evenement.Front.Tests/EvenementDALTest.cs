@@ -35,7 +35,5 @@ namespace Service.Evenement.Front.Tests
             service.EvenementDalService = mock.Object;
             var test = service.GetCategories();
         }
-
-
     }
 }

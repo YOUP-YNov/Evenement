@@ -2,10 +2,11 @@
 <xs:schema id="EventDalService" targetNamespace="http://tempuri.org/EventDalService.xsd" xmlns:mstns="http://tempuri.org/EventDalService.xsd" xmlns="http://tempuri.org/EventDalService.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="2" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
           <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="YoupDEVConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="YoupDEVConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Service.Evenement.Dal.Properties.Settings.GlobalReference.Default.YoupDEVConnectionString" Provider="System.Data.SqlClient" />
           <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="YoupDEVConnectionStringLucas" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="YoupDEVConnectionStringLucas (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Service.Evenement.Dal.Properties.Settings.GlobalReference.Default.YoupDEVConnectionStringLucas" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Service.Evenement.Dal.Properties.Settings.GlobalReference.Default.ConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EvenementTableAdapter" GeneratorDataComponentClassName="EvenementTableAdapter" Name="Evenement" UserDataComponentName="EvenementTableAdapter">
@@ -344,7 +345,7 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SubscriptionEventTableAdapter" GeneratorDataComponentClassName="SubscriptionEventTableAdapter" Name="SubscriptionEvent" UserDataComponentName="SubscriptionEventTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_ParticipeToEvenementOrCancel" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetParticipationByUserAndEventId" GetMethodModifier="Public" GetMethodName="GetParticipationByUserAndEventId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetParticipationByUserAndEventId" UserSourceName="GetParticipationByUserAndEventId">
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="false" GeneratorGetMethodName="GetParticipationByUserAndEventId" GetMethodModifier="Public" GetMethodName="GetParticipationByUserAndEventId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetParticipationByUserAndEventId" UserSourceName="GetParticipationByUserAndEventId">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_ParticipeToEvenementOrCancel</CommandText>
@@ -366,7 +367,7 @@
               <Mapping SourceColumn="Annulation" DataSetColumn="Annulation" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetParticipationByUser" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEventParticipationByUserId" GetMethodModifier="Public" GetMethodName="GetEventParticipationByUserId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEventParticipationByUserId" UserSourceName="GetEventParticipationByUserId">
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetEventParticipationByUserId" GetMethodModifier="Public" GetMethodName="GetEventParticipationByUserId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetEventParticipationByUserId" UserSourceName="GetEventParticipationByUserId">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetParticipationByUser</CommandText>
@@ -377,7 +378,7 @@
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="YoupDEVConnectionStringLucas (Settings)" DbObjectName="YoupDEV.dbo.ps_GetParticipantByEvent" DbObjectType="StoredProcedure" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetParticipantByEvent" GetMethodModifier="Public" GetMethodName="GetParticipantByEvent" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetParticipantByEvent" UserSourceName="GetParticipantByEvent">
+              <DbSource ConnectionRef="ConnectionString (Settings)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetParticipantByEvent" GetMethodModifier="Public" GetMethodName="GetParticipantByEvent" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetParticipantByEvent" UserSourceName="GetParticipantByEvent">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.ps_GetParticipantByEvent</CommandText>

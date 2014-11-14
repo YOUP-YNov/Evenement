@@ -4901,7 +4901,7 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::Service.Evenement.Dal.Properties.Settings.Default.YoupDEVConnectionStringLucas;
+            this._connection.ConnectionString = global::Service.Evenement.Dal.Properties.Settings.Default.ConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
