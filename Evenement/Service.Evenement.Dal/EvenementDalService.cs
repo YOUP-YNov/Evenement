@@ -136,6 +136,25 @@ namespace Service.Evenement.Dal
             return result.ToImageDao();
         }
 
+        public int DeleteImage ( EvenementDalRequest request )
+        {
+            if ( request == null || request.ImageId == 0)
+                return 2;
+
+            int result = 0;
+            // Tricks a enlever dans la version finale ( Boxing du 64 vers 32 ) Drop & Create PROC + Refresh Dataset
+            try
+            {
+                result = ImageDalService.DeleteImage(request.ImageId);
+            }
+            catch(Exception e)
+            {
+                result = 3;
+            }
+            
+            return result;
+        }
+
         public IEnumerable<EvenementDao> GetLieuEvenementByVille ( EvenementDalRequest request )
         {
             if ( request == null )
@@ -196,6 +215,13 @@ namespace Service.Evenement.Dal
         public IEnumerable<EvenementDao> GetEvenementByProfil(long id_profil)
         {
             var result = EventDalService.GetEventByProfil(id_profil);
+
+            return result.ToEvenementDao();
+        }
+
+        public IEnumerable<EvenementDao> GetEvenementByState(EventStateDao state)
+        {
+            var result = EventDalService.GetEventByState(state.Id);
 
             return result.ToEvenementDao();
         }
@@ -322,7 +348,8 @@ namespace Service.Evenement.Dal
         {
             if ( request == null && request.EvenementId == 0 && request.UserId == 0 )
                 return null;
-            var result = SubscriptionDalService.GetParticipationByUserAndEventId(request.EvenementId, request.UserId);
+            SubscriptionDalService.SubscribeOrUnsubscribe(request.EvenementId, request.UserId);
+            var result = SubscriptionDalService.GetParticipantByEvent(request.EvenementId);
             return result.ToSubscriberDao();
         }
 

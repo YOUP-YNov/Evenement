@@ -38,9 +38,6 @@ namespace Service.Evenement.ExpositionAPI.App_Start
             Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieFront>();
             Mapper.CreateMap<EvenementCategorieFront, EvenementCategorieBll>();
 
-            Mapper.CreateMap<EventLocationBll, EventLocationFront>();
-            Mapper.CreateMap<EventLocationFront, EventLocationBll>();
-
             Mapper.CreateMap<EvenementBll, EvenementFront>();
             Mapper.CreateMap<EvenementFront, EvenementBll>();
 

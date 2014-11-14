@@ -12,12 +12,14 @@ using System.Text;
 using Service.Evenement.ExpositionAPI.Models.ModelsUpdate;
 using Service.Evenement.Business.Response;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     /// <summary>
     /// controller d'évènement.
     /// </summary>
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EvenementController : ApiController
     {
         private EvenementBllService _evenementBllService;
@@ -35,6 +37,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
                 _evenementBllService = value;
             }
         }
+
         /// <summary>
         /// retourne la liste des evenements
         /// </summary>
@@ -49,7 +52,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
         public HttpResponseMessage Get(DateTime? date_search = null, long? id_Categorie = null,  bool? prenium = null , int max_result = 10,[FromUri] long? max_id = null,string text_search = null, string orderby = null)
         {
-
             ResponseObject result = EvenementBllService.GetEvenements(date_search, max_result, id_Categorie, max_id, prenium, text_search, orderby);
             if (result.Value != null)
             {
@@ -143,6 +145,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             ResponseObject response = EvenementBllService.PutEvenement(bllEvent);
             return GenerateResponseMessage.initResponseMessage(response);
         }
+
         /// <summary>
         /// Permet l'inscription et la desincription
         /// </summary>
@@ -183,12 +186,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 
             ResponseObject response = EvenementBllService.CreateEvenement(bllEvent);
             return GenerateResponseMessage.initResponseMessage(response);
-
-
-            InviteFriends invitations = new InviteFriends();
-            invitations.idEvent = bllEvent.Id;
-            invitations.idUser = bllEvent.OrganisateurId;
-            invitations.idFriends = evt.friends;
         }
 
         private void InviteFriends(InviteFriends invitations)
