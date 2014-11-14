@@ -347,7 +347,14 @@ namespace Service.Evenement.Dal
         }
 
 
+        public void SubscribeOrUnsubscribe(long eventId, long userId)
+        {
+            //var result = SubscriptionDalService.SubscribeOrUnsubscribe(
+            //                   eventId,
+            //                   userId
+            //                   );
 
+        }
 
 
         #endregion

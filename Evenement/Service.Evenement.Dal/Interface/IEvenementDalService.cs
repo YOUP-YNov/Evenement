@@ -24,7 +24,6 @@ namespace Service.Evenement.Dal.Interface
         IEnumerable<EvenementDao> UpdateEvenement ( EvenementDao Event );
         IEnumerable<EvenementDao> UpdateStateEvenement ( EvenementDao Event );
         IEnumerable<EvenementDao> CreateEvenement ( EvenementDalRequest request, EvenementDao Event );
-
-
+        IEnumerable<EvenementDao> SubscribeOrUnsubscribe(long eventId, long userId);
     }
 }

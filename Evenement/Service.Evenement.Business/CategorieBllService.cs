@@ -15,6 +15,7 @@ namespace Service.Evenement.Business
     public class CategorieBllService
     {
         private IEvenementDalService _evenementDalService;
+        private ICategorieDalService _categorieDalService;
 
         public IEvenementDalService EvenementDalService
         {
@@ -27,6 +28,20 @@ namespace Service.Evenement.Business
             set
             {
                 _evenementDalService = value;
+            }
+        }
+
+        public ICategorieDalService CategorieDalService
+        {
+            get
+            {
+                if (_categorieDalService == null)
+                    _categorieDalService = new CategorieDalService();
+                return _categorieDalService;
+            }
+            set
+            {
+                _categorieDalService = value;
             }
         }
 
@@ -73,9 +88,7 @@ namespace Service.Evenement.Business
         {
              EvenementCategorieDao daoEventCategorie = Mapper.Map<EvenementCategorieBll, EvenementCategorieDao>(categoriebll);
 
-            // TODO : corriger cette ligne :
-            //_evenementDalService.CategorieDalService.UpdateCategorie(daoEventCategorie.Id,daoEventCategorie.Libelle.ToString());
-
+             CategorieDalService.UpdateCategorie(daoEventCategorie);
             throw new NotImplementedException();
         }
        
