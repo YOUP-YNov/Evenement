@@ -37,6 +37,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
                 _evenementBllService = value;
             }
         }
+
         /// <summary>
         /// retourne la liste des evenements
         /// </summary>
@@ -51,7 +52,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
         public HttpResponseMessage Get(DateTime? date_search = null, long? id_Categorie = null,  bool? prenium = null , int max_result = 10,[FromUri] long? max_id = null,string text_search = null, string orderby = null)
         {
-
             ResponseObject result = EvenementBllService.GetEvenements(date_search, max_result, id_Categorie, max_id, prenium, text_search, orderby);
             if (result.Value != null)
             {
@@ -78,13 +78,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             }
 
             return GenerateResponseMessage.initResponseMessage(result);
-           /* IEnumerable<EvenementBll> bllEventList = EvenementBllService.GetByProfil(id_profil);
-            IEnumerable<EvenementTimelineFront> timelineFrontEventList = null;
-            foreach (var e in bllEventList)
-            {
-                timelineFrontEventList.ToList().Add(Mapper.Map<Business.EvenementBll, EvenementTimelineFront>(e));
-            }
-            return timelineFrontEventList;*/
         }
 
         /// <summary>
@@ -103,19 +96,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             }
 
             return GenerateResponseMessage.initResponseMessage(result);
-
-
-           /* IEnumerable<EvenementBll> tmp = EvenementBllService.GetReportedEvents();
-
-
-            List<EvenementFront> events = new List<EvenementFront>();
-
-            foreach (EvenementBll e in tmp)
-            {
-                events.Add(Mapper.Map<EvenementBll, EvenementFront>(e));
-            }
-
-            return events;*/
         }
 
         /// <summary>
@@ -147,6 +127,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             ResponseObject response = EvenementBllService.PutEvenement(bllEvent);
             return GenerateResponseMessage.initResponseMessage(response);
         }
+
         /// <summary>
         /// Permet l'inscription et la desincription
         /// </summary>
@@ -187,12 +168,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 
             ResponseObject response = EvenementBllService.CreateEvenement(bllEvent);
             return GenerateResponseMessage.initResponseMessage(response);
-
-
-            InviteFriends invitations = new InviteFriends();
-            invitations.idEvent = bllEvent.Id;
-            invitations.idUser = bllEvent.OrganisateurId;
-            invitations.idFriends = evt.friends;
         }
 
         private void InviteFriends(InviteFriends invitations)

@@ -38,6 +38,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         {
             bllService.ModifyEventState(id, new Business.EventStateBll(Business.EventStateEnum.Signaler));
         }
+
         /// <summary>
         /// desactiver un evenement
         /// </summary>

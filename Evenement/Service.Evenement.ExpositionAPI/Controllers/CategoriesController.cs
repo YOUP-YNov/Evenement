@@ -16,7 +16,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CategoriesController : ApiController
     {
-
         private CategorieBllService _categorieBllService;
 
         public CategorieBllService CategorieBllService
@@ -32,6 +31,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
                 _categorieBllService = value;
             }
         }
+
         /// <summary>
         /// Retourne la liste des catégories
         /// </summary>
@@ -46,9 +46,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
                 result.Value = Mapper.Map<IEnumerable<EvenementCategorieBll>, IEnumerable<EvenementCategorieFront>>((IEnumerable<EvenementCategorieBll>)result.Value);
             }
 
-            return GenerateResponseMessage.initResponseMessage(result);
-
-           
+            return GenerateResponseMessage.initResponseMessage(result);           
         }
 
         /// <summary>
@@ -56,12 +54,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">Id de la catégorie</param>
         /// <returns>une catégorie</returns>
-        
         [HttpGet]
         [ResponseType(typeof(EvenementCategorieFront))]
         public HttpResponseMessage Get(long id)
         {
-
             ResponseObject result = CategorieBllService.GetCategorie(id);
             if (result.Value is IEnumerable<EvenementCategorieBll>)
             {
@@ -74,13 +70,18 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <summary>
         /// Supprime une catégorie
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Id de la catégorie à supprimer</param>
         [HttpDelete]
         public void Delete(long id)
         {
             _categorieBllService.DeleteCategorie(id);
         }
 
+        /// <summary>
+        /// Permet de mettre à jour le libelle d'un catégorie
+        /// </summary>
+        /// <param name="id">Id de la catégorie à modifier</param>
+        /// <param name="libelle">Nouveau libelle</param>
         public void UpdateCategorie(long id, String libelle)
         {
             EvenementCategorieFront categorie = new EvenementCategorieFront();
@@ -91,6 +92,5 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 
             _categorieBllService.UpdateCategorie(bllEventCategorie);
         }
-
     }
 }
