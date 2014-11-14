@@ -13,8 +13,8 @@ namespace Service.Evenement.Dal.Interface
     {
         IEnumerable<EvenementCategorieDao> GetAllCategorie ( EvenementDalRequest request );
         IEnumerable<EventImageDao> GetImageByEventId ( EvenementDalRequest request );
-        IEnumerable<EventImageDao> CreateImage ( EvenementDalRequest request, EventImageDao image );
-        IEnumerable<EvenementDao> GetLieuEvenementByVille ( EvenementDalRequest request );
+        IEnumerable<EventImageDao> CreateImage(EventImageDao image);
+        IEnumerable<EvenementDao> GetLieuEvenementByVille(EvenementDalRequest request);
         IEnumerable<EvenementDao> GetLieuEvenementByCP ( EvenementDalRequest request );
         IEnumerable<EvenementDao> GetLieuEvenementById ( EvenementDalRequest request );
         IEnumerable<EvenementDao> CreateLieuEvenement ( EvenementDalRequest request, EventLocationDao location );
@@ -24,6 +24,6 @@ namespace Service.Evenement.Dal.Interface
         IEnumerable<EvenementDao> UpdateEvenement ( EvenementDao Event );
         IEnumerable<EvenementDao> UpdateStateEvenement ( EvenementDao Event );
         IEnumerable<EvenementDao> CreateEvenement ( EvenementDalRequest request, EvenementDao Event );
-        IEnumerable<EvenementDao> SubscribeOrUnsubscribe(long eventId, long userId);
+        void SubscribeOrUnsubscribe(long eventId, long userId);
     }
 }

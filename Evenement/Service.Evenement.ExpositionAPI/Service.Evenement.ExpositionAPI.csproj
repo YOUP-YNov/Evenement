@@ -120,12 +120,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Service.Evenement.Business\Service.Evenement.Business.csproj">
-      <Project>{5968d451-9f4f-4361-aacc-645ee4298f3b}</Project>
-      <Name>Service.Evenement.Business</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="App_Start\AutomapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -248,6 +242,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Image\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Service.Evenement.Business\Service.Evenement.Business.csproj">
+      <Project>{5968d451-9f4f-4361-aacc-645ee4298f3b}</Project>
+      <Name>Service.Evenement.Business</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

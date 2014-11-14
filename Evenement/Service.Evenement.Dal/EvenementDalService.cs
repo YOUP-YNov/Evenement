@@ -316,7 +316,8 @@ namespace Service.Evenement.Dal
         {
             if ( request == null && request.EvenementId == 0 && request.UserId == 0 )
                 return null;
-            var result = SubscriptionDalService.GetParticipationByUserAndEventId(request.EvenementId, request.UserId);
+            SubscriptionDalService.SubscribeOrUnsubscribe(request.EvenementId, request.UserId);
+            var result = SubscriptionDalService.GetParticipantByEvent(request.EvenementId);
             return result.ToSubscriberDao();
         }
 
@@ -346,7 +347,7 @@ namespace Service.Evenement.Dal
             return result.ToSubscriberDao();
         }
 
-
+  
 
 
 
