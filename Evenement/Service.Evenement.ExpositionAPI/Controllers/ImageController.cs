@@ -9,9 +9,11 @@ using AutoMapper;
 using Service.Evenement.Business;
 using Service.Evenement.Business.Response;
 using Service.Evenement.ExpositionAPI.Models;
+using System.Web.Http.Cors;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ImageController : Controller
     {
         private ImageBllService _evenementBllService;
@@ -31,18 +33,37 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// retourne le détail d'un événement
+        /// retourne les détail des images d'un evenement
         /// </summary>
         /// <param name="id">l'id de l'événement</param>
         /// <returns>un événement</returns>
         [HttpGet]
         [ResponseType(typeof(EventImageFront))]
-        public HttpResponseMessage GetImageEvenement ( long id )
+        public HttpResponseMessage GetImagesEvenement ( long id )
         {
             ResponseObject result = new ResponseObject() { Value = EvenementBllService.GetAllImageByEvent(id) };
             if ( result.Value != null )
             {
                 result.Value = Mapper.Map < IEnumerable<EventImageBll>, IEnumerable<EventImageFront>>((IEnumerable<EventImageBll>) result.Value);
+            }
+            return GenerateResponseMessage.initResponseMessage(result);
+        }
+
+        /// <summary>
+        /// Associe une image a un evenement
+        /// </summary>
+        /// <param name="fileName">nom du fichier</param>
+        /// <param name="evenement_id">id de l'évènement</param>
+        /// <param name="content">byte array de l'image</param>
+        /// <returns>Image uploadé</returns>
+        [HttpPost]
+        [ResponseType(typeof(EventImageFront))]
+        public HttpResponseMessage PostImage ( string fileName, long evenement_id, byte[] content )
+        {
+            ResponseObject result = new ResponseObject() { Value = EvenementBllService.SaveImageToEvent(fileName, content, evenement_id) };
+            if ( result.Value != null )
+            {
+                result.Value = Mapper.Map<IEnumerable<EventImageBll>, IEnumerable<EventImageFront>>((IEnumerable<EventImageBll>) result.Value);
             }
             return GenerateResponseMessage.initResponseMessage(result);
         }

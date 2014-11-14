@@ -536,7 +536,14 @@
             <summary>
             Supprime une catégorie
             </summary>
-            <param name="id"></param>
+            <param name="id">Id de la catégorie à supprimer</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategoriesController.UpdateCategorie(System.Int64,System.String)">
+            <summary>
+            Permet de mettre à jour le libelle d'un catégorie
+            </summary>
+            <param name="id">Id de la catégorie à modifier</param>
+            <param name="libelle">Nouveau libelle</param>
         </member>
         <member name="T:Service.Evenement.ExpositionAPI.Controllers.EvenementController">
             <summary>
@@ -654,12 +661,21 @@
             <param name="id">id de l'evenement</param>
             <returns></returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.ImageController.GetImageEvenement(System.Int64)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.ImageController.GetImagesEvenement(System.Int64)">
             <summary>
-            retourne le détail d'un événement
+            retourne les détail des images d'un evenement
             </summary>
             <param name="id">l'id de l'événement</param>
             <returns>un événement</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.ImageController.PostImage(System.String,System.Int64,System.Byte[])">
+            <summary>
+            Associe une image a un evenement
+            </summary>
+            <param name="fileName">nom du fichier</param>
+            <param name="evenement_id">id de l'évènement</param>
+            <param name="content">byte array de l'image</param>
+            <returns>Image uploadé</returns>
         </member>
         <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.Id">
             <summary>
