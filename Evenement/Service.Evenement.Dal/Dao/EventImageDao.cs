@@ -18,6 +18,9 @@ namespace Service.Evenement.Dal.Dao
         /// </summary>
         public long Id { get; set; }
 
+        /// <summary>
+        /// Assigne ou récupère l'id de l'evenement
+        /// </summary>
         public long EvenementId { get; set; }
     }
 }

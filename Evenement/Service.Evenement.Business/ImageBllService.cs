@@ -107,7 +107,7 @@ namespace Service.Evenement.Business
             return arr;
         }
 
-        public IEnumerable<EventImageBll> SaveImageToEvent ( string fileName, byte[] content , int EvenementId)
+        public IEnumerable<EventImageBll> SaveImageToEvent ( string fileName, byte[] content , long EvenementId)
         {
             if ( String.IsNullOrWhiteSpace(fileName) || content == null )
                 return null;
@@ -127,7 +127,7 @@ namespace Service.Evenement.Business
             return Mapper.Map<IEnumerable<EventImageDao>, IEnumerable<EventImageBll>>(result);
         }
 
-        public IEnumerable<EventImageBll> GetAllImageByEvent ( int EvenementId )
+        public IEnumerable<EventImageBll> GetAllImageByEvent ( long EvenementId )
         {
             if ( EvenementId == 0 )
                 return null;
