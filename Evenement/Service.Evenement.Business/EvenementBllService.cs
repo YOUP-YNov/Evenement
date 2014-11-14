@@ -166,7 +166,7 @@ namespace Service.Evenement.Business
                      if (daoEventList.Count() > 0)
                      {
                          response.State = ResponseState.Ok;
-                         response.Value = daoEventList;
+                         response.Value = Mapper.Map<IEnumerable<EvenementDao>,IEnumerable<EvenementBll>> (daoEventList);
                      }
                      else
                      {
