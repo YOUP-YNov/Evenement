@@ -166,6 +166,22 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         {
             EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evt.evenement);
 
+            WebClient client = new WebClient();
+            client.Headers[HttpRequestHeader.ContentType] = "application/json";
+            //la création de topic est censé retourner un entier, l'id du topic
+            //En l'état actuel ce n'est pas le cas, mais ils travaillent dessus
+            string id_string_topic=client.UploadString("http://forumyoup.apphb.com/Help/Api/POST-api-Topic",
+                "{Nom:"+bllEvent.TitreEvenement+",DescriptifTopic:"+bllEvent.DescriptionEvenement+
+                ",DateCreation:"+DateTime.Now+
+                ",Utilisateur_id:"+bllEvent.OrganisateurId+" }");
+
+            int valeur;
+            if(int.TryParse(id_string_topic,out valeur))
+            {
+                int id_topic = valeur;
+                bllEvent.Topic_id = id_topic;
+            }
+            
             ResponseObject response = EvenementBllService.CreateEvenement(bllEvent);
             return GenerateResponseMessage.initResponseMessage(response);
         }

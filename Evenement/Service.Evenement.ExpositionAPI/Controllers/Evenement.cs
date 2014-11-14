@@ -106,5 +106,10 @@
         /// Assigne ou récupère le statut d'un evenement
         /// </summary>
         public string Statut { get; set; }
+
+        /// <summary>
+        /// Assigne ou récupère l'id d'un topic
+        /// </summary>
+        public int Topic_id { get; set; }
     }
 }

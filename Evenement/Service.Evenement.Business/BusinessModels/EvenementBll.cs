@@ -108,6 +108,12 @@
         /// </summary>
         public string Statut { get; set; }
 
+          /// <summary>
+        /// Assigne ou récupère l'id d'un topic
+        /// </summary>
+        public int Topic_id { get; set; }
+    
+
         public bool evenementUpdateIsValid()
         {
             if (this.Id != null && this.OrganisateurId != null && this.Categorie != null
