@@ -9,9 +9,11 @@ using Service.Evenement.Business;
 using AutoMapper;
 using System.Web.Http.Description;
 using Service.Evenement.Business.Response;
+using System.Web.Http.Cors;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CategoriesController : ApiController
     {
 

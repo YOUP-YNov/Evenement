@@ -7,12 +7,14 @@ using System.Web.Http;
 using Service.Evenement.ExpositionAPI.Models;
 using Service.Evenement.Business;
 using AutoMapper;
+using System.Web.Http.Cors;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     /// <summary>
     /// controller pour les Etat de l'évènement
     /// </summary>
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EvenementEtatController : ApiController
     {
         EvenementBllService bllService;

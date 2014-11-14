@@ -12,12 +12,14 @@ using System.Text;
 using Service.Evenement.ExpositionAPI.Models.ModelsUpdate;
 using Service.Evenement.Business.Response;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     /// <summary>
     /// controller d'évènement.
     /// </summary>
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EvenementController : ApiController
     {
         private EvenementBllService _evenementBllService;

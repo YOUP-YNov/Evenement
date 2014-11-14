@@ -9,9 +9,11 @@ using AutoMapper;
 using Service.Evenement.Business;
 using Service.Evenement.Business.Response;
 using Service.Evenement.ExpositionAPI.Models;
+using System.Web.Http.Cors;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ImageController : Controller
     {
         private ImageBllService _evenementBllService;
