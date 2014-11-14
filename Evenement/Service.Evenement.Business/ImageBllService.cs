@@ -12,6 +12,9 @@ using System.IO;
 using System.Drawing;
 using System.Configuration;
 using System.Collections.Specialized;
+using Service.Evenement.Dal.Dao.Request;
+using Service.Evenement.Dal.Dao;
+using AutoMapper;
 
 namespace Service.Evenement.Business
 {
@@ -62,7 +65,7 @@ namespace Service.Evenement.Business
 
         private CloudBlobClient blob;
 
-        public string SaveImage ( string fileName, byte[] content )
+        private string SaveImage ( string fileName, byte[] content )
         {
             blob = account.CreateCloudBlobClient();
 
@@ -102,6 +105,41 @@ namespace Service.Evenement.Business
                 arr = ms.ToArray();
             }
             return arr;
+        }
+
+        public IEnumerable<EventImageBll> SaveImageToEvent ( string fileName, byte[] content , int EvenementId)
+        {
+            if ( String.IsNullOrWhiteSpace(fileName) || content == null )
+                return null;
+
+            var ImageUrl = SaveImage(fileName, content);
+
+            if(String .IsNullOrWhiteSpace(ImageUrl))
+                return null;
+            
+            EventImageDao request = new EventImageDao(){
+                EvenementId = EvenementId,
+                Url = new StringBuilder(ImageUrl)
+            };
+
+            var result = EvenementDalService.CreateImage(request);
+
+            return Mapper.Map<IEnumerable<EventImageDao>, IEnumerable<EventImageBll>>(result);
+        }
+
+        public IEnumerable<EventImageBll> GetAllImageByEvent ( int EvenementId )
+        {
+            if ( EvenementId == 0 )
+                return null;
+
+            var request = new EvenementDalRequest()
+            {
+                EvenementId = EvenementId
+            };
+
+            var result = EvenementDalService.GetImageByEventId(request);
+
+            return Mapper.Map<IEnumerable<EventImageDao>, IEnumerable<EventImageBll>>(result);
         }
     }
 }

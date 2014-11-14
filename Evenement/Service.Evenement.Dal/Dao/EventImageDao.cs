@@ -17,5 +17,7 @@ namespace Service.Evenement.Dal.Dao
         /// Assigne ou récupère l'id de l'image
         /// </summary>
         public long Id { get; set; }
+
+        public long EvenementId { get; set; }
     }
 }
