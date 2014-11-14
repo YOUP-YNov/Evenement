@@ -122,17 +122,17 @@ namespace Service.Evenement.Dal
             if ( request == null )
                 return null;
             // Tricks a enlever dans la version finale ( Boxing du 64 vers 32 ) Drop & Create PROC + Refresh Dataset
-            var result = ImageDalService.GetImagesByEventId(Convert.ToInt32(request.EvenementId));
+            var result = ImageDalService.GetImagesByEventId(request.EvenementId);
             return result.ToImageDao();
         }
 
-        public IEnumerable<EventImageDao> CreateImage ( EvenementDalRequest request, EventImageDao image )
+        public IEnumerable<EventImageDao> CreateImage (EventImageDao image )
         {
-            if ( request == null || image == null )
+            if (image == null )
                 return null;
 
             // Tricks a enlever dans la version finale ( Boxing du 64 vers 32 ) Drop & Create PROC + Refresh Dataset
-            var result = ImageDalService.AddImageToEvent(Convert.ToInt32(request.EvenementId), image.Url.ToString());
+            var result = ImageDalService.AddPhotoToEvent(image.EvenementId, image.Url.ToString());
             return result.ToImageDao();
         }
 
