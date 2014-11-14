@@ -41,8 +41,8 @@ namespace Service.Evenement.ExpositionAPI.App_Start
             Mapper.CreateMap<EvenementBll, EvenementFront>();
             Mapper.CreateMap<EvenementFront, EvenementBll>();
 
-            Mapper.CreateMap<EvenementBll, EvenementTimelineFront>().ForMember(e => e.Evenement_id, d => d.MapFrom(src => src.Id)).ForMember( e => e.LieuEvenement_id , d => d.MapFrom( src => src.EventAdresse.Id));
-            Mapper.CreateMap<EvenementTimelineFront, EvenementBll>().ForMember( e => e.Id , d=> d.MapFrom( src => src.Evenement_id));
+            Mapper.CreateMap<EvenementBll, EvenementTimelineFront>().ForMember(e => e.Evenement_id, d => d.MapFrom(src => src.Id)).ForMember(e => e.LieuEvenement_id, d => d.MapFrom(src => src.EventAdresse.Id)).ForMember(e => e.Prix, d => d.MapFrom(src => src.Price)).ForMember(e => e.Etat_id, d => d.MapFrom(src => src.EtatEvenement.Id));
+            Mapper.CreateMap<EvenementTimelineFront, EvenementBll>().ForMember(e => e.Id, d => d.MapFrom(src => src.Evenement_id)).ForMember(e => e.EventAdresse.Id, d => d.MapFrom(src => src.LieuEvenement_id)).ForMember(e => e.Price, d => d.MapFrom(src => src.Prix)).ForMember(e => e.EtatEvenement.Id, d => d.MapFrom(src => src.Etat_id));
 
             Mapper.CreateMap<EventStateBll, EventStateFront>();
             Mapper.CreateMap<EventStateFront, EventStateBll>();
