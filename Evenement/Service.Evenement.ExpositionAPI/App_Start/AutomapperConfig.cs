@@ -65,6 +65,10 @@ namespace Service.Evenement.ExpositionAPI.App_Start
 
             Mapper.CreateMap<EventImageFront, EventImageBll>();
             Mapper.CreateMap<EventImageBll, EventImageFront>();
+
+            Mapper.CreateMap<EventLocationFront, EventLocationBll>();
+            Mapper.CreateMap<EventLocationBll, EventLocationFront>();
+
             //création de map pour les string builder
             Mapper.CreateMap<string, StringBuilder>().ConvertUsing(s =>
             {

@@ -112,7 +112,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             ResponseObject result =  EvenementBllService.GetEvenementById(id);
             if (result.Value!= null)
             {
-                result.Value = Mapper.Map<EvenementBll, EvenementFront>((EvenementBll)result.Value); // TODO : voir pourquoi ça crash
+                result.Value = Mapper.Map<EvenementBll, EvenementFront>((EvenementBll)result.Value);
             }
             return GenerateResponseMessage.initResponseMessage(result);
         }
