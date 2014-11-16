@@ -101,10 +101,10 @@ namespace Service.Evenement.Business
         /// <param name="text_search"></param>
         /// <param name="orderby"></param>
         /// <returns>liste d'évènements</returns>
-        public ResponseObject GetEvenements(DateTime? date_search = null, int max_result = 10, long? categorie = -1, long? max_id = null, bool? premium = null, string text_search = null, string orderby = null)
+        public ResponseObject GetEvenements(DateTime? date_search = null, int max_result = 10, long? categorie = -1, long? max_id = null, bool? premium = null, string text_search = null, string orderby = null, DateTime? startRange = null, DateTime? endRange = null)
         {
 
-            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement(date_search,premium, max_result, categorie, max_id,text_search ,orderby);
+            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement(date_search,premium, max_result, categorie, max_id,text_search ,orderby, startRange, endRange);
             IEnumerable<EvenementBll> bllEvent = Mapper.Map < IEnumerable<EvenementDao>, IEnumerable<EvenementBll>>(tmp);
             ResponseObject response = new ResponseObject();
             if (bllEvent != null)

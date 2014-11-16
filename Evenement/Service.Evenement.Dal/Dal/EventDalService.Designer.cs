@@ -3536,6 +3536,8 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TextEvenement", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Premium", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 1, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NombreMaxResult", global::System.Data.SqlDbType.BigInt, 8, global::System.Data.ParameterDirection.Input, 19, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@StartRange", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EndRange", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[5] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[5].Connection = this.Connection;
             this._commandCollection[5].CommandText = "dbo.ps_GetEventByCP";
@@ -3802,7 +3804,7 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual EventDalService.EvenementDataTable GetEvenements(global::System.Nullable<long> EvenementId, global::System.Nullable<long> CategorieId, global::System.Nullable<global::System.DateTime> DateEvenement, string TextEvenement, global::System.Nullable<bool> Premium, global::System.Nullable<long> NombreMaxResult) {
+        public virtual EventDalService.EvenementDataTable GetEvenements(global::System.Nullable<long> EvenementId, global::System.Nullable<long> CategorieId, global::System.Nullable<global::System.DateTime> DateEvenement, string TextEvenement, global::System.Nullable<bool> Premium, global::System.Nullable<long> NombreMaxResult, global::System.Nullable<global::System.DateTime> StartRange, global::System.Nullable<global::System.DateTime> EndRange) {
             this.Adapter.SelectCommand = this.CommandCollection[4];
             if ((EvenementId.HasValue == true)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = ((long)(EvenementId.Value));
@@ -3839,6 +3841,18 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters {
             }
             else {
                 this.Adapter.SelectCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            if ((StartRange.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[7].Value = ((System.DateTime)(StartRange.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            if ((EndRange.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[8].Value = ((System.DateTime)(EndRange.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[8].Value = global::System.DBNull.Value;
             }
             EventDalService.EvenementDataTable dataTable = new EventDalService.EvenementDataTable();
             this.Adapter.Fill(dataTable);

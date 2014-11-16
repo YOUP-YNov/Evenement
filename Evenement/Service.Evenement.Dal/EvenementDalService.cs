@@ -199,9 +199,9 @@ namespace Service.Evenement.Dal
             return result.ToEvenementDao();
         }
 
-        public IEnumerable<EvenementDao> GetAllEvenement(DateTime? date_search, bool? premium, int max_result, long? categorie, long? max_id, string orderby = null, string text_search = null)
+        public IEnumerable<EvenementDao> GetAllEvenement(DateTime? date_search, bool? premium, int max_result, long? categorie, long? max_id, string orderby = null, string text_search = null, DateTime? startRange = null, DateTime? endRange = null)
         {
-            var result = EventDalService.GetEvenements(max_id,categorie,date_search,text_search,premium,max_result);
+            var result = EventDalService.GetEvenements(max_id,categorie,date_search,text_search,premium,max_result, startRange, endRange);
 
             return result.ToEvenementDao();
         }

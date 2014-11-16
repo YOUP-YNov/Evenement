@@ -47,12 +47,14 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="text_search">le text de la recherche</param>
         /// <param name="max_id">l'id du derniers evenements</param>
         /// <param name="orderby">le nom du trie (date, categorie, disponnible)</param>
+        /// <param name="startRange">Date de début la plage</param>
+        /// <param name="endRange">Date de fin de la plage</param>
         /// <returns>la liste des événements</returns>
         [HttpGet]
         [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
-        public HttpResponseMessage Get(DateTime? date_search = null, long? id_Categorie = null,  bool? prenium = null , int max_result = 10,[FromUri] long? max_id = null,string text_search = null, string orderby = null)
+        public HttpResponseMessage Get(DateTime? date_search = null, long? id_Categorie = null,  bool? prenium = null , int max_result = 10,[FromUri] long? max_id = null,string text_search = null, string orderby = null, DateTime? startRange = null, DateTime? endRange = null)
         {
-            ResponseObject result = EvenementBllService.GetEvenements(date_search, max_result, id_Categorie, max_id, prenium, text_search, orderby);
+            ResponseObject result = EvenementBllService.GetEvenements(date_search, max_result, id_Categorie, max_id, prenium, text_search, orderby, startRange, endRange);
             if (result.Value != null)
             {
                 result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementTimelineFront>>((IEnumerable<EvenementBll>)result.Value);
