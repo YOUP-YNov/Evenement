@@ -17,7 +17,7 @@ using System.Web.Http.Cors;
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     /// <summary>
-    /// controller d'évènement.
+    /// Controleur d'évènement.
     /// </summary>
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EvenementController : ApiController
@@ -39,17 +39,17 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// retourne la liste des evenements
+        /// Retourne la liste des evenements
         /// </summary>
-        /// <param name="date_search">parametre optionnel pour la recherche des evenements à une date</param>
-        /// <param name="max_result">le maximum de résultat </param>
-        /// <param name="categorie"> l'id de la catégorie</param>
-        /// <param name="text_search">le text de la recherche</param>
-        /// <param name="max_id">l'id du derniers evenements</param>
-        /// <param name="orderby">le nom du trie (date, categorie, disponnible)</param>
-        /// <param name="startRange">Date de début la plage</param>
+        /// <param name="date_search">Parametre optionnel pour la recherche des evenements à une date</param>
+        /// <param name="max_result">Le maximum de résultat </param>
+        /// <param name="categorie"> L'id de la catégorie</param>
+        /// <param name="text_search">Le text de la recherche</param>
+        /// <param name="max_id">L'id du derniers evenements</param>
+        /// <param name="orderby">Le nom du tri (date, categorie, disponnible)</param>
+        /// <param name="startRange">Date de début de la plage</param>
         /// <param name="endRange">Date de fin de la plage</param>
-        /// <returns>la liste des événements</returns>
+        /// <returns>La liste des événements</returns>
         [HttpGet]
         [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
         public HttpResponseMessage Get(DateTime? date_search = null, long? id_Categorie = null,  bool? prenium = null , int max_result = 10,[FromUri] long? max_id = null,string text_search = null, string orderby = null, DateTime? startRange = null, DateTime? endRange = null)
@@ -64,10 +64,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// retourne la liste des événements d'un profil 
+        /// Retourne la liste des événements d'un profil 
         /// </summary>
-        /// <param name="id_profil">id du profil</param>
-        /// <returns>liste d'événements</returns>
+        /// <param name="id_profil">Id du profil</param>
+        /// <returns>Liste d'événements</returns>
         [HttpGet]
         [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
         [Route("api/Profil/{id_profil}/Evenements")]
@@ -101,10 +101,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// retourne le détail d'un événement
+        /// Retourne le détail d'un événement
         /// </summary>
-        /// <param name="id">l'id de l'événement</param>
-        /// <returns>un événement</returns>
+        /// <param name="id">L'id de l'événement</param>
+        /// <returns>Un événement</returns>
         [HttpGet]
         [ResponseType(typeof(EvenementFront))]
         public HttpResponseMessage GetEvenement(long id)
@@ -118,10 +118,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// retourne les évènements d'un département 
+        /// Retourne les évènements d'un département 
         /// </summary>
         /// <param name="dept"></param>
-        /// <returns>liste d'évènements</returns>
+        /// <returns>Liste d'évènements</returns>
         [HttpGet]
         [ResponseType(typeof(EvenementFront))]
         public HttpResponseMessage GetEvenement(int dept)
@@ -136,10 +136,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// modification de l'évènement
+        /// Modification de l'évènement
         /// </summary>
-        /// <param name="id">id de l'évènement à modifier</param>
-        /// <param name="evenement">évènement</param>
+        /// <param name="id">Id de l'évènement à modifier</param>
+        /// <param name="evenement">Evènement</param>
         [HttpPut]
         public HttpResponseMessage Put(long id_evenement, [FromBody]EvenementUpdate evenement)
         {
@@ -151,19 +151,19 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <summary>
         /// Permet l'inscription et la desincription
         /// </summary>
-        /// <param name="idEvenement">id de l'evenement</param>
-        /// <param name="idProfil">id du profil</param>
+        /// <param name="idEvenement">Id de l'evenement</param>
+        /// <param name="idProfil">Id du profil</param>
         public void PostInscriptionDeinscription(long idEvenement, long idProfil)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// desactivation de l'evenement 
+        /// Desactivation de l'evenement 
         /// c'est une mise en archive. L'évenement n'est plus consultable. 
         /// </summary>
-        /// <param name="id">id de l'evenement</param>
-        /// <param name="id_profil">id du profil</param>
+        /// <param name="id">Id de l'evenement</param>
+        /// <param name="id_profil">Id du profil</param>
         [HttpDelete]
         [Route("Evenements/{id_evenement}/Desactiver")]
         public HttpResponseMessage DesactivateEvenement(long id_evenement, [FromBody] long id_profil)
@@ -178,9 +178,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// fonction de création de l'évènement
+        /// Fonction de création de l'évènement
         /// </summary>
-        /// <param name="evt">l'évènement à creer</param>
+        /// <param name="evt">L'évènement à créer</param>
         [HttpPost]
         public HttpResponseMessage Create([FromBody] EvenementCreate evt)
         {
@@ -226,7 +226,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// permet de modifier l'etat d'un evenement (Admin)
+        /// Permet de modifier l'etat d'un evenement (Admin)
         /// </summary>
         /// <param name="id_profil">id de profil</param>
         /// <param name="id_evenement">id de l'evenement</param>
@@ -239,8 +239,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <summary>
         /// Permet de lister l'ensemble de evenements suivant un etat (ADmin)
         /// </summary>
-        /// <param name="id_profil">id du profil</param>
-        /// <param name="id_etat">id de l'etat</param>
+        /// <param name="id_profil">Id du profil</param>
+        /// <param name="id_etat">Id de l'etat</param>
         /// <returns></returns>
         public IEnumerable<EvenementTimelineFront> GetEvenementsEtats(int id_profil, int id_etat)
         {
