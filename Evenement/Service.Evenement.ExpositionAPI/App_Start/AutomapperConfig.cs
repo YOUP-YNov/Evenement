@@ -43,12 +43,11 @@ namespace Service.Evenement.ExpositionAPI.App_Start
 
             Mapper.CreateMap<EvenementBll, EvenementTimelineFront>().ForMember(
                 e => e.Evenement_id, d => d.MapFrom(src => src.Id)).ForMember(
-                e => e.LieuEvenement_id, d => d.MapFrom(src => src.EventAdresse.Id)).ForMember(
                 e => e.Prix, d => d.MapFrom(src => src.Price)).ForMember(
-                e => e.Etat_id, d => d.MapFrom(src => src.EtatEvenement.Id));
+                e => e.Etat, d => d.MapFrom(src => src.EtatEvenement.Nom)).ForMember(
+                e => e.ImageUrl, d => d.MapFrom(src => src.Galleries.Count() > 0 ? src.Galleries.First().Url : string.Empty));
             Mapper.CreateMap<EvenementTimelineFront, EvenementBll>().ForMember(
                 e => e.Id, d => d.MapFrom(src => src.Evenement_id)).ForMember(
-                e => e.EventAdresse, d => d.MapFrom(src => src)).ForMember(
                 e => e.Price, d => d.MapFrom(src => src.Prix)).ForMember(
                 e => e.EtatEvenement, d => d.MapFrom(src => src));
 
