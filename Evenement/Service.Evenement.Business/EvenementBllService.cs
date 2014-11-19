@@ -9,6 +9,9 @@ using Service.Evenement.Dal;
 using Service.Evenement.Dal.Dao.Request;
 using Service.Evenement.Business.Response;
 using Service.Evenement.Business.BusinessModels;
+using System.Net;
+using Newtonsoft.Json;
+using System.Web.Helpers;
 
 namespace Service.Evenement.Business
 {
@@ -20,19 +23,19 @@ namespace Service.Evenement.Business
         {
             get
             {
-                if ( _evenementDalService == null )
+                if (_evenementDalService == null)
                     _evenementDalService = new EvenementDalService();
                 return _evenementDalService;
-        }
+            }
             set
-        {
+            {
                 _evenementDalService = value;
             }
         }
 
-        public EvenementBllService ()
+        public EvenementBllService()
         {
-            
+
         }
 
         public ResponseObject CreateEvenement(EvenementBll evenementBll)
@@ -40,15 +43,15 @@ namespace Service.Evenement.Business
             ResponseObject response = new ResponseObject();
             if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
             {
-            EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
+                EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
                 IEnumerable<EvenementDao> result = EvenementDalService.CreateEvenement(new EvenementDalRequest(), daoEvent);
                 if (result.Count() > 0)
                 {
-                        response.State = ResponseState.Created;
+                    response.State = ResponseState.Created;
                 }
                 else
                 {
-                        response.State = ResponseState.NotModified;
+                    response.State = ResponseState.NotModified;
                 }
             }
             else
@@ -73,7 +76,7 @@ namespace Service.Evenement.Business
                     if (result.Count() > 0)
                     {
                         response.State = ResponseState.Ok;
-        }
+                    }
                     else
                     {
                         response.State = ResponseState.NotModified;
@@ -103,13 +106,28 @@ namespace Service.Evenement.Business
         /// <returns>liste d'évènements</returns>
         public ResponseObject GetEvenements(DateTime? date_search = null, int max_result = 10, long? categorie = -1, long? max_id = null, bool? premium = null, string text_search = null, string orderby = null, DateTime? startRange = null, DateTime? endRange = null)
         {
+            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement(date_search, premium, max_result, categorie, max_id, text_search, orderby, startRange, endRange);
+            IEnumerable<EvenementBll> bllEvent = Mapper.Map<IEnumerable<EvenementDao>, IEnumerable<EvenementBll>>(tmp);
+            WebClient client = new WebClient();
 
-            IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement(date_search,premium, max_result, categorie, max_id,text_search ,orderby, startRange, endRange);
-            IEnumerable<EvenementBll> bllEvent = Mapper.Map < IEnumerable<EvenementDao>, IEnumerable<EvenementBll>>(tmp);
+            foreach (EvenementBll e in bllEvent)
+            {
+                string result = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/UserSmall/" + e.OrganisateurId);
+                if (!string.IsNullOrWhiteSpace(result))
+                {
+                    dynamic json = Json.Decode(result);
+                    if (json != null)
+                    {
+                        e.OrganisateurPseudo = json.Pseudo;
+                        e.OrganisateurImageUrl = json.PhotoChemin;
+                    }
+                }
+            }
+
             ResponseObject response = new ResponseObject();
             if (bllEvent != null)
             {
-                if(bllEvent.Count()>0)
+                if (bllEvent.Count() > 0)
                 {
                     response.State = ResponseState.Ok;
                     response.Value = bllEvent;
@@ -125,7 +143,7 @@ namespace Service.Evenement.Business
             }
             return response;
         }
-        
+
         /// <summary>
         /// retourne un évènement par rapport à son ID
         /// </summary>
@@ -134,18 +152,29 @@ namespace Service.Evenement.Business
         public ResponseObject GetEvenementById(long id)
         {
             ResponseObject response = new ResponseObject();
-            if(id == null)
+            if (id == null)
             {
                 response.State = ResponseState.BadRequest;
             }
             else
-        {
-            EvenementDalRequest request = new EvenementDalRequest();
-            request.EvenementId = id;
+            {
+                EvenementDalRequest request = new EvenementDalRequest();
+                request.EvenementId = id;
                 var evt = EvenementDalService.getEvenementId(request);
-            EvenementBll evtBLL = Mapper.Map<EvenementDao, EvenementBll>(evt);
+                EvenementBll evtBLL = Mapper.Map<EvenementDao, EvenementBll>(evt);
                 if (evtBLL != null)
                 {
+                    WebClient client = new WebClient();
+                    string result = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/UserSmall/" + evtBLL.OrganisateurId);
+                    if (!string.IsNullOrWhiteSpace(result))
+                    {
+                        dynamic json = Json.Decode(result);
+                        if (json != null)
+                        {
+                            evtBLL.OrganisateurPseudo = json.Pseudo;
+                            evtBLL.OrganisateurImageUrl = json.PhotoChemin;
+                        }
+                    }
                     response.State = ResponseState.Ok;
                     response.Value = evtBLL;
                 }
@@ -155,15 +184,15 @@ namespace Service.Evenement.Business
                 }
             }
 
-
             return response;
         }
+
         /// <summary>
         /// retourne la liste des évènements d'un département
         /// </summary>
         /// <param name="dept"></param>
         /// <returns>liste d'évènements</returns>
-        public ResponseObject GetEvenementByDept( int dept )
+        public ResponseObject GetEvenementByDept(int dept)
         {
             ResponseObject response = new ResponseObject();
             if (dept == default(int))
@@ -190,35 +219,35 @@ namespace Service.Evenement.Business
         public ResponseObject GetByProfil(long id_profil)
         {
             // pour l'instant les event dont le profil est organisateur (api profil pour gerer les event ou le profil est inscrit)
-             ResponseObject response = new ResponseObject();
-             if (id_profil == default(long))
-             {
-                 response.State = ResponseState.BadRequest;
-             }
-             else
-             {
-                 IEnumerable<EvenementDao> daoEventList = EvenementDalService.GetEvenementByProfil(id_profil);
-                 if (daoEventList != null)
-                 {
-                     if (daoEventList.Count() > 0)
-                     {
-                         response.State = ResponseState.Ok;
-                         response.Value = Mapper.Map<IEnumerable<EvenementDao>,IEnumerable<EvenementBll>> (daoEventList);
-                     }
-                     else
-                     {
-                         response.State = ResponseState.NoContent;
-                     }
-                 }
-                 else
-                 {
+            ResponseObject response = new ResponseObject();
+            if (id_profil == default(long))
+            {
+                response.State = ResponseState.BadRequest;
+            }
+            else
+            {
+                IEnumerable<EvenementDao> daoEventList = EvenementDalService.GetEvenementByProfil(id_profil);
+                if (daoEventList != null)
+                {
+                    if (daoEventList.Count() > 0)
+                    {
+                        response.State = ResponseState.Ok;
+                        response.Value = Mapper.Map<IEnumerable<EvenementDao>, IEnumerable<EvenementBll>>(daoEventList);
+                    }
+                    else
+                    {
+                        response.State = ResponseState.NoContent;
+                    }
+                }
+                else
+                {
 
-                     response.State = ResponseState.NotFound;
-                 }
-             }
+                    response.State = ResponseState.NotFound;
+                }
+            }
 
-             return response;
-            }           
+            return response;
+        }
 
         /// <summary>
         /// Retourne la liste des événements signalés
@@ -228,8 +257,8 @@ namespace Service.Evenement.Business
         {
             //IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
             //IEnumerable<EvenementBll> events = from e in tmp
-                                                      // where e.EtatEvenement.Nom == Dal.Dao.EventStateEnum.Signaler
-                                                       //select Mapper.Map<EvenementDao, EvenementBll>(e);
+            // where e.EtatEvenement.Nom == Dal.Dao.EventStateEnum.Signaler
+            //select Mapper.Map<EvenementDao, EvenementBll>(e);
             return null;
         }
 
@@ -255,7 +284,7 @@ namespace Service.Evenement.Business
             EvenementDao eventDao = EvenementDalService.getEvenementId(request);
 
             switch (state.Nom)
-        {
+            {
                 case EventStateEnum.Annuler:
                     eventDao.EtatEvenement = new EventStateDao(Dal.Dao.EventStateEnum.Annuler);
                     break;
@@ -293,10 +322,10 @@ namespace Service.Evenement.Business
                 if (e != null)
                 {
                     EvenementDao evenement = e.First();
-                    
+
                     return evenement.EventAdresse.Id;
                 }
-            } 
+            }
             return 0;
         }
 
@@ -319,7 +348,7 @@ namespace Service.Evenement.Business
         /// </summary>
         /// <param name="UserId">Id de l'utilisateur</param>
         /// <returns>Liste des evenements souscrit par l'utilisateur</returns>
-        public IEnumerable<EvenementSubscriberBll> GetSubscriptionByUser ( int UserId )
+        public IEnumerable<EvenementSubscriberBll> GetSubscriptionByUser(int UserId)
         {
             IEnumerable<EvenementSubscriberBll> result = null;
             EvenementDalRequest request = new EvenementDalRequest()
@@ -329,7 +358,7 @@ namespace Service.Evenement.Business
 
             IEnumerable<EvenementSubcriberDao> daoResult = EvenementDalService.GetSubscriptionByUser(request);
 
-            if ( daoResult != null )
+            if (daoResult != null)
             {
                 result = Mapper.Map<IEnumerable<EvenementSubcriberDao>, IEnumerable<EvenementSubscriberBll>>(daoResult);
             }
@@ -342,7 +371,7 @@ namespace Service.Evenement.Business
         /// <param name="UserId">Id de l'utilisateur</param>
         /// <param name="EvenementId">Id de l'evenement</param>
         /// <returns>L'inscription de l'utilisateur à l'évènement</returns>
-        public EvenementSubscriberBll SubscribeEvenement ( int UserId, int _evenementId )
+        public EvenementSubscriberBll SubscribeEvenement(int UserId, int _evenementId)
         {
             EvenementDalRequest request = new EvenementDalRequest()
             {
@@ -376,7 +405,7 @@ namespace Service.Evenement.Business
         /// </summary>
         /// <param name="EvenementId">Id de l'évènement</param>
         /// <returns>Liste des inscriptions relative à cette évènement</returns>
-        public IEnumerable<EvenementSubscriberBll> GetSubscribersByEvent ( int EvenementId )
+        public IEnumerable<EvenementSubscriberBll> GetSubscribersByEvent(int EvenementId)
         {
             EvenementDalRequest request = new EvenementDalRequest()
             {
@@ -385,7 +414,7 @@ namespace Service.Evenement.Business
 
             var daoResult = EvenementDalService.GetSubscribersByEvent(request);
 
-            if ( daoResult == null )
+            if (daoResult == null)
                 return null;
 
             IEnumerable<EvenementSubscriberBll> result = Mapper.Map<IEnumerable<EvenementSubcriberDao>, IEnumerable<EvenementSubscriberBll>>(daoResult);
