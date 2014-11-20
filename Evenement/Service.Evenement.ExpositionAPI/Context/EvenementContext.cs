@@ -143,7 +143,7 @@ namespace Service.Evenement.ExpositionAPI.Context
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
             //la création de topic est censé retourner un entier, l'id du topic
             //En l'état actuel ce n'est pas le cas, mais ils travaillent dessus
-            string id_string_topic = client.UploadString("http://forumyoup.apphb.com/Help/Api/POST-api-Topic",
+            string id_string_topic = client.UploadString("http://forumyoup.apphb.com/api/Topic",
                 "{Nom:" + bllEvent.TitreEvenement + ",DescriptifTopic:" + bllEvent.DescriptionEvenement +
                 ",DateCreation:" + DateTime.Now +
                 ",Utilisateur_id:" + bllEvent.OrganisateurId + " }");
