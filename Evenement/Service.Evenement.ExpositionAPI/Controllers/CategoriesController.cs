@@ -84,6 +84,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="libelle">Nouveau libelle</param>
         public HttpResponseMessage UpdateCategorie(long id, String libelle)
         {
+
             EvenementCategorieFront categorie = new EvenementCategorieFront();
             categorie.Id = id;
             categorie.Libelle = libelle;
