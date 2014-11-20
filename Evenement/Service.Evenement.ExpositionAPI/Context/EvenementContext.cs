@@ -207,5 +207,14 @@ namespace Service.Evenement.ExpositionAPI.Context
             return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
         }
 
+        /// <summary>
+        /// Retourne le nombre de participants à un événement
+        /// </summary>
+        /// <param name="id">Id de l'événement</param>
+        /// <returns>Nombre de participants</returns>
+        public static int GetParticipantNbByEvent(long id)
+        {
+            return EventBusinessService.GetParticipantNbByEvent(id);
+        }
     }
 }

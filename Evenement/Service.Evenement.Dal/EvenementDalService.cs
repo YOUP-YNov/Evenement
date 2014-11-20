@@ -731,7 +731,24 @@ namespace Service.Evenement.Dal
             return null;
         }
 
+        /// <summary>
+        /// Retourne le nombre de participants à un événement
+        /// </summary>
+        /// <param name="id">Id de l'événement</param>
+        /// <returns></returns>
+        public int GetParticipantNbByEvent(long id)
+        {
+            try
+            {
+                return (int)EventDalService.GetParticipantNbByEvent(id);
+            }
+            catch (Exception e)
+            {
+                new LErreur(e, "Service.Evenement.Dal", "GetParticipantNbByEvent Error", 0).Save(LoggerUri);
+            }
 
+            return 0;
+        }
 
 
 
