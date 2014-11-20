@@ -13,6 +13,7 @@ using Service.Evenement.ExpositionAPI.Models.ModelsUpdate;
 using Service.Evenement.Business.Response;
 using System.Web.Http.Description;
 using System.Web.Http.Cors;
+using Service.Evenement.ExpositionAPI.Context;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
@@ -22,22 +23,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EvenementController : ApiController
     {
-        private EvenementBllService _evenementBllService;
-
-        public EvenementBllService EvenementBllService
-        {
-            get
-            {
-                if (_evenementBllService == null)
-                    _evenementBllService = new EvenementBllService();
-                return _evenementBllService;
-            }
-            set
-            {
-                _evenementBllService = value;
-            }
-        }
-
         /// <summary>
         /// Retourne la liste des evenements
         /// </summary>
@@ -54,7 +39,14 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
         public HttpResponseMessage Get(DateTime? date_search = null, long? id_Categorie = null,  bool? prenium = null , int max_result = 10,[FromUri] long? max_id = null,string text_search = null, string orderby = null, DateTime? startRange = null, DateTime? endRange = null)
         {
-            ResponseObject result = EvenementBllService.GetEvenements(date_search, max_result, id_Categorie, max_id, prenium, text_search, orderby, startRange, endRange);
+            ResponseObject result = EvenementContext.Get(
+                date_search, 
+                id_Categorie, 
+                prenium, max_result, 
+                max_id, text_search, 
+                orderby, 
+                startRange, 
+                endRange);
             if (result.Value != null)
             {
                 result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementTimelineFront>>((IEnumerable<EvenementBll>)result.Value);
@@ -73,7 +65,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [Route("api/Profil/{id_profil}/Evenements")]
         public HttpResponseMessage GetByProfil(int id_profil)
         {
-            ResponseObject result = EvenementBllService.GetByProfil(id_profil);
+            ResponseObject result = EvenementContext.GetByProfil(id_profil);
             if (result.Value != null)
             {
                 result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementTimelineFront>>((IEnumerable<EvenementBll>)result.Value);
@@ -91,7 +83,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
         public HttpResponseMessage GetReportedEvents()
         {
-            ResponseObject result = EvenementBllService.GetReportedEvents();
+            ResponseObject result = EvenementContext.GetReportedEvents();
             if (result.Value != null)
             {
                 result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementTimelineFront>>((IEnumerable<EvenementBll>)result.Value);
@@ -109,7 +101,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [ResponseType(typeof(EvenementFront))]
         public HttpResponseMessage GetEvenement(long id)
         {
-            ResponseObject result =  EvenementBllService.GetEvenementById(id);
+            ResponseObject result = EvenementContext.GetEvenement(id);
             if (result.Value!= null)
             {
                 result.Value = Mapper.Map<EvenementBll, EvenementFront>((EvenementBll)result.Value);
@@ -126,7 +118,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [ResponseType(typeof(EvenementFront))]
         public HttpResponseMessage GetEvenement(int dept)
         {
-            ResponseObject result = EvenementBllService.GetEvenementByDept( dept );
+            ResponseObject result = EvenementContext.GetEvenement(dept);
             if (result.Value != null)
             {
                 result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementTimelineFront>>((IEnumerable<EvenementBll>)result.Value);
@@ -155,7 +147,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="idProfil">Id du profil</param>
         public void PostInscriptionDeinscription(long idEvenement, long idProfil)
         {
-            throw new NotImplementedException();
+            EvenementContext.PostInscriptionDeinscription(idEvenement, idProfil);
         }
 
         /// <summary>
@@ -168,12 +160,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [Route("Evenements/{id_evenement}/Desactiver")]
         public HttpResponseMessage DesactivateEvenement(long id_evenement, [FromBody] long id_profil)
         {
-            /*var evts = EvenementBllService.GetByProfil(id_profil);
-            var existsEvt = evts.FirstOrDefault(evt => evt.Id == id_evenement);
-            if (existsEvt != null)
-            {
-                EvenementBllService.DeactivateEvent(id_evenement);
-            }*/
+            EvenementContext.DesactivateEvenement(id_evenement, id_profil);
             return null;
         }
 
@@ -184,31 +171,14 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [HttpPost]
         public HttpResponseMessage Create([FromBody] EvenementCreate evt)
         {
-            EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evt.evenement);
-
-            WebClient client = new WebClient();
-            client.Headers[HttpRequestHeader.ContentType] = "application/json";
-            //la création de topic est censé retourner un entier, l'id du topic
-            //En l'état actuel ce n'est pas le cas, mais ils travaillent dessus
-            string id_string_topic=client.UploadString("http://forumyoup.apphb.com/Help/Api/POST-api-Topic",
-                "{Nom:"+bllEvent.TitreEvenement+",DescriptifTopic:"+bllEvent.DescriptionEvenement+
-                ",DateCreation:"+DateTime.Now+
-                ",Utilisateur_id:"+bllEvent.OrganisateurId+" }");
-
-            int valeur;
-            if(int.TryParse(id_string_topic,out valeur))
-            {
-                int id_topic = valeur;
-                bllEvent.Topic_id = id_topic;
-            }
-            
-            ResponseObject response = EvenementBllService.CreateEvenement(bllEvent);
+            ResponseObject response = EvenementContext.Create(evt);
             return GenerateResponseMessage.initResponseMessage(response);
         }
 
         private void InviteFriends(InviteFriends invitations)
         {
             //TODO => appeler le profil
+            
         }
 
         /// <summary>

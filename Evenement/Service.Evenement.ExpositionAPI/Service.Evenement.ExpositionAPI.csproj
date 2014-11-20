@@ -163,6 +163,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Context\CategorieContext.cs" />
+    <Compile Include="Context\EvenementContext.cs" />
+    <Compile Include="Context\ImageContext.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\EvenementController.cs" />
     <Compile Include="Controllers\EvenementEtatController.cs" />

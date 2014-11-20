@@ -519,6 +519,160 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:Service.Evenement.ExpositionAPI.Context.EvenementContext">
+            <summary>
+            Classe statique threadSafe avec initialisation tardive pour l'accès au service Evenement Bll
+            </summary>
+        </member>
+        <member name="F:Service.Evenement.ExpositionAPI.Context.EvenementContext._eventBusinessService">
+            <summary>
+            Donnée membre représentant l'accés au service evenement
+            </summary>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.Get(System.Nullable{System.DateTime},System.Nullable{System.Int64},System.Nullable{System.Boolean},System.Int32,System.Nullable{System.Int64},System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Retourne la liste des evenements
+            </summary>
+            <param name="date_search">Parametre optionnel pour la recherche des evenements à une date</param>
+            <param name="max_result">Le maximum de résultat </param>
+            <param name="categorie"> L'id de la catégorie</param>
+            <param name="text_search">Le text de la recherche</param>
+            <param name="max_id">L'id du derniers evenements</param>
+            <param name="orderby">Le nom du tri (date, categorie, disponnible)</param>
+            <param name="startRange">Date de début de la plage</param>
+            <param name="endRange">Date de fin de la plage</param>
+            <returns>La liste des événements</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetByProfil(System.Int32)">
+            <summary>
+            Retourne la liste des événements d'un profil 
+            </summary>
+            <param name="id_profil">Id du profil</param>
+            <returns>Liste d'événements</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetReportedEvents">
+            <summary>
+            Retourne la liste des événements signalés
+            </summary>
+            <returns>Liste d'événements</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetEvenement(System.Int64)">
+            <summary>
+            Retourne le détail d'un événement
+            </summary>
+            <param name="id">L'id de l'événement</param>
+            <returns>Un événement</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetEvenement(System.Int32)">
+            <summary>
+            Retourne les évènements d'un département 
+            </summary>
+            <param name="dept"></param>
+            <returns>Liste d'évènements</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.Put(System.Int64,Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate)">
+            <summary>
+            Modification de l'évènement
+            </summary>
+            <param name="id">Id de l'évènement à modifier</param>
+            <param name="evenement">Evènement</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.PostInscriptionDeinscription(System.Int64,System.Int64)">
+            <summary>
+            Permet l'inscription et la desincription
+            </summary>
+            <param name="idEvenement">Id de l'evenement</param>
+            <param name="idProfil">Id du profil</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.DesactivateEvenement(System.Int64,System.Int64)">
+            <summary>
+            Desactivation de l'evenement 
+            c'est une mise en archive. L'évenement n'est plus consultable. 
+            </summary>
+            <param name="id">Id de l'evenement</param>
+            <param name="id_profil">Id du profil</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.Create(Service.Evenement.ExpositionAPI.Models.EvenementCreate)">
+            <summary>
+            Fonction de création de l'évènement
+            </summary>
+            <param name="evt">L'évènement à créer</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetEvenementsSignale(System.Int32,System.Int32)">
+            <summary>
+            méthode d'appel de l'api profil
+            </summary>
+            <param name="id_profil">id du profil admin</param>
+            <param name="nb_min_signalement">nb de signalement minimum</param>
+            <returns>liste d'evenement signalé</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.PutEvenemenntEtat(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Permet de modifier l'etat d'un evenement (Admin)
+            </summary>
+            <param name="id_profil">id de profil</param>
+            <param name="id_evenement">id de l'evenement</param>
+            <param name="id_etat">id de l'etat</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetEvenementsEtats(System.Int32,System.Int32)">
+            <summary>
+            Permet de lister l'ensemble de evenements suivant un etat (ADmin)
+            </summary>
+            <param name="id_profil">Id du profil</param>
+            <param name="id_etat">Id de l'etat</param>
+            <returns></returns>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Context.EvenementContext.EventBusinessService">
+            <summary>
+            Récupère ou assigne l'accés au service evenement
+            </summary>
+        </member>
+        <member name="T:Service.Evenement.ExpositionAPI.Context.ImageContext">
+            <summary>
+            Classe statique threadSafe avec initialisation tardive pour l'accès au service Image Bll
+            </summary>
+        </member>
+        <member name="F:Service.Evenement.ExpositionAPI.Context.ImageContext._imageBusinessService">
+            <summary>
+            Donnée membre représentant l'accés au service image
+            </summary>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.ImageContext.DeleteImage(System.Nullable{System.Int64})">
+            <summary>
+            Supprime une Image
+            </summary>
+            <param name="ImageId">Id de l'image a supprimer</param>
+            <returns>Objet englobant de réponse Service</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.ImageContext.PostImageByUri(System.String,System.Int64)">
+            <summary>
+            Crée une image via son url et la lie a un évènement
+            </summary>
+            <param name="urlFile">url du fichier</param>
+            <param name="EventId">id de l'évènement</param>
+            <returns>Objet englobant de réponse Service</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.ImageContext.PostImage(System.String,System.Int64,System.Byte[])">
+            <summary>
+            Crée une image à partir d'un tableau de byte
+            </summary>
+            <param name="fileName">Nom du fichier</param>
+            <param name="evenement_id">Id de l'évènement</param>
+            <param name="content">Tableau de byte représentant le document</param>
+            <returns>Objet englobant de réponse Service</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.ImageContext.GetImagesEvenement(System.Int64)">
+            <summary>
+            Récuèpre l'ensembles des images d'un évènement
+            </summary>
+            <param name="id">Id de l'évènement</param>
+            <returns>Objet englobant de réponse Service</returns>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Context.ImageContext.ImageBusinessService">
+            <summary>
+            Récupère ou assigne l'accés au service image
+            </summary>
+        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategoriesController.Get">
             <summary>
             Retourne la liste des catégories
@@ -690,9 +844,8 @@
             <summary>
             Associe une image a un evenement
             </summary>
-            <param name="fileName">nom du fichier</param>
-            <param name="evenement_id">id de l'évènement</param>
-            <param name="content">byte array de l'image</param>
+            <param name="urlFile">url du fichier</param>
+            <param name="EventId">id de l'évènement</param>
             <returns>Image uploadé</returns>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.ImageController.DeleteImage(System.Int64)">

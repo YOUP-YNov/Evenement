@@ -138,46 +138,6 @@ namespace Service.Evenement.Business
         #region Méthode Publique
 
         /// <summary>
-        /// Sauvegarde une Image sur le serveur Azure Cloud Storage
-        /// </summary>
-        /// <param name="fileName">Représente le nom du fichier</param>
-        /// <param name="content">Représente le contenu du documents sous forme de byte Array</param>
-        /// <returns>L'url de l'image sur le serveur de stockage</returns>
-        private string SaveImage ( string fileName, byte[] content )
-        {
-            blob = account.CreateCloudBlobClient();
-
-            var container = blob.GetContainerReference(ContainerName);
-
-            string fileNameKey = DateTime.UtcNow + "-" + fileName;
-
-            var blobFromSasCredential = container.GetBlockBlobReference(fileNameKey);
-
-            try
-            {
-                blobFromSasCredential.UploadFromByteArray(content, 0, content.Length);
-            }
-            catch ( Microsoft.WindowsAzure.Storage.StorageException e )
-            {
-                new LErreur(e, "Service.Evenement.Business", "SaveImage Error", 0).Save(LoggerUri);
-            }
-            return String.Format(UriImageTemplate, UriHost, ContainerName, fileNameKey);
-        }
-
-        /// <summary>
-        /// Retourne la liste des blob contenu sur le serveur Azure Storage
-        /// </summary>
-        /// <returns>Liste des Blob</returns>
-        public IEnumerable<IListBlobItem> getBlobList ()
-        {
-            blob = account.CreateCloudBlobClient();
-
-            var container = blob.GetContainerReference(ContainerName);
-
-            return container.ListBlobs(null, false);
-        }
-
-        /// <summary>
         /// Sauvegarde une Image sur Azure et l'associe à un évènement
         /// </summary>
         /// <param name="fileName">Nom du fichier a uploader</param>
@@ -276,6 +236,50 @@ namespace Service.Evenement.Business
                 default:
                     return ImageDeleteEnum.UnknowError;
             }
+        }
+
+        #endregion
+
+        #region Méthodes privées
+
+        /// <summary>
+        /// Sauvegarde une Image sur le serveur Azure Cloud Storage
+        /// </summary>
+        /// <param name="fileName">Représente le nom du fichier</param>
+        /// <param name="content">Représente le contenu du documents sous forme de byte Array</param>
+        /// <returns>L'url de l'image sur le serveur de stockage</returns>
+        private string SaveImage ( string fileName, byte[] content )
+        {
+            blob = account.CreateCloudBlobClient();
+
+            var container = blob.GetContainerReference(ContainerName);
+
+            string fileNameKey = DateTime.UtcNow + "-" + fileName;
+
+            var blobFromSasCredential = container.GetBlockBlobReference(fileNameKey);
+
+            try
+            {
+                blobFromSasCredential.UploadFromByteArray(content, 0, content.Length);
+            }
+            catch ( Microsoft.WindowsAzure.Storage.StorageException e )
+            {
+                new LErreur(e, "Service.Evenement.Business", "SaveImage Error", 0).Save(LoggerUri);
+            }
+            return String.Format(UriImageTemplate, UriHost, ContainerName, fileNameKey);
+        }
+
+        /// <summary>
+        /// Retourne la liste des blob contenu sur le serveur Azure Storage
+        /// </summary>
+        /// <returns>Liste des Blob</returns>
+        private IEnumerable<IListBlobItem> getBlobList ()
+        {
+            blob = account.CreateCloudBlobClient();
+
+            var container = blob.GetContainerReference(ContainerName);
+
+            return container.ListBlobs(null, false);
         }
 
         #endregion
