@@ -106,7 +106,7 @@ namespace Service.Evenement.ExpositionAPI.Context
         public static ResponseObject Put (Guid token, EvenementUpdate evenement )
         {
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
-            ResponseObject response = EventBusinessService.PutEvenement(bllEvent,token);
+            ResponseObject response = EventBusinessService.PutEvenement(bllEvent, token);
             return response;
         }
 
@@ -149,10 +149,19 @@ namespace Service.Evenement.ExpositionAPI.Context
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
             //la création de topic est censé retourner un entier, l'id du topic
             //En l'état actuel ce n'est pas le cas, mais ils travaillent dessus
-            string id_string_topic = client.UploadString("http://forumyoup.apphb.com/api/Topic",
+            string id_string_topic = null;
+            try
+            {
+                id_string_topic = client.UploadString("http://forumyoup.apphb.com/api/Topic",
                 "{Nom:" + bllEvent.TitreEvenement + ",DescriptifTopic:" + bllEvent.DescriptionEvenement +
                 ",DateCreation:" + DateTime.Now +
                 ",Utilisateur_id:" + bllEvent.OrganisateurId + " }");
+            }
+            catch (Exception e)
+            {
+
+            }
+            
 
             int valeur;
             if ( int.TryParse(id_string_topic, out valeur) )

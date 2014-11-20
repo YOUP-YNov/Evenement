@@ -136,8 +136,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         public HttpResponseMessage Put(Guid token, [FromBody]EvenementUpdate evenement)
         {
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
-
-            ResponseObject response = EvenementContext.EventBusinessService.PutEvenement(bllEvent, token);
+            ResponseObject response = EvenementContext.Put(token, evenement);
             return GenerateResponseMessage.initResponseMessage(response);
         }
 
