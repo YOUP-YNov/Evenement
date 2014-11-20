@@ -18,11 +18,18 @@ namespace Service.Evenement.ExpositionAPI.Context
         private static Lazy<ImageBllService> _imageBusinessService;
 
         /// <summary>
-        /// Récupère ou assigne l'accés au service image
+        /// Récupère l'accés au service image
         /// </summary>
-        public static ImageBllService ImageBusinessService { 
-            get { return _imageBusinessService.Value; }
-            set { _imageBusinessService = new Lazy<ImageBllService>(() => { return new ImageBllService(); }); }
+        public static ImageBllService ImageBusinessService 
+        { 
+            get
+            {
+                if (_imageBusinessService == null || _imageBusinessService.Value == null)
+                {
+                    _imageBusinessService = new Lazy<ImageBllService>(() => { return new ImageBllService(); });
+                }
+                return _imageBusinessService.Value;
+            }
         }
 
         /// <summary>
