@@ -133,35 +133,35 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id">Id de l'évènement à modifier</param>
         /// <param name="evenement">Evènement</param>
         [HttpPut]
-        public HttpResponseMessage Put(long id_evenement, [FromBody]EvenementUpdate evenement)
+        public HttpResponseMessage Put(long id, [FromBody]EvenementUpdate evenement)
         {
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
-            ResponseObject response = EvenementContext.Put(id_evenement, evenement);
+            ResponseObject response = EvenementContext.Put(id, evenement);
             return GenerateResponseMessage.initResponseMessage(response);
         }
 
         /// <summary>
         /// Permet l'inscription et la desincription
         /// </summary>
-        /// <param name="idEvenement">Id de l'evenement</param>
+        /// <param name="id">Id de l'evenement</param>
         /// <param name="idProfil">Id du profil</param>
-        public void PostInscriptionDeinscription(long idEvenement, long idProfil)
+        [HttpPost]
+        public void PostInscriptionDeinscription(long id, long idProfil)
         {
-            EvenementContext.PostInscriptionDeinscription(idEvenement, idProfil);
+            EvenementContext.PostInscriptionDeinscription(id, idProfil);
         }
 
         /// <summary>
         /// Desactivation de l'evenement 
         /// c'est une mise en archive. L'évenement n'est plus consultable. 
         /// </summary>
-        /// <param name="id">Id de l'evenement</param>
+        /// <param name="id">Id de l'évenement</param>
         /// <param name="id_profil">Id du profil</param>
         [HttpDelete]
-        [Route("Evenements/{id_evenement}/Desactiver")]
-        public HttpResponseMessage DesactivateEvenement(long id_evenement, [FromBody] long id_profil)
+        public HttpResponseMessage DeleteEvenement(long id, [FromBody] long id_profil)
         {
-            EvenementContext.DesactivateEvenement(id_evenement, id_profil);
-            return null;
+            ResponseObject response = EvenementContext.DesactivateEvenement(id, id_profil);
+            return GenerateResponseMessage.initResponseMessage(response);
         }
 
         /// <summary>
