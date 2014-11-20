@@ -14,9 +14,23 @@ namespace Service.Evenement.Business
 {
     public class CategorieBllService
     {
+        #region Donnée membre
+        /// <summary>
+        /// Donnée membre représentant l'accès au service Dal Evenement
+        /// </summary>
         private IEvenementDalService _evenementDalService;
+
+        /// <summary>
+        /// Donnée membre représentant l'accès au service Dal categorie
+        /// </summary>
         private ICategorieDalService _categorieDalService;
 
+        #endregion
+
+        #region Propriétées
+        /// <summary>
+        /// Récupère ou assigne l'accès au service Dal Evenement
+        /// </summary>
         public IEvenementDalService EvenementDalService
         {
             get
@@ -31,6 +45,9 @@ namespace Service.Evenement.Business
             }
         }
 
+        /// <summary>
+        /// Récupère ou assigne l'accès au service Dal Categorie
+        /// </summary>
         public ICategorieDalService CategorieDalService
         {
             get
@@ -45,6 +62,14 @@ namespace Service.Evenement.Business
             }
         }
 
+        #endregion
+
+        #region Méthodes Publiques
+
+        /// <summary>
+        /// Récupère toutes les catégories
+        /// </summary>
+        /// <returns>Objet de service, englobant les catégories ainsi qu'un status d'opération</returns>
         public ResponseObject GetCategories()
         {
             IEnumerable<EvenementCategorieDao> result = EvenementDalService.GetAllCategorie(new EvenementDalRequest() { });
@@ -61,6 +86,11 @@ namespace Service.Evenement.Business
             return response;
         }
 
+        /// <summary>
+        /// Récupère une categorie en fonction de son Id
+        /// </summary>
+        /// <param name="id">Id de la catégorie</param>
+        /// <returns>Objet de service, englobant la catégorie ainsi qu'un status d'opération</returns>
         public ResponseObject GetCategorie(long id)
         {
             Dal.Dao.EvenementCategorieDao categ = new EvenementCategorieDao();
@@ -79,11 +109,19 @@ namespace Service.Evenement.Business
             return response;
         }
 
+        /// <summary>
+        /// Supprime une catégorie
+        /// </summary>
+        /// <param name="id">Id de la catégorie a supprimé</param>
         public void DeleteCategorie(long id)
         {
             ((EvenementDalService)_evenementDalService).CategorieDalService.DeleteCategorie(id);
         }
 
+        /// <summary>
+        /// Mets à jours une catégorie
+        /// </summary>
+        /// <param name="categoriebll">Informations relative à la catégorie</param>
         public void UpdateCategorie(EvenementCategorieBll categoriebll)
         {
              EvenementCategorieDao daoEventCategorie = Mapper.Map<EvenementCategorieBll, EvenementCategorieDao>(categoriebll);
@@ -91,6 +129,8 @@ namespace Service.Evenement.Business
              CategorieDalService.UpdateCategorie(daoEventCategorie);
             throw new NotImplementedException();
         }
-       
+
+        #endregion
+
     }
 }

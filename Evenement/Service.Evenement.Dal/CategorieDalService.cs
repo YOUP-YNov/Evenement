@@ -10,6 +10,9 @@ using Service.Evenement.Dal.Mappeur;
 
 namespace Service.Evenement.Dal
 {
+    /// <summary>
+    /// Cette Classe est voué a disparaître, Une partie du code présent ici est dupliqué du EvenementDalService.cs
+    /// </summary>
     public class CategorieDalService : ICategorieDalService
     {
         private CategorieTableAdapter _cateDalService;

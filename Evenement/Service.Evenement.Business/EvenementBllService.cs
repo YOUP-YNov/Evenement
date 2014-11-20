@@ -17,8 +17,14 @@ namespace Service.Evenement.Business
 {
     public class EvenementBllService
     {
+        /// <summary>
+        /// Donnée membre représentant l'accès au service Dal Evenement
+        /// </summary>
         private EvenementDalService _evenementDalService;
 
+        /// <summary>
+        /// Récupère ou assigne l'accès au service Dal Evenement
+        /// </summary>
         public EvenementDalService EvenementDalService
         {
             get
@@ -33,11 +39,19 @@ namespace Service.Evenement.Business
             }
         }
 
+        /// <summary>
+        /// Constructeur par défaut EvenementBllService
+        /// </summary>
         public EvenementBllService()
         {
 
         }
 
+        /// <summary>
+        /// Crée un Evenement
+        /// </summary>
+        /// <param name="evenementBll">evenement a crée</param>
+        /// <returns>Objet de service, englobant l'évenement ainsi qu'un status d'opération</returns>
         public ResponseObject CreateEvenement(EvenementBll evenementBll)
         {
             ResponseObject response = new ResponseObject();
@@ -61,7 +75,11 @@ namespace Service.Evenement.Business
             return response;
         }
 
-
+        /// <summary>
+        /// Mettre à jours un évènement
+        /// </summary>
+        /// <param name="evenementBll">Evenement a mettre a jours</param>
+        /// <returns>Objet de service, englobant l'évenement ainsi qu'un status d'opération</returns>
         public ResponseObject PutEvenement(EvenementBll evenementBll)
         {
 

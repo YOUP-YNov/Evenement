@@ -11,6 +11,9 @@ namespace Service.Evenement.Business
 {
     public class InitBllAutoMappeur
     {
+        /// <summary>
+        /// Initilisation des Mapping entre la couche Dal et la couche business
+        /// </summary>
         public static void initialisation()
         {
             Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
@@ -27,16 +30,6 @@ namespace Service.Evenement.Business
 
             Mapper.CreateMap<EventImageDao, EventImageBll>();
             Mapper.CreateMap<EventImageBll, EventImageDao>();
-
-           /* Mapper.CreateMap<EventStateEnumFront, MyClass>().ConvertUsing(c =>
-            {
-                MyAttribute attribute = c.GetCustomAttribute<MyEnum, MyAttribute>();
-                return new MyClass()
-                {
-                    Id = c.ToString(),
-                    Name = attribute == null ? c.ToString() : attribute.DisplayName
-                };
-            });*/
 
             Mapper.CreateMap<EvenementSubcriberDao, EvenementSubscriberBll>();
             Mapper.CreateMap<EvenementSubscriberBll, EvenementSubcriberDao>();

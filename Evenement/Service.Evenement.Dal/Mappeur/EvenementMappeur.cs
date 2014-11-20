@@ -22,9 +22,19 @@ using Service.Evenement.Dal.Dao;
 
 namespace Service.Evenement.Dal.Mappeur
 {
+    /// <summary>
+    /// Classe statique qui assure la mapping entre les Objets fournit par le dataset et les objects
+    /// DAO
+    /// </summary>
     internal static class EvenementMappeur
     {
         #region Evenement
+
+        /// <summary>
+        /// Transforme une EvenementTable en IEnumerable d'EvenementDao
+        /// </summary>
+        /// <param name="EventTable">Data retourner par le Dataset</param>
+        /// <returns>Liste des objets de type Dal</returns>
         internal static IEnumerable<EvenementDao> ToEvenementDao(this EvenementTable EventTable)
         {
             if ( EventTable == null && EventTable.Rows == null )
@@ -42,6 +52,11 @@ namespace Service.Evenement.Dal.Mappeur
             return result;
         }
 
+        /// <summary>
+        /// Transforme une EvenementRow en EvenementDao
+        /// </summary>
+        /// <param name="EvenementRow">Représente une ligne renvoyer par le dataset</param>
+        /// <returns>Evenement Dao</returns>
         internal static EvenementDao ToEvenementDao ( this EvenementRow EvenementRow )
         {
             if ( EvenementRow == null )
@@ -72,6 +87,11 @@ namespace Service.Evenement.Dal.Mappeur
             return result;
         }
 
+        /// <summary>
+        /// Tranforme une EvenementRow en EvenementStateDao ( représentation objet de l'état de l'évènement )
+        /// </summary>
+        /// <param name="param">Représente une ligne evenement renvoyer par le dataset </param>
+        /// <returns>L'état de l'évenement</returns>
         internal static EvenementStateDao ToEvenementStateDao ( this EvenementRow param )
         {
             EvenementStateDao result = new EvenementStateDao();
@@ -85,6 +105,11 @@ namespace Service.Evenement.Dal.Mappeur
             return result;
         }
 
+        /// <summary>
+        /// Tranforme une EvenementRow en EvenementLocationDao ( représentation objet de la localisation de l'évènement )
+        /// </summary>
+        /// <param name="param">Représente une ligne evenement renvoyer par le dataset</param>
+        /// <returns>La localisation de l'évènement</returns>
         internal static EvenementLocationDao ToEvenementAdresseDao ( this EvenementRow param )
         {
             EvenementLocationDao result = new EvenementLocationDao();
@@ -107,6 +132,11 @@ namespace Service.Evenement.Dal.Mappeur
 
         #region EventLieu
 
+        /// <summary>
+        /// Tranforme une LieuEvenementTable en EvenementDao ( Objet global EvenementDao qui contient une Localisation )
+        /// </summary>
+        /// <param name="EventTable">Représente une table de lieu renvoyer par le dataset</param>
+        /// <returns>Liste de lieu</returns>
         internal static IEnumerable<EvenementDao> ToEvenementDao ( this LieuEvenementTable EventTable )
         {
             if ( EventTable == null && EventTable.Rows == null )
@@ -124,6 +154,11 @@ namespace Service.Evenement.Dal.Mappeur
             return result;
         }
 
+        /// <summary>
+        /// Tranforme une LieuEvenementRow en EvenementDao ( Objet global EvenementDao qui contient une Localisation )
+        /// </summary>
+        /// <param name="EvenementRow">Représente une ligne de lieu renvoyer par le dataset</param>
+        /// <returns>Renvoie un evenement contenant une localisation</returns>
         internal static EvenementDao ToEvenementDao ( this LieuEvenementRow EvenementRow )
         {
             if ( EvenementRow == null )
@@ -138,6 +173,12 @@ namespace Service.Evenement.Dal.Mappeur
 
             return result;
         }
+
+        /// <summary>
+        /// Tranforme une LieuEvenementRow en EvenementLocationDao ( Objet représentant la Localisation )
+        /// </summary>
+        /// <param name="param">Représente une ligne de lieu renvoyer par le dataset</param>
+        /// <returns>Objet EvenementLocationDao</returns>
         internal static EvenementLocationDao ToEvenementAdresseDao ( this LieuEvenementRow param )
         {
             EvenementLocationDao result = new EvenementLocationDao();
@@ -161,6 +202,11 @@ namespace Service.Evenement.Dal.Mappeur
 
         #region Image
 
+        /// <summary>
+        /// Tranforme une ImageTable en IEnumerable<EvenementImageDao> ( Objet représentant les images )
+        /// </summary>
+        /// <param name="ImageTable">Représente une table d'image renvoyer par le dataset</param>
+        /// <returns>Renvoie une liste d'images</returns>
         internal static IEnumerable<EvenementImageDao> ToImageDao ( this ImageTable ImageTable )
         {
             if ( ImageTable == null && ImageTable.Rows == null )
@@ -178,6 +224,11 @@ namespace Service.Evenement.Dal.Mappeur
             return result;
         }
 
+        /// <summary>
+        /// Tranforme une ImageRow en EvenementImageDao ( Objet représentant les images )
+        /// </summary>
+        /// <param name="ImageRow">Représente une ligne d'image renvoyer par le dataset</param>
+        /// <returns>Renvoie une image</returns>
         internal static EvenementImageDao ToEvenementImageDao ( this ImageRow ImageRow )
         {
             if ( ImageRow == null )

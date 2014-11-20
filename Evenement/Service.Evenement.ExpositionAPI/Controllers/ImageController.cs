@@ -69,13 +69,32 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
+        /// Associe une image a un evenement
+        /// </summary>
+        /// <param name="fileName">nom du fichier</param>
+        /// <param name="evenement_id">id de l'évènement</param>
+        /// <param name="content">byte array de l'image</param>
+        /// <returns>Image uploadé</returns>
+        [HttpPost]
+        [ResponseType(typeof(EventImageFront))]
+        public HttpResponseMessage PostImageByUri ( string urlFile, long EventId )
+        {
+            ResponseObject result = new ResponseObject() { Value = EvenementBllService.SaveImageFromUrl(urlFile, EventId) };
+            if ( result.Value != null )
+            {
+                result.Value = Mapper.Map<IEnumerable<EventImageBll>, IEnumerable<EventImageFront>>((IEnumerable<EventImageBll>) result.Value);
+            }
+            return GenerateResponseMessage.initResponseMessage(result);
+        }
+
+        /// <summary>
         /// Permet de delete une image associé a un évènement
         /// </summary>
         /// <param name="ImageId">Id de l'image</param>
         /// <returns>CodeEnum de résultat</returns>
         [HttpDelete]
         [ResponseType(typeof(string))]
-        public HttpResponseMessage PostImage ( long ImageId )
+        public HttpResponseMessage DeleteImage ( long ImageId )
         {
             long? imageId = ImageId;
             ResponseObject result = new ResponseObject() { Value = EvenementBllService.DeleteImage(imageId).ToString() };
