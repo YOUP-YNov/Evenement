@@ -19,15 +19,21 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// <summary>
         /// Donnée membre représentant l'accés au service evenement
         /// </summary>
-        private static Lazy<EvenementBllService> _eventBusinessService;
+        private static Lazy<EvenementBllService> _eventBusinessService  = new Lazy<EvenementBllService>();
 
         /// <summary>
-        /// Récupère ou assigne l'accés au service evenement
+        /// Récupère l'accés au service evenement
         /// </summary>
         public static EvenementBllService EventBusinessService
         {
-            get { return _eventBusinessService.Value; }
-            set { _eventBusinessService = new Lazy<EvenementBllService>(() => { return new EvenementBllService(); }); }
+            get 
+            {
+                if (_eventBusinessService == null || _eventBusinessService.Value == null)
+                {
+                    _eventBusinessService = new Lazy<EvenementBllService>(() => { return new EvenementBllService(); });
+                }
+                return _eventBusinessService.Value; 
+            }
         }
 
         /// <summary>

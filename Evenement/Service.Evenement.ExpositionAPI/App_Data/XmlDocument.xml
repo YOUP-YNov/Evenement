@@ -746,7 +746,7 @@
             <param name="dept"></param>
             <returns>Liste d'évènements</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Put(System.Guid,Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Put(System.Int64,Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate)">
             <summary>
             Modification de l'évènement
             </summary>
