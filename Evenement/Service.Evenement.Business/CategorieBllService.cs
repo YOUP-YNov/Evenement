@@ -115,19 +115,38 @@ namespace Service.Evenement.Business
         /// <param name="id">Id de la catégorie a supprimé</param>
         public void DeleteCategorie(long id)
         {
-            ((EvenementDalService)_evenementDalService).CategorieDalService.DeleteCategorie(id);
+            ((EvenementDalService)EvenementDalService).CategorieDalService.DeleteCategorie(id);
         }
 
         /// <summary>
         /// Mets à jours une catégorie
         /// </summary>
         /// <param name="categoriebll">Informations relative à la catégorie</param>
-        public void UpdateCategorie(EvenementCategorieBll categoriebll)
+        public ResponseObject UpdateCategorie(EvenementCategorieBll categoriebll)
         {
-             EvenementCategorieDao daoEventCategorie = Mapper.Map<EvenementCategorieBll, EvenementCategorieDao>(categoriebll);
+            ResponseObject response = new ResponseObject();
+            EvenementCategorieDao daoEventCategorie = Mapper.Map<EvenementCategorieBll, EvenementCategorieDao>(categoriebll);
+            try
+            {
+                IEnumerable<EvenementCategorieDao> result = CategorieDalService.UpdateCategorie(daoEventCategorie);
+                if (result != null)
+                {
+                    if (result.Count() >0)
+                    {
+                        IEnumerable<EvenementCategorieBll> categEventBll = Mapper.Map<IEnumerable<EvenementCategorieDao>, IEnumerable<EvenementCategorieBll>>(result);
+                        response.State = ResponseState.Ok;
+                        response.Value = categEventBll;
+                        return response;
+                    }
+                }
 
-             CategorieDalService.UpdateCategorie(daoEventCategorie);
-            throw new NotImplementedException();
+            }
+            catch (Exception e)
+            {
+                response.State = ResponseState.NotModified;
+            }
+            response.State = ResponseState.NotModified;
+            return response;
         }
 
         #endregion

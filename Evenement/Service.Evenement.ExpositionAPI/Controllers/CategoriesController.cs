@@ -74,7 +74,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [HttpDelete]
         public void Delete(long id)
         {
-            _categorieBllService.DeleteCategorie(id);
+            CategorieBllService.DeleteCategorie(id);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">Id de la catégorie à modifier</param>
         /// <param name="libelle">Nouveau libelle</param>
-        public void UpdateCategorie(long id, String libelle)
+        public HttpResponseMessage UpdateCategorie(long id, String libelle)
         {
             EvenementCategorieFront categorie = new EvenementCategorieFront();
             categorie.Id = id;
@@ -90,7 +90,12 @@ namespace Service.Evenement.ExpositionAPI.Controllers
 
             EvenementCategorieBll bllEventCategorie = Mapper.Map<EvenementCategorieFront, EvenementCategorieBll>(categorie);
 
-            _categorieBllService.UpdateCategorie(bllEventCategorie);
+            ResponseObject result = CategorieBllService.UpdateCategorie(bllEventCategorie);
+            if (result.Value is IEnumerable<EvenementCategorieBll>)
+            {
+                result.Value = Mapper.Map<EvenementCategorieBll, EvenementCategorieFront>((EvenementCategorieBll)result.Value);
+            }
+            return GenerateResponseMessage.initResponseMessage(result);
         }
     }
 }

@@ -35,6 +35,7 @@ namespace Service.Evenement.Dal.Interface
         IEnumerable<EvenementSubcriberDao> SubscribeEvenement ( EvenementDalRequest request );
         IEnumerable<EvenementSubcriberDao> GetSubscribersByEvent ( EvenementDalRequest request );
         IEnumerable<EvenementSubcriberDao> GetSubscriptionByUser ( EvenementDalRequest request );
+        int GetParticipantNbByEvent(long id);
         
     }
 }

@@ -13,7 +13,6 @@ using System.Net;
 using Newtonsoft.Json;
 using System.Web.Helpers;
 
-using System.Net.Http;
 namespace Service.Evenement.Business
 {
     public class EvenementBllService
@@ -140,6 +139,7 @@ namespace Service.Evenement.Business
             }
             return response;
         }
+        
         /// <summary>
         /// retourne la liste des évènements en fonction d'une date, d'une catégorie, de son statut, de son nom.
         /// </summary>
@@ -436,13 +436,13 @@ namespace Service.Evenement.Business
                     if (eventDelete != null)
                     {
                         if (idProfil == eventDelete.OrganisateurId)
-                        {
-                            EvenementDao eventDao = new EvenementDao();
-                            eventDao.Id = eventId;
-                            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
-                            eventDao.DateModification = DateTime.Now;
+        {
+            EvenementDao eventDao = new EvenementDao();
+            eventDao.Id = eventId;
+            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
+            eventDao.DateModification = DateTime.Now;
 
-                            EvenementDalService.UpdateStateEvenement(eventDao);
+            EvenementDalService.UpdateStateEvenement(eventDao);
                             response.State = ResponseState.Ok;
                         }
                         else
@@ -535,6 +535,16 @@ namespace Service.Evenement.Business
             IEnumerable<EvenementSubscriberBll> result = Mapper.Map<IEnumerable<EvenementSubcriberDao>, IEnumerable<EvenementSubscriberBll>>(daoResult);
 
             return result;
+        }
+
+        /// <summary>
+        /// Retourne le nombre de participants à un événement
+        /// </summary>
+        /// <param name="id">Id de l'événement</param>
+        /// <returns>Nombre de participants</returns>
+        public int GetParticipantNbByEvent(long id)
+        {
+            return EvenementDalService.GetParticipantNbByEvent(id);
         }
     }
 }

@@ -87,7 +87,6 @@
     <Compile Include="BusinessModels\EventStateEnum.cs" />
     <Compile Include="BusinessModels\ImageDeleteEnum.cs" />
     <Compile Include="BusinessModels\Request\EvenementDalRequest.cs" />
-    <Compile Include="HttpClient.cs" />
     <Compile Include="Response\ResponseObject.cs" />
     <Compile Include="Response\ResponseState.cs" />
     <Compile Include="CategorieBllService.cs" />

@@ -217,5 +217,17 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             throw new NotImplementedException();
             return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
         }
+
+        /// <summary>
+        /// Retourne le nombre de participants à un événement
+        /// </summary>
+        /// <param name="id">Id de l'événement</param>
+        /// <returns>Nombre de participants</returns>
+        [HttpGet]
+        [Route("api/Evenement/{id}/ParticipantNb")]
+        public int GetParticipantNbByEvent(long id)
+        {
+            return EvenementContext.GetParticipantNbByEvent(id);
+        }
     }
 }

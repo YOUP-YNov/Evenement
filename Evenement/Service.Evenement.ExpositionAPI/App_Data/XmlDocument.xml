@@ -622,6 +622,13 @@
             <param name="id_etat">Id de l'etat</param>
             <returns></returns>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetParticipantNbByEvent(System.Int64)">
+            <summary>
+            Retourne le nombre de participants à un événement
+            </summary>
+            <param name="id">Id de l'événement</param>
+            <returns>Nombre de participants</returns>
+        </member>
         <member name="P:Service.Evenement.ExpositionAPI.Context.EvenementContext.EventBusinessService">
             <summary>
             Récupère l'accés au service evenement
@@ -797,6 +804,13 @@
             <param name="id_profil">Id du profil</param>
             <param name="id_etat">Id de l'etat</param>
             <returns></returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetParticipantNbByEvent(System.Int64)">
+            <summary>
+            Retourne le nombre de participants à un événement
+            </summary>
+            <param name="id">Id de l'événement</param>
+            <returns>Nombre de participants</returns>
         </member>
         <member name="T:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController">
             <summary>
