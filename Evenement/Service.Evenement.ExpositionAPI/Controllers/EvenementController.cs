@@ -141,10 +141,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id">Id de l'évènement à modifier</param>
         /// <param name="evenement">Evènement</param>
         [HttpPut]
-        public HttpResponseMessage Put(long id_evenement, [FromBody]EvenementUpdate evenement)
+        public HttpResponseMessage Put(Guid token, [FromBody]EvenementUpdate evenement)
         {
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
-            ResponseObject response = EvenementBllService.PutEvenement(bllEvent);
+            ResponseObject response = EvenementBllService.PutEvenement(bllEvent, token);
             return GenerateResponseMessage.initResponseMessage(response);
         }
 
