@@ -65,6 +65,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
@@ -86,6 +87,7 @@
     <Compile Include="BusinessModels\EventStateEnum.cs" />
     <Compile Include="BusinessModels\ImageDeleteEnum.cs" />
     <Compile Include="BusinessModels\Request\EvenementDalRequest.cs" />
+    <Compile Include="HttpClient.cs" />
     <Compile Include="Response\ResponseObject.cs" />
     <Compile Include="Response\ResponseState.cs" />
     <Compile Include="CategorieBllService.cs" />

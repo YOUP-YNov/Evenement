@@ -13,6 +13,7 @@ using System.Net;
 using Newtonsoft.Json;
 using System.Web.Helpers;
 
+using System.Net.Http;
 namespace Service.Evenement.Business
 {
     public class EvenementBllService
@@ -395,14 +396,66 @@ namespace Service.Evenement.Business
         /// Permet de désactiver un événement
         /// </summary>
         /// <param name="eventId">id de l'événement à désactiver</param>
-        public void DeactivateEvent(int eventId)
+        public ResponseObject DeactivateEvent(int eventId, Guid token)
         {
-            EvenementDao eventDao = new EvenementDao();
-            eventDao.Id = eventId;
-            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
-            eventDao.DateModification = DateTime.Now;
+            ResponseObject response = new ResponseObject();
+            WebClient client = new WebClient();
+            int idProfil = -1;
+                string resultJson = null;
+                try
+                {
+                    resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + token);
+                }
+                catch (Exception e)
+                {
+                   
+                }
+                
+                if (!string.IsNullOrWhiteSpace(resultJson))
+                {
+                    dynamic json = Json.Decode(resultJson);
+                    if (json != null)
+                    {
+                        idProfil = json.Utilisateur_Id;
+                    }
+                }
 
-            EvenementDalService.UpdateStateEvenement(eventDao);
+                if (idProfil != -1)
+                {
+                    ResponseObject responseEvt = this.GetEvenementById(eventId);
+                    EvenementBll eventDelete = null;
+                    if (responseEvt != null)
+                    {
+                        eventDelete = (EvenementBll)responseEvt.Value;
+                    }
+                    else
+                    {
+                        response.State = ResponseState.NotFound;
+                    }
+
+                    if (eventDelete != null)
+                    {
+                        if (idProfil == eventDelete.OrganisateurId)
+                        {
+                            EvenementDao eventDao = new EvenementDao();
+                            eventDao.Id = eventId;
+                            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
+                            eventDao.DateModification = DateTime.Now;
+
+                            EvenementDalService.UpdateStateEvenement(eventDao);
+                            response.State = ResponseState.Ok;
+                        }
+                        else
+                        {
+                            response.State = ResponseState.Unauthorized;
+                        }
+                    }
+                }
+                else
+                {
+                    response.State = ResponseState.Unauthorized;
+                }
+                return response;
         }
 
         /// <summary>
