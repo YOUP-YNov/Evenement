@@ -19,7 +19,7 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// <summary>
         /// Donnée membre représentant l'accés au service evenement
         /// </summary>
-        private static Lazy<EvenementBllService> _eventBusinessService;
+        private static Lazy<EvenementBllService> _eventBusinessService  = new Lazy<EvenementBllService>();
 
         /// <summary>
         /// Récupère ou assigne l'accés au service evenement
@@ -97,10 +97,10 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// </summary>
         /// <param name="id">Id de l'évènement à modifier</param>
         /// <param name="evenement">Evènement</param>
-        public static ResponseObject Put ( long id_evenement, EvenementUpdate evenement )
+        public static ResponseObject Put ( Guid token, EvenementUpdate evenement )
         {
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
-            ResponseObject response = EventBusinessService.PutEvenement(bllEvent);
+            ResponseObject response = EventBusinessService.PutEvenement(bllEvent,token);
             return response;
         }
 

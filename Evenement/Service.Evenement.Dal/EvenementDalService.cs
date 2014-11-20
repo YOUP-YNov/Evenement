@@ -387,7 +387,26 @@ namespace Service.Evenement.Dal
             }
             return null;
         }
+        /// <summary>
+        /// récupère les événements signalés
+        /// </summary>
+        /// <returns> liste d'événements signalés</returns>
+        public IEnumerable<EvenementDao> GetReportedEvents()
+        {
+            try
+            {
+                var result = EventDalService.GetReportedEvents();
+                return result.ToEvenementDao();
 
+            }
+            catch (Exception e)
+            {
+
+                new LErreur(e, "Service.Evenement.Dal", "GetReportedEvents Error", 0).Save(LoggerUri);
+            }
+            return null;
+
+        }
         /// <summary>
         /// 
         /// </summary>

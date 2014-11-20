@@ -301,11 +301,27 @@ namespace Service.Evenement.Business
         /// <returns>Liste d'événements</returns>
         public ResponseObject GetReportedEvents()
         {
-            //IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement();
-            //IEnumerable<EvenementBll> events = from e in tmp
-            // where e.EtatEvenement.Nom == Dal.Dao.EventStateEnum.Signaler
-            //select Mapper.Map<EvenementDao, EvenementBll>(e);
-            return null;
+            ResponseObject response = new ResponseObject();
+
+            IEnumerable<Dal.Dao.EvenementDao> reportedEvents = EvenementDalService.GetReportedEvents();
+            if (reportedEvents != null)
+            {
+                if (reportedEvents.Count() > 0)
+                {
+                    response.State = ResponseState.Ok;
+                    response.Value = Mapper.Map<IEnumerable<EvenementDao>, IEnumerable<EvenementBll>>(reportedEvents);
+                }
+                else
+                {
+                    response.State = ResponseState.NoContent;
+                }
+            }
+            else
+            {
+                response.State = ResponseState.NotFound;
+             }
+            return response;
+        
         }
 
         /// <summary>
