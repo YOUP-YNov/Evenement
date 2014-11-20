@@ -130,7 +130,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <summary>
         /// Modification de l'évènement
         /// </summary>
-        /// <param name="id">Id de l'évènement à modifier</param>
+        /// <param name="token">Token de l'utilisateur courant</param>
         /// <param name="evenement">Evènement</param>
         [HttpPut]
         public HttpResponseMessage Put(Guid token, [FromBody]EvenementUpdate evenement)
