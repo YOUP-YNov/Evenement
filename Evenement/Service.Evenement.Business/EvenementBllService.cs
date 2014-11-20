@@ -80,29 +80,57 @@ namespace Service.Evenement.Business
         /// </summary>
         /// <param name="evenementBll">Evenement a mettre a jours</param>
         /// <returns>Objet de service, englobant l'évenement ainsi qu'un status d'opération</returns>
-        public ResponseObject PutEvenement(EvenementBll evenementBll)
+        public ResponseObject PutEvenement(EvenementBll evenementBll, Guid token)
         {
-
             EvenementBll evenement = (EvenementBll)(this.GetEvenementById(evenementBll.Id)).Value;
             ResponseObject response = new ResponseObject();
             if (evenement != null)
             {
-                if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
+                WebClient client = new WebClient();
+                int idProfil = -1;
+                string resultJson = null;
+                try
                 {
-                    EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
-                    IEnumerable<EvenementDao> result = EvenementDalService.UpdateEvenement(daoEvent);
-                    if (result.Count() > 0)
+                    resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + token);
+                }
+                catch (Exception e)
+                {
+                   
+                }
+                
+                if (!string.IsNullOrWhiteSpace(resultJson))
+                {
+                    dynamic json = Json.Decode(resultJson);
+                    if (json != null)
                     {
-                        response.State = ResponseState.Ok;
+                        idProfil = json.Utilisateur_Id;
                     }
-                    else
-                    {
-                        response.State = ResponseState.NotModified;
-                    }
+                }
+
+                if (idProfil != evenement.OrganisateurId)
+                {
+                    response.State = ResponseState.Unauthorized;
                 }
                 else
                 {
-                    response.State = ResponseState.BadRequest;
+
+                    if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
+                    {
+                        EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
+                        IEnumerable<EvenementDao> result = EvenementDalService.UpdateEvenement(daoEvent);
+                        if (result.Count() > 0)
+                        {
+                            response.State = ResponseState.Ok;
+                        }
+                        else
+                        {
+                            response.State = ResponseState.NotModified;
+                        }
+                    }
+                    else
+                    {
+                        response.State = ResponseState.BadRequest;
+                    }
                 }
             }
             else
