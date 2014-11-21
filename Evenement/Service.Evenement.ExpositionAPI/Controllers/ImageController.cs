@@ -1,27 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Web;
-using System.Web.Http.Description;
-using System.Web.Mvc;
-using AutoMapper;
+﻿using AutoMapper;
 using Service.Evenement.Business;
 using Service.Evenement.Business.Response;
-using Service.Evenement.ExpositionAPI.Models;
-using System.Web.Http.Cors;
 using Service.Evenement.ExpositionAPI.Context;
+using Service.Evenement.ExpositionAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Cors;
+using System.Web.Http.Description;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
+    /// <summary>
+    /// Contrôleur pour gérer les images des évènements
+    /// </summary>
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class ImageController : Controller
+    public class ImageController : ApiController
     {
         /// <summary>
-        /// retourne les détail des images d'un evenement
+        /// Retourne les détails des images d'un évènement
         /// </summary>
-        /// <param name="id">l'id de l'événement</param>
-        /// <returns>un événement</returns>
+        /// <param name="id">L'id de l'évènement</param>
+        /// <returns>Un événement</returns>
         [HttpGet]
         [ResponseType(typeof(EventImageFront))]
         public HttpResponseMessage GetImagesEvenement ( long id )
@@ -35,12 +36,12 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// Associe une image a un evenement
+        /// Associe une image à un évènement
         /// </summary>
-        /// <param name="fileName">nom du fichier</param>
-        /// <param name="evenement_id">id de l'évènement</param>
-        /// <param name="content">byte array de l'image</param>
-        /// <returns>Image uploadé</returns>
+        /// <param name="fileName">Nom du fichier</param>
+        /// <param name="evenement_id">Id de l'évènement</param>
+        /// <param name="content">Byte array de l'image</param>
+        /// <returns>Image uploadée</returns>
         [HttpPost]
         [ResponseType(typeof(EventImageFront))]
         public HttpResponseMessage PostImage ( string fileName, long evenement_id, byte[] content )
@@ -54,11 +55,11 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// Associe une image a un evenement
+        /// Associe une image à un évènement
         /// </summary>
-        /// <param name="urlFile">url du fichier</param>
-        /// <param name="EventId">id de l'évènement</param>
-        /// <returns>Image uploadé</returns>
+        /// <param name="urlFile">Url du fichier</param>
+        /// <param name="EventId">Id de l'évènement</param>
+        /// <returns>Image uploadée</returns>
         [HttpPost]
         [ResponseType(typeof(EventImageFront))]
         public HttpResponseMessage PostImageByUri ( string urlFile, long EventId )
@@ -72,7 +73,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// Permet de delete une image associé a un évènement
+        /// Permet de supprimer une image associé à un évènement
         /// </summary>
         /// <param name="ImageId">Id de l'image</param>
         /// <returns>CodeEnum de résultat</returns>

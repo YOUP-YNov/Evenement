@@ -18,7 +18,7 @@ using Service.Evenement.ExpositionAPI.Context;
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     /// <summary>
-    /// Controleur d'évènement.
+    /// Contrôleur pour gérer les évènements
     /// </summary>
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EvenementController : ApiController

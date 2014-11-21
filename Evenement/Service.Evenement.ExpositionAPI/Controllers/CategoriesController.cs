@@ -1,18 +1,19 @@
-﻿using Service.Evenement.ExpositionAPI.Models;
+﻿using AutoMapper;
+using Service.Evenement.Business;
+using Service.Evenement.Business.Response;
+using Service.Evenement.ExpositionAPI.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Service.Evenement.Business;
-using AutoMapper;
-using System.Web.Http.Description;
-using Service.Evenement.Business.Response;
 using System.Web.Http.Cors;
+using System.Web.Http.Description;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
+    /// <summary>
+    /// Contrôleur pour gérer les catégories des évènements
+    /// </summary>
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CategoriesController : ApiController
     {

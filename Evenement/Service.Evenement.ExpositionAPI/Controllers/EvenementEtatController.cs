@@ -12,7 +12,7 @@ using System.Web.Http.Cors;
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     /// <summary>
-    /// controller pour les Etat de l'évènement
+    /// Contrôleur pour gérer les états des évènements
     /// </summary>
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EvenementEtatController : ApiController
