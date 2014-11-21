@@ -548,28 +548,40 @@ namespace Service.Evenement.Business
                     //On récupère le nombre d'utilisateurs déjà inscrits et le nombre d'utilsateurs
                     //max pour vérifier s'il reste de la place sur l'événement
                     EvenementDalRequest requestNombreUtilisateurs = new EvenementDalRequest() { EvenementId = _evenementId };
-                    var nombreUtilisateurs = EvenementDalService.getEvenementId(requestNombreUtilisateurs).Participants.Count();
-                    EvenementDalRequest requestNombreMax = new EvenementDalRequest() { EvenementId = _evenementId };
-                    var nombreMax = EvenementDalService.getEvenementId(requestNombreMax).MaximumParticipant;
-
-                    if (nombreUtilisateurs < nombreMax)
+                    EvenementDao eventActuel = EvenementDalService.getEvenementId(requestNombreUtilisateurs);
+                    if (eventActuel!=null)
                     {
-                        var daoResult = EvenementDalService.SubscribeEvenement(request).FirstOrDefault();
-                        if (daoResult == null)
+                        int nbDispo = -1;
+                        if(eventActuel.Participants !=null)
                         {
-                            response.State = ResponseState.NotFound;
+                            EvenementDalRequest requestNombreMax = new EvenementDalRequest() { EvenementId = _evenementId };
+                            int nombreMax = EvenementDalService.getEvenementId(requestNombreMax).MaximumParticipant;
+                            nbDispo = nombreMax - eventActuel.Participants.Count();
                         }
-                            
-                        EvenementSubscriberBll result = Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(daoResult);
-                        response.State = ResponseState.Ok;
-                        response.Value = result;
-                        return response;
+
+                        if (nbDispo>0 || nbDispo == -1)
+                        {
+                            var daoResult = EvenementDalService.SubscribeEvenement(request).FirstOrDefault();
+                            if (daoResult == null)
+                            {
+                                response.State = ResponseState.NotFound;
+                            }
+
+                            EvenementSubscriberBll result = Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(daoResult);
+                            response.State = ResponseState.Ok;
+                            response.Value = result;
+                            return response;
+                        }
+                        else
+                        {
+                            response.State = ResponseState.BadRequest;
+                            throw new System.InvalidOperationException("Le nombre d'utilisateurs maximum est déjà atteint");
+                        }
                     }
-                    else
-                    {
-                        response.State = ResponseState.BadRequest;
-                        throw new System.InvalidOperationException("Le nombre d'utilisateurs maximum est déjà atteint");
-                    }
+                    
+
+                   
+                   
                 }
             }
             return response;
