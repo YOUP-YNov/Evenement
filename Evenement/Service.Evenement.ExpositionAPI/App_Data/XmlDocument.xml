@@ -675,7 +675,7 @@
             </summary>
             <param name="id">Id de l'evenement</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.DesactivateEvent(System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.DesactivateEvent(System.Int32,System.String)">
             <summary>
             Permet de désactiver un evenement
             </summary>
@@ -877,7 +877,7 @@
             </summary>
             <param name="id">Id de l'evenement</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.DesactivateEvent(System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.DesactivateEvent(System.Int32,System.String)">
             <summary>
             Permet de désactiver un evenement
             </summary>
@@ -918,11 +918,6 @@
             </summary>
             <param name="ImageId">Id de l'image</param>
             <returns>CodeEnum de résultat</returns>
-        </member>
-        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.OrganisateurImageUrl">
-            <summary>
-            Assigne ou récupère la photo de l'organisateur
-            </summary>
         </member>
         <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.HashTag">
             <summary>

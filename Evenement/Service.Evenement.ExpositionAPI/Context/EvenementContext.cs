@@ -141,15 +141,15 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// </summary>
         /// <param name="id">Id de l'evenement</param>
         /// <param name="id_profil">Id du profil</param>
-        public static ResponseObject DesactivateEvenement ( long id_evenement, long id_profil )
+        public static ResponseObject DesactivateEvenement (int id_evenement, string token )
         {
+             return EventBusinessService.DeactivateEvent(id_evenement, token);
             /*var evts = EvenementBllService.GetByProfil(id_profil);
             var existsEvt = evts.FirstOrDefault(evt => evt.Id == id_evenement);
             if (existsEvt != null)
             {
                 EvenementBllService.DeactivateEvent(id_evenement);
             }*/
-            return null;
         }
 
         /// <summary>
@@ -268,9 +268,9 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// Permet de désactiver un evenement
         /// </summary>
         /// <param name="id">id de l'evenement</param>
-        public static void DesactivateEvent ( int id )
+        public static void DesactivateEvent ( int id_event, string token )
         {
-            EventBusinessService.ModifyEventState(id, new EventStateBll(Business.EventStateEnum.Desactiver));
+            EventBusinessService.DeactivateEvent(id_event, token);
         }
 
         #endregion
