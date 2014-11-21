@@ -14,6 +14,7 @@ using Service.Evenement.Business.Response;
 using System.Web.Http.Description;
 using System.Web.Http.Cors;
 using Service.Evenement.ExpositionAPI.Context;
+using Service.Evenement.ExpositionAPI.Models.ModelCreate;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
@@ -114,9 +115,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="dept"></param>
         /// <returns>Liste d'évènements</returns>
-        [HttpGet]
+        [HttpPost]
+        [Route("api/Evenement/Dept")]
         [ResponseType(typeof(EvenementTimelineFront))]
-        public HttpResponseMessage GetEvenement(int[] dept)
+        public HttpResponseMessage GetEvenement([FromBody] int[] dept)
         {
             ResponseObject result = EvenementContext.GetEvenement(dept);
             if (result.Value != null)
@@ -159,9 +161,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id">Id de l'évenement</param>
         /// <param name="id_profil">Id du profil</param>
         [HttpDelete]
-        public HttpResponseMessage DeleteEvenement(long id, [FromBody] long id_profil)
+        public HttpResponseMessage DeleteEvenement(int id, string token)
         {
-            ResponseObject response = EvenementContext.DesactivateEvenement(id, id_profil);
+            ResponseObject response = EvenementContext.DesactivateEvenement(id, token);
             return GenerateResponseMessage.initResponseMessage(response);
         }
 
@@ -170,9 +172,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="evt">L'évènement à créer</param>
         [HttpPost]
-        public HttpResponseMessage Create([FromBody] EvenementCreate evt)
+        public HttpResponseMessage Create(string token, [FromBody] CustomEvenementCreate evt)
         {
-            ResponseObject response = EvenementContext.Create(evt);
+            ResponseObject response = EvenementContext.Create(evt, token);
             return GenerateResponseMessage.initResponseMessage(response);
         }
 

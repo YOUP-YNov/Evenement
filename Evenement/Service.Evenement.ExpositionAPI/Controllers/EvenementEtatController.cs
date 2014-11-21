@@ -43,11 +43,11 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// Permet de désactiver un evenement
         /// </summary>
         /// <param name="id">id de l'evenement</param>
-        [HttpPut]
+        /*[HttpPut]
         [Route("api/EvenementEtat/Deactivate/{id}")]
-        public void DesactivateEvent(int id)
+        public void DesactivateEvent(int id, string token)
         {
-            EvenementContext.DesactivateEvent(id);
-        }
+            EvenementContext.DesactivateEvent(id, token);
+        }*/
     }
 }

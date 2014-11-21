@@ -86,7 +86,7 @@
         /// <summary>
         /// Récupère le nombre de participants enregistrés à l'évènement
         /// </summary>
-        public int NdParticipant { get; set; }
+        //public int NdParticipant { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le nombre de participant maximum à l'évenement

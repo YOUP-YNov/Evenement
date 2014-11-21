@@ -23,7 +23,7 @@ namespace Service.Evenement.Dal.Interface
         IEnumerable<EvenementDao> GetLieuEvenementById ( EvenementDalRequest request );
         IEnumerable<EvenementDao> CreateLieuEvenement ( EvenementDalRequest request, EventLocationDao location );
         IEnumerable<EvenementDao> GetAllEvenement ( DateTime? date_search, bool? premium, int max_result, long? categorie, long? max_id, string orderby = null, string text_search = null, DateTime? startRange = null, DateTime? endRange = null );
-        IEnumerable<EvenementDao> GetEvenementByDept ( int dept );
+        IEnumerable<EvenementDao> GetEvenementByDept ( int[] dept );
         IEnumerable<EvenementDao> GetEvenementByProfil ( long id_profil );
         IEnumerable<EvenementDao> GetEvenementByState ( EventStateDao state );
         IEnumerable<EvenementDao> GetEvenementByCPAndCategorie ( EvenementDalRequest request );

@@ -8,6 +8,7 @@ using Service.Evenement.Business;
 using Service.Evenement.Business.Response;
 using Service.Evenement.ExpositionAPI.Controllers;
 using Service.Evenement.ExpositionAPI.Models;
+using Service.Evenement.ExpositionAPI.Models.ModelCreate;
 
 namespace Service.Evenement.ExpositionAPI.Context
 {
@@ -140,24 +141,24 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// </summary>
         /// <param name="id">Id de l'evenement</param>
         /// <param name="id_profil">Id du profil</param>
-        public static ResponseObject DesactivateEvenement ( long id_evenement, long id_profil )
+        public static ResponseObject DesactivateEvenement (int id_evenement, string token )
         {
+             return EventBusinessService.DeactivateEvent(id_evenement, token);
             /*var evts = EvenementBllService.GetByProfil(id_profil);
             var existsEvt = evts.FirstOrDefault(evt => evt.Id == id_evenement);
             if (existsEvt != null)
             {
                 EvenementBllService.DeactivateEvent(id_evenement);
             }*/
-            return null;
         }
 
         /// <summary>
         /// Fonction de création de l'évènement
         /// </summary>
         /// <param name="evt">L'évènement à créer</param>
-        public static ResponseObject Create ( EvenementCreate evt )
+        public static ResponseObject Create ( CustomEvenementCreate evt, string token )
         {
-            EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evt.evenement);
+            EvenementBll bllEvent = Mapper.Map<EvenementCreate, EvenementBll>(evt.evenement);
 
             WebClient client = new WebClient();
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
@@ -184,7 +185,7 @@ namespace Service.Evenement.ExpositionAPI.Context
                 bllEvent.Topic_id = id_topic;
             }
 
-            ResponseObject response = EventBusinessService.CreateEvenement(bllEvent);
+            ResponseObject response = EventBusinessService.CreateEvenement(bllEvent, token);
             return response;
         }
 
@@ -267,9 +268,9 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// Permet de désactiver un evenement
         /// </summary>
         /// <param name="id">id de l'evenement</param>
-        public static void DesactivateEvent ( int id )
+        public static void DesactivateEvent ( int id_event, string token )
         {
-            EventBusinessService.ModifyEventState(id, new EventStateBll(Business.EventStateEnum.Desactiver));
+            EventBusinessService.DeactivateEvent(id_event, token);
         }
 
         #endregion
