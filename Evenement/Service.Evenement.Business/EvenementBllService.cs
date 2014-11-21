@@ -12,6 +12,7 @@ using Service.Evenement.Business.BusinessModels;
 using System.Net;
 using Newtonsoft.Json;
 using System.Web.Helpers;
+using System.Configuration;
 
 namespace Service.Evenement.Business
 {
@@ -62,6 +63,16 @@ namespace Service.Evenement.Business
                 if (result.Count() > 0)
                 {
                     response.State = ResponseState.Created;
+                    WebClient client = new WebClient();
+                    try
+                    {
+                        // Appel de l'api de recherche pour indexer l'événement
+                        client.DownloadStringAsync(new Uri(ConfigurationManager.AppSettings["RechercheUri"].ToString() + string.Format("add/get_event/type?={0}&idP={1}&nameP={2}&town={3}&latitude={4}&longitude={5}&idE={6}&nameE={7}&date={8}&adresse={9}", evenementBll.EventAdresse.Id, evenementBll.EventAdresse.Nom, evenementBll.EventAdresse.Ville, evenementBll.EventAdresse.Latitude, evenementBll.EventAdresse.Longitude, evenementBll.Id, evenementBll.TitreEvenement, evenementBll.Categorie.Libelle, evenementBll.CreateDate, evenementBll.EventAdresse.Adresse)));
+                    }
+                    catch
+                    {
+
+                    }
                 }
                 else
                 {
