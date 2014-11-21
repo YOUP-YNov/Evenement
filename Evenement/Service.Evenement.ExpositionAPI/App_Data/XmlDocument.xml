@@ -556,6 +556,13 @@
             </summary>
             <returns>Liste d'événements</returns>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetEventsByState(Service.Evenement.ExpositionAPI.Models.EventStateFront)">
+            <summary>
+            Retourne la liste des événements par état donné
+            </summary>
+            <param name="stateFront"></param>
+            <returns></returns>
+        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetEvenement(System.Int64)">
             <summary>
             Retourne le détail d'un événement
@@ -624,7 +631,7 @@
         </member>
         <member name="P:Service.Evenement.ExpositionAPI.Context.EvenementContext.EventBusinessService">
             <summary>
-            Récupère ou assigne l'accés au service evenement
+            Récupère l'accés au service evenement
             </summary>
         </member>
         <member name="T:Service.Evenement.ExpositionAPI.Context.ImageContext">
@@ -670,7 +677,7 @@
         </member>
         <member name="P:Service.Evenement.ExpositionAPI.Context.ImageContext.ImageBusinessService">
             <summary>
-            Récupère ou assigne l'accés au service image
+            Récupère l'accés au service image
             </summary>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategoriesController.Get">
@@ -746,26 +753,26 @@
             <param name="dept"></param>
             <returns>Liste d'évènements</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Put(System.Int64,Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Put(System.Guid,Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate)">
             <summary>
             Modification de l'évènement
             </summary>
-            <param name="id">Id de l'évènement à modifier</param>
+            <param name="token">Token de l'utilisateur courant</param>
             <param name="evenement">Evènement</param>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostInscriptionDeinscription(System.Int64,System.Int64)">
             <summary>
             Permet l'inscription et la desincription
             </summary>
-            <param name="idEvenement">Id de l'evenement</param>
+            <param name="id">Id de l'evenement</param>
             <param name="idProfil">Id du profil</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DesactivateEvenement(System.Int64,System.Int64)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DeleteEvenement(System.Int64,System.Int64)">
             <summary>
             Desactivation de l'evenement 
             c'est une mise en archive. L'évenement n'est plus consultable. 
             </summary>
-            <param name="id">Id de l'evenement</param>
+            <param name="id">Id de l'évenement</param>
             <param name="id_profil">Id du profil</param>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Create(Service.Evenement.ExpositionAPI.Models.EvenementCreate)">
@@ -790,7 +797,7 @@
             <param name="id_evenement">id de l'evenement</param>
             <param name="id_etat">id de l'etat</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenementsEtats(System.Int32,System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenementsEtats(System.Int32)">
             <summary>
             Permet de lister l'ensemble de evenements suivant un etat (ADmin)
             </summary>

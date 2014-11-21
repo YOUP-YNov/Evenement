@@ -323,6 +323,34 @@ namespace Service.Evenement.Business
             return response;
         
         }
+        /// <summary>
+        /// récupère tous les événements selon un état
+        /// </summary>
+        /// <param name="stateBll"></param>
+        /// <returns></returns>
+        public ResponseObject GetEventsByState(EventStateBll stateBll)
+        {
+            ResponseObject response = new ResponseObject();
+            EventStateDao stateDao = Mapper.Map<EventStateBll, EventStateDao>(stateBll);
+            IEnumerable<Dal.Dao.EvenementDao> events = EvenementDalService.GetEvenementByState(stateDao);
+            if (events != null)
+            {
+                if (events.Count() > 0)
+                {
+                    response.State = ResponseState.Ok;
+                    response.Value = Mapper.Map<IEnumerable<EvenementDao>, IEnumerable<EvenementBll>>(events);
+                }
+                else
+                {
+                    response.State = ResponseState.NoContent;
+                }
+            }
+            else
+            {
+                response.State = ResponseState.NotFound;
+            }
+            return response;
+        }
 
         /// <summary>
         /// Retourne l'état d'un événement

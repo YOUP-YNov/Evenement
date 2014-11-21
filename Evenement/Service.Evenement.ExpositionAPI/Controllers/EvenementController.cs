@@ -92,19 +92,31 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             return GenerateResponseMessage.initResponseMessage(result);
         }
 
+        [ResponseType(typeof(IEnumerable<EvenementFront>))]
+        public HttpResponseMessage GetEventsByState(EventStateFront stateFront)
+        {
+            ResponseObject result = EvenementContext.GetEventsByState(stateFront);
+            if (result.Value != null)
+            {
+                result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementFront>>((IEnumerable<EvenementBll>)result.Value);
+            }
+
+            return GenerateResponseMessage.initResponseMessage(result);
+        }
+
         /// <summary>
         /// Retourne le détail d'un événement
         /// </summary>
         /// <param name="id">L'id de l'événement</param>
         /// <returns>Un événement</returns>
         [HttpGet]
-        [ResponseType(typeof(EvenementFront))]
+        [ResponseType(typeof(EvenementTimelineFront))]
         public HttpResponseMessage GetEvenement(long id)
         {
             ResponseObject result = EvenementContext.GetEvenement(id);
             if (result.Value!= null)
             {
-                result.Value = Mapper.Map<EvenementBll, EvenementFront>((EvenementBll)result.Value);
+                result.Value = Mapper.Map<EvenementBll, EvenementTimelineFront>((EvenementBll)result.Value);
             }
             return GenerateResponseMessage.initResponseMessage(result);
         }
@@ -213,10 +225,44 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id_profil">Id du profil</param>
         /// <param name="id_etat">Id de l'etat</param>
         /// <returns></returns>
-        public IEnumerable<EvenementTimelineFront> GetEvenementsEtats(int id_profil, int id_etat)
+        public HttpResponseMessage GetEvenementsEtats(int id_etat)
         {
-            throw new NotImplementedException();
-            return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
+            EventStateFront stateFront = new EventStateFront();
+
+            switch (id_etat)
+	        {
+		        case 11:
+                    stateFront.Nom=EventStateEnumFront.AValider;
+                    stateFront.Id = 11;
+                    break;
+                case 12:
+                    stateFront.Nom = EventStateEnumFront.Valide;
+                    stateFront.Id = 12;
+                    break;
+                case 13:
+                    stateFront.Nom = EventStateEnumFront.Annuler;
+                    stateFront.Id = 13;
+                    break;
+                case 14:
+                    stateFront.Nom = EventStateEnumFront.Signaler;
+                    stateFront.Id = 14;
+                    break;
+                case 15:
+                    stateFront.Nom = EventStateEnumFront.Reussi;
+                    stateFront.Id = 15;
+                    break;
+                case 16:
+                    stateFront.Nom = EventStateEnumFront.Desactiver;
+                    stateFront.Id = 16;
+                    break;
+	        }
+            ResponseObject result = EvenementContext.GetEventsByState(stateFront);
+            if (result.Value != null)
+            {
+                result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementFront>>((IEnumerable<EvenementBll>)result.Value);
+            }
+
+            return GenerateResponseMessage.initResponseMessage(result);
         }
     }
 }
