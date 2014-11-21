@@ -610,7 +610,7 @@
             <param name="id">Id de l'évènement à modifier</param>
             <param name="evenement">Evènement</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.PostInscriptionDeinscription(System.Int64,System.Int64)">
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.PostInscriptionDeinscription(System.Int32,System.String)">
             <summary>
             Permet l'inscription et la desincription
             </summary>
@@ -817,7 +817,7 @@
             <param name="token">Token de l'utilisateur courant</param>
             <param name="evenement">Evènement</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostInscriptionDeinscription(System.Int64,System.Int64)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostInscriptionDeinscription(System.Int32,System.String)">
             <summary>
             Permet l'inscription et la desincription
             </summary>

@@ -92,7 +92,7 @@ namespace Service.Evenement.Business
                 if (result.Count() > 0)
                 {
                     response.State = ResponseState.Created;
-                    WebClient client = new WebClient();
+                   
                     try
                     {
                         // Appel de l'api de recherche pour indexer l'événement
@@ -127,7 +127,7 @@ namespace Service.Evenement.Business
         /// </summary>
         /// <param name="evenementBll">Evenement a mettre a jours</param>
         /// <returns>Objet de service, englobant l'évenement ainsi qu'un status d'opération</returns>
-        public ResponseObject PutEvenement(EvenementBll evenementBll, Guid token)
+        public ResponseObject PutEvenement(EvenementBll evenementBll, string token)
         {
             EvenementBll evenement = (EvenementBll)(this.GetEvenementById(evenementBll.Id)).Value;
             ResponseObject response = new ResponseObject();
@@ -138,7 +138,7 @@ namespace Service.Evenement.Business
                 string resultJson = null;
                 try
                 {
-                    resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + token);
+                    resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" +Guid.Parse(token).ToString());
                 }
                 catch (Exception e)
                 {
@@ -502,17 +502,42 @@ namespace Service.Evenement.Business
             return result;
         }
 
+
         /// <summary>
         /// Permet à un utilisateurs de s'incrire ou de se désincrire à un évènement
         /// </summary>
         /// <param name="UserId">Id de l'utilisateur</param>
         /// <param name="EvenementId">Id de l'evenement</param>
         /// <returns>L'inscription de l'utilisateur à l'évènement</returns>
-        public EvenementSubscriberBll SubscribeEvenement(int UserId, int _evenementId)
+        public ResponseObject SubscribeEvenement(string token, int _evenementId)
+        {
+            ResponseObject response = new ResponseObject();
+            WebClient client = new WebClient();
+            int idProfil = -1;
+            string resultJson = null;
+            try
             {
+                resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + Guid.Parse(token).ToString());
+            }
+            catch (Exception e)
+            {
+                response.State = ResponseState.Unauthorized;
+                return response;
+            }
+
+            if (!string.IsNullOrWhiteSpace(resultJson))
+            {
+                dynamic json = Json.Decode(resultJson);
+                if (json != null)
+                {
+                    idProfil = json.Utilisateur_Id;
+                }
+
+                if (idProfil != -1)
+                {
                     EvenementDalRequest request = new EvenementDalRequest()
                     {
-                UserId = UserId,
+                        UserId = idProfil,
                         EvenementId = _evenementId
                     };
                     //On récupère le nombre d'utilisateurs déjà inscrits et le nombre d'utilsateurs
@@ -526,14 +551,23 @@ namespace Service.Evenement.Business
                     {
                         var daoResult = EvenementDalService.SubscribeEvenement(request).FirstOrDefault();
                         if (daoResult == null)
-                    return null;
+                        {
+                            response.State = ResponseState.NotFound;
+                        }
+
                         EvenementSubscriberBll result = Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(daoResult);
-                return result;
+                        response.State = ResponseState.Ok;
+                        response.Value = result;
+                        return response;
                     }
                     else
                     {
+                        response.State = ResponseState.BadRequest;
                         throw new System.InvalidOperationException("Le nombre d'utilisateurs maximum est déjà atteint");
                     }
+                }
+            }
+            return response;
 
         }
 
