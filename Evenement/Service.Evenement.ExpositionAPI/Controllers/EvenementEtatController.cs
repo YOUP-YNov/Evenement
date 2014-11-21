@@ -8,6 +8,7 @@ using Service.Evenement.ExpositionAPI.Models;
 using Service.Evenement.Business;
 using AutoMapper;
 using System.Web.Http.Cors;
+using Service.Evenement.ExpositionAPI.Context;
 
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
@@ -17,8 +18,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EvenementEtatController : ApiController
     {
-        EvenementBllService bllService;
-
        /// <summary>
        /// Permet de récupérer l'etat d'un evenement particulier 
        /// </summary>
@@ -26,7 +25,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
        /// <returns></returns>
         public EventStateFront GetEventState(int id)
         {
-            return Mapper.Map<Business.EventStateBll, EventStateFront>(bllService.GetEventState(id));
+            return EvenementContext.GetEventState(id);
         }
 
         /// <summary>
@@ -37,7 +36,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [Route("api/EvenementEtat/Report/{id}")]
         public void SignalEvent(int id)
         {
-            bllService.ModifyEventState(id, new Business.EventStateBll(Business.EventStateEnum.Signaler));
+            EvenementContext.SignalEvent(id);
         }
 
         /// <summary>
@@ -48,7 +47,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [Route("api/EvenementEtat/Deactivate/{id}")]
         public void DesactivateEvent(int id)
         {
-            bllService.ModifyEventState(id, new EventStateBll(Business.EventStateEnum.Desactiver));
+            EvenementContext.DesactivateEvent(id);
         }
     }
 }

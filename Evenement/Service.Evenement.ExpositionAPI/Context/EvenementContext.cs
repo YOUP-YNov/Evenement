@@ -36,6 +36,8 @@ namespace Service.Evenement.ExpositionAPI.Context
             }
         }
 
+        #region Evenement
+
         /// <summary>
         /// Retourne la liste des evenements
         /// </summary>
@@ -114,7 +116,7 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// </summary>
         /// <param name="id">Id de l'évènement à modifier</param>
         /// <param name="evenement">Evènement</param>
-        public static ResponseObject Put (Guid token, EvenementUpdate evenement )
+        public static ResponseObject Put (string token, EvenementUpdate evenement )
         {
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
             ResponseObject response = EventBusinessService.PutEvenement(bllEvent, token);
@@ -126,9 +128,10 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// </summary>
         /// <param name="idEvenement">Id de l'evenement</param>
         /// <param name="idProfil">Id du profil</param>
-        public static void PostInscriptionDeinscription ( long idEvenement, long idProfil )
+        public static ResponseObject PostInscriptionDeinscription(int idEvenement, string token)
         {
-            throw new NotImplementedException();
+            ResponseObject response = EventBusinessService.SubscribeEvenement(token, idEvenement);
+            return response;
         }
 
         /// <summary>
@@ -236,5 +239,39 @@ namespace Service.Evenement.ExpositionAPI.Context
         {
             return EventBusinessService.GetParticipantNbByEvent(id);
         }
+
+        #endregion
+
+        #region Evenement_Etat
+
+        /// <summary>
+        /// Permet de récupérer l'etat d'un evenement particulier 
+        /// </summary>
+        /// <param name="id">id de l'evenement</param>
+        /// <returns></returns>
+        public static EventStateFront GetEventState ( int id )
+        {
+            return Mapper.Map<Business.EventStateBll, EventStateFront>(EventBusinessService.GetEventState(id));
+        }
+
+        /// <summary>
+        /// Permet de signaler un evenement
+        /// </summary>
+        /// <param name="id">Id de l'evenement</param>
+        public static void SignalEvent ( int id )
+        {
+            EventBusinessService.ModifyEventState(id, new Business.EventStateBll(Business.EventStateEnum.Signaler));
+        }
+
+        /// <summary>
+        /// Permet de désactiver un evenement
+        /// </summary>
+        /// <param name="id">id de l'evenement</param>
+        public static void DesactivateEvent ( int id )
+        {
+            EventBusinessService.ModifyEventState(id, new EventStateBll(Business.EventStateEnum.Desactiver));
+        }
+
+        #endregion
     }
 }

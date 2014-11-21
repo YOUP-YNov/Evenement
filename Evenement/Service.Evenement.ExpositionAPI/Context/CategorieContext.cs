@@ -59,9 +59,9 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// </summary>
         /// <param name="id">Id de la catégorie à modifier</param>
         /// <param name="libelle">Nouveau libelle</param>
-        public static void UpdateCategorie ( EvenementCategorieBll Categorie )
+        public static ResponseObject UpdateCategorie ( EvenementCategorieBll Categorie )
         {
-            _CategorieBllService.UpdateCategorie(Categorie);
+           return  _CategorieBllService.UpdateCategorie(Categorie);
         }
     }
 }

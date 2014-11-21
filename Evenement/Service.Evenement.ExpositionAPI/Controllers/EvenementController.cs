@@ -133,7 +133,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="token">Token de l'utilisateur courant</param>
         /// <param name="evenement">Evènement</param>
         [HttpPut]
-        public HttpResponseMessage Put(Guid token, [FromBody]EvenementUpdate evenement)
+        public HttpResponseMessage Put(string token, [FromBody]EvenementUpdate evenement)
         {
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
             ResponseObject response = EvenementContext.Put(token, evenement);
@@ -146,9 +146,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id">Id de l'evenement</param>
         /// <param name="idProfil">Id du profil</param>
         [HttpPost]
-        public void PostInscriptionDeinscription(long id, long idProfil)
+        public HttpResponseMessage PostInscriptionDeinscription(int id, string token)
         {
-            EvenementContext.PostInscriptionDeinscription(id, idProfil);
+            ResponseObject response = EvenementContext.PostInscriptionDeinscription(id, token);
+            return GenerateResponseMessage.initResponseMessage(response);
         }
 
         /// <summary>
