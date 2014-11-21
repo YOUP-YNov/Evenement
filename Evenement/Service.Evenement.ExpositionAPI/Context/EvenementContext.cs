@@ -36,6 +36,8 @@ namespace Service.Evenement.ExpositionAPI.Context
             }
         }
 
+        #region Evenement
+
         /// <summary>
         /// Retourne la liste des evenements
         /// </summary>
@@ -236,5 +238,39 @@ namespace Service.Evenement.ExpositionAPI.Context
         {
             return EventBusinessService.GetParticipantNbByEvent(id);
         }
+
+        #endregion
+
+        #region Evenement_Etat
+
+        /// <summary>
+        /// Permet de récupérer l'etat d'un evenement particulier 
+        /// </summary>
+        /// <param name="id">id de l'evenement</param>
+        /// <returns></returns>
+        public static EventStateFront GetEventState ( int id )
+        {
+            return Mapper.Map<Business.EventStateBll, EventStateFront>(EventBusinessService.GetEventState(id));
+        }
+
+        /// <summary>
+        /// Permet de signaler un evenement
+        /// </summary>
+        /// <param name="id">Id de l'evenement</param>
+        public static void SignalEvent ( int id )
+        {
+            EventBusinessService.ModifyEventState(id, new Business.EventStateBll(Business.EventStateEnum.Signaler));
+        }
+
+        /// <summary>
+        /// Permet de désactiver un evenement
+        /// </summary>
+        /// <param name="id">id de l'evenement</param>
+        public static void DesactivateEvent ( int id )
+        {
+            EventBusinessService.ModifyEventState(id, new EventStateBll(Business.EventStateEnum.Desactiver));
+        }
+
+        #endregion
     }
 }

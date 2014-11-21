@@ -662,6 +662,25 @@
             <param name="id">Id de l'événement</param>
             <returns>Nombre de participants</returns>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetEventState(System.Int32)">
+            <summary>
+            Permet de récupérer l'etat d'un evenement particulier 
+            </summary>
+            <param name="id">id de l'evenement</param>
+            <returns></returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.SignalEvent(System.Int32)">
+            <summary>
+            Permet de signaler un evenement
+            </summary>
+            <param name="id">Id de l'evenement</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.DesactivateEvent(System.Int32)">
+            <summary>
+            Permet de désactiver un evenement
+            </summary>
+            <param name="id">id de l'evenement</param>
+        </member>
         <member name="P:Service.Evenement.ExpositionAPI.Context.EvenementContext.EventBusinessService">
             <summary>
             Récupère l'accés au service evenement
@@ -818,14 +837,6 @@
             Fonction de création de l'évènement
             </summary>
             <param name="evt">L'évènement à créer</param>
-        </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenementsSignale(System.Int32,System.Int32)">
-            <summary>
-            méthode d'appel de l'api profil
-            </summary>
-            <param name="id_profil">id du profil admin</param>
-            <param name="nb_min_signalement">nb de signalement minimum</param>
-            <returns>liste d'evenement signalé</returns>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenementsEtats(System.Int32)">
             <summary>
