@@ -128,9 +128,10 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// </summary>
         /// <param name="idEvenement">Id de l'evenement</param>
         /// <param name="idProfil">Id du profil</param>
-        public static void PostInscriptionDeinscription ( long idEvenement, long idProfil )
+        public static ResponseObject PostInscriptionDeinscription(int idEvenement, string token)
         {
-            throw new NotImplementedException();
+            ResponseObject response = EventBusinessService.SubscribeEvenement(token, idEvenement);
+            return response;
         }
 
         /// <summary>
