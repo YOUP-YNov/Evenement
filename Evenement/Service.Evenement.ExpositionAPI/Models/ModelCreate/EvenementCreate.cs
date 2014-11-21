@@ -9,11 +9,6 @@ namespace Service.Evenement.ExpositionAPI.Models.ModelCreate
     {
 
         /// <summary>
-        /// Assigne ou récupère la photo de l'organisateur
-        /// </summary>
-        public string OrganisateurImageUrl { get; set; }
-
-        /// <summary>
         /// Assigne ou récupère la liste des HashTag associé à l'évenement
         /// </summary>
         public IEnumerable<String> HashTag { get; set; }
@@ -94,7 +89,5 @@ namespace Service.Evenement.ExpositionAPI.Models.ModelCreate
         /// </summary>
         public int Topic_id { get; set; }
 
-
-        public List<long> friends { get; set; }
     }
 }
