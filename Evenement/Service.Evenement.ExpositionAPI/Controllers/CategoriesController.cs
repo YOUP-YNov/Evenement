@@ -82,6 +82,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="id">Id de la catégorie à modifier</param>
         /// <param name="libelle">Nouveau libelle</param>
+        [HttpPut]
         public HttpResponseMessage UpdateCategorie(long id, String libelle)
         {
 
