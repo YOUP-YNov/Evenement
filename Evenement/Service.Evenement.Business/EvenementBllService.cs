@@ -52,26 +52,62 @@ namespace Service.Evenement.Business
         /// </summary>
         /// <param name="evenementBll">evenement a crée</param>
         /// <returns>Objet de service, englobant l'évenement ainsi qu'un status d'opération</returns>
-        public ResponseObject CreateEvenement(EvenementBll evenementBll)
+        public ResponseObject CreateEvenement(EvenementBll evenementBll, string token)
         {
             ResponseObject response = new ResponseObject();
-            if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
+            WebClient client = new WebClient();
+            int idProfil = -1;
+            string resultJson = null;
+            try
             {
-                EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
-                IEnumerable<EvenementDao> result = EvenementDalService.CreateEvenement(new EvenementDalRequest(), daoEvent);
-                if (result.Count() > 0)
+                resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + Guid.Parse(token).ToString());
+            }
+            catch (Exception e)
+            {
+                 response.State = ResponseState.Unauthorized;
+                 return response;
+            }
+
+            if (!string.IsNullOrWhiteSpace(resultJson))
+            {
+                dynamic json = Json.Decode(resultJson);
+                if (json != null)
                 {
-                    response.State = ResponseState.Created;
+                    idProfil = json.Utilisateur_Id;
                 }
                 else
                 {
-                    response.State = ResponseState.NotModified;
+                    response.State = ResponseState.Unauthorized;
+                }
+            }
+
+            if (idProfil != -1)
+            {
+                evenementBll.OrganisateurId = idProfil;
+                if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
+                {
+                    EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
+                    IEnumerable<EvenementDao> result = EvenementDalService.CreateEvenement(new EvenementDalRequest(), daoEvent);
+                    if (result.Count() > 0)
+                    {
+                        response.State = ResponseState.Created;
+                    }
+                    else
+                    {
+                        response.State = ResponseState.NotModified;
+                    }
+                }
+                else
+                {
+                    response.State = ResponseState.BadRequest;
                 }
             }
             else
-            {
-                response.State = ResponseState.BadRequest;
-            }
+                response.State = ResponseState.Unauthorized;
+
+
+
+            
             return response;
         }
 

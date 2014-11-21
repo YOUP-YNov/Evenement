@@ -8,6 +8,7 @@ using Service.Evenement.Business;
 using Service.Evenement.Business.Response;
 using Service.Evenement.ExpositionAPI.Controllers;
 using Service.Evenement.ExpositionAPI.Models;
+using Service.Evenement.ExpositionAPI.Models.ModelCreate;
 
 namespace Service.Evenement.ExpositionAPI.Context
 {
@@ -154,9 +155,9 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// Fonction de création de l'évènement
         /// </summary>
         /// <param name="evt">L'évènement à créer</param>
-        public static ResponseObject Create ( EvenementCreate evt )
+        public static ResponseObject Create ( CustomEvenementCreate evt, string token )
         {
-            EvenementBll bllEvent = Mapper.Map<EvenementFront, EvenementBll>(evt.evenement);
+            EvenementBll bllEvent = Mapper.Map<EvenementCreate, EvenementBll>(evt.evenement);
 
             WebClient client = new WebClient();
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
@@ -183,7 +184,7 @@ namespace Service.Evenement.ExpositionAPI.Context
                 bllEvent.Topic_id = id_topic;
             }
 
-            ResponseObject response = EventBusinessService.CreateEvenement(bllEvent);
+            ResponseObject response = EventBusinessService.CreateEvenement(bllEvent, token);
             return response;
         }
 
