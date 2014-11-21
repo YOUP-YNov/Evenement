@@ -160,9 +160,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id">Id de l'évenement</param>
         /// <param name="id_profil">Id du profil</param>
         [HttpDelete]
-        public HttpResponseMessage DeleteEvenement(long id, [FromBody] long id_profil)
+        public HttpResponseMessage DeleteEvenement(int id, string token)
         {
-            ResponseObject response = EvenementContext.DesactivateEvenement(id, id_profil);
+            ResponseObject response = EvenementContext.DesactivateEvenement(id, token);
             return GenerateResponseMessage.initResponseMessage(response);
         }
 

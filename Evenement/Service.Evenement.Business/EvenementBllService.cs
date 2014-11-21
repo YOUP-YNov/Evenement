@@ -466,20 +466,69 @@ namespace Service.Evenement.Business
             return 0;
         }
 
-        /// <summary>
-        /// Permet de désactiver un événement
-        /// </summary>
-        /// <param name="eventId">id de l'événement à désactiver</param>
-        public void DeactivateEvent(int eventId)
+         public ResponseObject DeactivateEvent(int eventId, string token)
+        {
+            ResponseObject response = new ResponseObject();
+            WebClient client = new WebClient();
+            int idProfil = -1;
+                string resultJson = null;
+                try
+                {
+                    resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + Guid.Parse(token).ToString());
+                }
+                catch (Exception e)
+                {
+                   
+                }
+                
+                if (!string.IsNullOrWhiteSpace(resultJson))
+                {
+                    dynamic json = Json.Decode(resultJson);
+                    if (json != null)
                     {
-            EvenementDao eventDao = new EvenementDao();
-            eventDao.Id = eventId;
-            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
-            eventDao.DateModification = DateTime.Now;
+                        idProfil = json.Utilisateur_Id;
+                    }
+                }
 
-            EvenementDalService.UpdateStateEvenement(eventDao);
+                if (idProfil != -1)
+                {
+                    ResponseObject responseEvt = this.GetEvenementById(eventId);
+                    EvenementBll eventDelete = null;
+                    if (responseEvt != null)
+                    {
+                        eventDelete = (EvenementBll)responseEvt.Value;
+                    }
+                    else
+                    {
+                        response.State = ResponseState.NotFound;
+                    }
+
+                    if (eventDelete != null)
+                    {
+                        if (idProfil == eventDelete.OrganisateurId)
+                        {
+                            EvenementDao eventDao = new EvenementDao();
+                            eventDao.Id = eventId;
+                            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
+                            eventDao.DateModification = DateTime.Now;
+
+                            EvenementDalService.UpdateStateEvenement(eventDao);
+                            response.State = ResponseState.Ok;
+                        }
+                        else
+                        {
+                            response.State = ResponseState.Unauthorized;
+                        }
+                    }
+                }
+                else
+                {
+                    response.State = ResponseState.Unauthorized;
+                }
+                return response;
         }
 
+     
         /// <summary>
         /// Permet de récupèrer la liste de toutes les inscriptions d'un utilisateur
         /// </summary>
