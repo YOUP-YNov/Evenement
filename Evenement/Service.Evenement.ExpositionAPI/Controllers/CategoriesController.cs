@@ -50,7 +50,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// Retourne la catégorie dont l'id est passé en parémètre
+        /// Retourne la catégorie dont l'id est passé en paramètre
         /// </summary>
         /// <param name="id">Id de la catégorie</param>
         /// <returns>une catégorie</returns>
@@ -78,7 +78,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// Permet de mettre à jour le libelle d'un catégorie
+        /// Permet de mettre à jour le libelle d'une catégorie
         /// </summary>
         /// <param name="id">Id de la catégorie à modifier</param>
         /// <param name="libelle">Nouveau libelle</param>

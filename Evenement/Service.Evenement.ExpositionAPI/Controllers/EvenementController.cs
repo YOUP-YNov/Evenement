@@ -196,17 +196,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// Permet de modifier l'etat d'un evenement (Admin)
-        /// </summary>
-        /// <param name="id_profil">id de profil</param>
-        /// <param name="id_evenement">id de l'evenement</param>
-        /// <param name="id_etat">id de l'etat</param>
-        public void PutEvenemenntEtat(int id_profil, int id_evenement, int id_etat)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Permet de lister l'ensemble des evenements suivant l'id d'un etat
         /// </summary>
         /// <param name="id_etat">Id de l'etat</param>
