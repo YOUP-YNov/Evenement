@@ -519,6 +519,32 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.CategorieContext.Get">
+            <summary>
+            Retourne la liste des catégories
+            </summary>
+            <returns>liste des catégories</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.CategorieContext.Get(System.Int64)">
+            <summary>
+            Retourne la catégorie dont l'id est passé en paramètre
+            </summary>
+            <param name="id">Id de la catégorie</param>
+            <returns>une catégorie</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.CategorieContext.Delete(System.Int64)">
+            <summary>
+            Supprime une catégorie
+            </summary>
+            <param name="id">Id de la catégorie à supprimer</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.CategorieContext.UpdateCategorie(Service.Evenement.Business.EvenementCategorieBll)">
+            <summary>
+            Permet de mettre à jour le libelle d'une catégorie
+            </summary>
+            <param name="id">Id de la catégorie à modifier</param>
+            <param name="libelle">Nouveau libelle</param>
+        </member>
         <member name="T:Service.Evenement.ExpositionAPI.Context.EvenementContext">
             <summary>
             Classe statique threadSafe avec initialisation tardive pour l'accès au service Evenement Bll
@@ -629,6 +655,13 @@
             <param name="id_etat">Id de l'etat</param>
             <returns></returns>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetParticipantNbByEvent(System.Int64)">
+            <summary>
+            Retourne le nombre de participants à un événement
+            </summary>
+            <param name="id">Id de l'événement</param>
+            <returns>Nombre de participants</returns>
+        </member>
         <member name="P:Service.Evenement.ExpositionAPI.Context.EvenementContext.EventBusinessService">
             <summary>
             Récupère l'accés au service evenement
@@ -680,6 +713,11 @@
             Récupère l'accés au service image
             </summary>
         </member>
+        <member name="T:Service.Evenement.ExpositionAPI.Controllers.CategoriesController">
+            <summary>
+            Contrôleur pour gérer les catégories des évènements
+            </summary>
+        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategoriesController.Get">
             <summary>
             Retourne la liste des catégories
@@ -688,7 +726,7 @@
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategoriesController.Get(System.Int64)">
             <summary>
-            Retourne la catégorie dont l'id est passé en parémètre
+            Retourne la catégorie dont l'id est passé en paramètre
             </summary>
             <param name="id">Id de la catégorie</param>
             <returns>une catégorie</returns>
@@ -701,14 +739,14 @@
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.CategoriesController.UpdateCategorie(System.Int64,System.String)">
             <summary>
-            Permet de mettre à jour le libelle d'un catégorie
+            Permet de mettre à jour le libelle d'une catégorie
             </summary>
             <param name="id">Id de la catégorie à modifier</param>
             <param name="libelle">Nouveau libelle</param>
         </member>
         <member name="T:Service.Evenement.ExpositionAPI.Controllers.EvenementController">
             <summary>
-            Controleur d'évènement.
+            Contrôleur pour gérer les évènements
             </summary>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Get(System.Nullable{System.DateTime},System.Nullable{System.Int64},System.Nullable{System.Boolean},System.Int32,System.Nullable{System.Int64},System.String,System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
@@ -789,75 +827,83 @@
             <param name="nb_min_signalement">nb de signalement minimum</param>
             <returns>liste d'evenement signalé</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PutEvenemenntEtat(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Permet de modifier l'etat d'un evenement (Admin)
-            </summary>
-            <param name="id_profil">id de profil</param>
-            <param name="id_evenement">id de l'evenement</param>
-            <param name="id_etat">id de l'etat</param>
-        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenementsEtats(System.Int32)">
             <summary>
-            Permet de lister l'ensemble de evenements suivant un etat (ADmin)
+            Permet de lister l'ensemble des evenements suivant l'id d'un etat
             </summary>
-            <param name="id_profil">Id du profil</param>
             <param name="id_etat">Id de l'etat</param>
             <returns></returns>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEventsByState(Service.Evenement.ExpositionAPI.Models.EventStateFront)">
+            <summary>
+            Permet de lister l'ensemble des evenements suivant un etat
+            </summary>
+            <param name="stateFront">Evenement</param>
+            <returns>Liste d'événements</returns>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetParticipantNbByEvent(System.Int64)">
+            <summary>
+            Retourne le nombre de participants à un événement
+            </summary>
+            <param name="id">Id de l'événement</param>
+            <returns>Nombre de participants</returns>
+        </member>
         <member name="T:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController">
             <summary>
-            controller pour les Etat de l'évènement
+            Contrôleur pour gérer les états des évènements
             </summary>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.GetEventState(System.Int32)">
             <summary>
-            l'etat d'un evenement particulier 
+            Permet de récupérer l'etat d'un evenement particulier 
             </summary>
             <param name="id">id de l'evenement</param>
             <returns></returns>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.SignalEvent(System.Int32)">
             <summary>
-            signaler un evenement
+            Permet de signaler un evenement
             </summary>
-            <param name="id">id de l'evenement</param>
-            <returns></returns>
+            <param name="id">Id de l'evenement</param>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.DesactivateEvent(System.Int32)">
             <summary>
-            desactiver un evenement
+            Permet de désactiver un evenement
             </summary>
             <param name="id">id de l'evenement</param>
-            <returns></returns>
+        </member>
+        <member name="T:Service.Evenement.ExpositionAPI.Controllers.ImageController">
+            <summary>
+            Contrôleur pour gérer les images des évènements
+            </summary>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.ImageController.GetImagesEvenement(System.Int64)">
             <summary>
-            retourne les détail des images d'un evenement
+            Retourne les détails des images d'un évènement
             </summary>
-            <param name="id">l'id de l'événement</param>
-            <returns>un événement</returns>
+            <param name="id">L'id de l'évènement</param>
+            <returns>Un événement</returns>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.ImageController.PostImage(System.String,System.Int64,System.Byte[])">
             <summary>
-            Associe une image a un evenement
+            Associe une image à un évènement
             </summary>
-            <param name="fileName">nom du fichier</param>
-            <param name="evenement_id">id de l'évènement</param>
-            <param name="content">byte array de l'image</param>
-            <returns>Image uploadé</returns>
+            <param name="fileName">Nom du fichier</param>
+            <param name="evenement_id">Id de l'évènement</param>
+            <param name="content">Byte array de l'image</param>
+            <returns>Image uploadée</returns>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.ImageController.PostImageByUri(System.String,System.Int64)">
             <summary>
-            Associe une image a un evenement
+            Associe une image à un évènement
             </summary>
-            <param name="urlFile">url du fichier</param>
-            <param name="EventId">id de l'évènement</param>
-            <returns>Image uploadé</returns>
+            <param name="urlFile">Url du fichier</param>
+            <param name="EventId">Id de l'évènement</param>
+            <returns>Image uploadée</returns>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.ImageController.DeleteImage(System.Int64)">
             <summary>
-            Permet de delete une image associé a un évènement
+            Permet de supprimer une image associé à un évènement
             </summary>
             <param name="ImageId">Id de l'image</param>
             <returns>CodeEnum de résultat</returns>
@@ -1052,6 +1098,11 @@
         <member name="P:Service.Evenement.ExpositionAPI.Models.EvenementFront.Payant">
             <summary>
             Assigne ou récupère la visibilité de l'évènement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.EvenementFront.Topic_id">
+            <summary>
+            Assigne ou récupère l'id d'un topic
             </summary>
         </member>
         <member name="P:Service.Evenement.ExpositionAPI.Models.EventImageFront.Url">
