@@ -511,5 +511,15 @@ namespace Service.Evenement.Business
 
             return result;
         }
+
+        /// <summary>
+        /// Retourne le nombre de participants à un événement
+        /// </summary>
+        /// <param name="id">Id de l'événement</param>
+        /// <returns>Nombre de participants</returns>
+        public int GetParticipantNbByEvent(long id)
+        {
+            return EvenementDalService.GetParticipantNbByEvent(id);
+        }
     }
 }

@@ -148,8 +148,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         public HttpResponseMessage Put(Guid token, [FromBody]EvenementUpdate evenement)
         {
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
-
-            ResponseObject response = EvenementContext.EventBusinessService.PutEvenement(bllEvent, token);
+            ResponseObject response = EvenementContext.Put(token, evenement);
             return GenerateResponseMessage.initResponseMessage(response);
         }
 
@@ -263,6 +262,18 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             }
 
             return GenerateResponseMessage.initResponseMessage(result);
+        }
+
+        /// <summary>
+        /// Retourne le nombre de participants à un événement
+        /// </summary>
+        /// <param name="id">Id de l'événement</param>
+        /// <returns>Nombre de participants</returns>
+        [HttpGet]
+        [Route("api/Evenement/{id}/ParticipantNb")]
+        public int GetParticipantNbByEvent(long id)
+        {
+            return EvenementContext.GetParticipantNbByEvent(id);
         }
     }
 }
