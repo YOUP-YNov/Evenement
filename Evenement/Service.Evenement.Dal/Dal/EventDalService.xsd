@@ -638,17 +638,5 @@
         </xs:element>
       </xs:choice>
     </xs:complexType>
-    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
-      <xs:selector xpath=".//mstns:Evenement" />
-      <xs:field xpath="mstns:Evenement_id" />
-    </xs:unique>
-    <xs:unique name="Categorie_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
-      <xs:selector xpath=".//mstns:Categorie" />
-      <xs:field xpath="mstns:Categorie_id" />
-    </xs:unique>
-    <xs:unique name="SubscriptionEvent_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
-      <xs:selector xpath=".//mstns:SubscriptionEvent" />
-      <xs:field xpath="mstns:Participe_id" />
-    </xs:unique>
   </xs:element>
 </xs:schema>

@@ -171,9 +171,10 @@
     <Compile Include="Controllers\EvenementEtatController.cs" />
     <Compile Include="Controllers\GenerateResponseMessage.cs" />
     <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Models\ModelCreate\CustomEvenementCreate.cs" />
+    <Compile Include="Models\ModelCreate\EvenementCreate.cs" />
     <Compile Include="Models\ModelsUpdate\CategorieUpdate.cs" />
     <Compile Include="Models\ModelsUpdate\EvenementUpdate.cs" />
-    <Compile Include="Models\EvenementCreate.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LieuController.cs" />
     <Compile Include="Global.asax.cs">

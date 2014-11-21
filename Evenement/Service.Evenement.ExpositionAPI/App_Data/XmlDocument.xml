@@ -617,7 +617,7 @@
             <param name="idEvenement">Id de l'evenement</param>
             <param name="idProfil">Id du profil</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.DesactivateEvenement(System.Int64,System.Int64)">
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.DesactivateEvenement(System.Int32,System.String)">
             <summary>
             Desactivation de l'evenement 
             c'est une mise en archive. L'évenement n'est plus consultable. 
@@ -625,7 +625,7 @@
             <param name="id">Id de l'evenement</param>
             <param name="id_profil">Id du profil</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.Create(Service.Evenement.ExpositionAPI.Models.EvenementCreate)">
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.Create(Service.Evenement.ExpositionAPI.Models.ModelCreate.CustomEvenementCreate,System.String)">
             <summary>
             Fonction de création de l'évènement
             </summary>
@@ -675,7 +675,7 @@
             </summary>
             <param name="id">Id de l'evenement</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.DesactivateEvent(System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.DesactivateEvent(System.Int32,System.String)">
             <summary>
             Permet de désactiver un evenement
             </summary>
@@ -817,21 +817,14 @@
             <param name="token">Token de l'utilisateur courant</param>
             <param name="evenement">Evènement</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostInscription(System.Int32,System.String)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostInscriptionDeinscription(System.Int32,System.String)">
             <summary>
-            Permet l'inscription 
+            Permet l'inscription et la desincription
             </summary>
             <param name="id">Id de l'evenement</param>
             <param name="idProfil">Id du profil</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostDesinscription(System.Int32,System.String)">
-            <summary>
-            Permet la desincription
-            </summary>
-            <param name="id">Id de l'evenement</param>
-            <param name="idProfil">Id du profil</param>
-        </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DeleteEvenement(System.Int64,System.Int64)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DeleteEvenement(System.Int32,System.String)">
             <summary>
             Desactivation de l'evenement 
             c'est une mise en archive. L'évenement n'est plus consultable. 
@@ -839,7 +832,7 @@
             <param name="id">Id de l'évenement</param>
             <param name="id_profil">Id du profil</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Create(Service.Evenement.ExpositionAPI.Models.EvenementCreate)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Create(System.String,Service.Evenement.ExpositionAPI.Models.ModelCreate.CustomEvenementCreate)">
             <summary>
             Fonction de création de l'évènement
             </summary>
@@ -884,12 +877,6 @@
             </summary>
             <param name="id">Id de l'evenement</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.DesactivateEvent(System.Int32)">
-            <summary>
-            Permet de désactiver un evenement
-            </summary>
-            <param name="id">id de l'evenement</param>
-        </member>
         <member name="T:Service.Evenement.ExpositionAPI.Controllers.ImageController">
             <summary>
             Contrôleur pour gérer les images des évènements
@@ -925,6 +912,87 @@
             </summary>
             <param name="ImageId">Id de l'image</param>
             <returns>CodeEnum de résultat</returns>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.HashTag">
+            <summary>
+            Assigne ou récupère la liste des HashTag associé à l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.Galleries">
+            <summary>
+            Assigne ou récupère la liste des Images associé à l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.EventAdresse">
+            <summary>
+            Assigne ou récupère l'adresse de l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.Categorie">
+            <summary>
+            Assigne ou récupère la catégorie de l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.DateEvenement">
+            <summary>
+            Assigne ou récupère la Date à laquelle l'évenement a lieu.
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.DateFinInscription">
+            <summary>
+            Assigne ou récupère la Date à partir de laquelle les utilisateurs ne peuvent plus
+            s'incrirent.
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.TitreEvenement">
+            <summary>
+            Assigne ou récupère le titre de l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.DescriptionEvenement">
+            <summary>
+            Assigne ou récupère la description de l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.MaximumParticipant">
+            <summary>
+            Assigne ou récupère le nombre de participant maximum à l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.MinimumParticipant">
+            <summary>
+            Assigne ou récupère le nombre de participant minimum à l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.Price">
+            <summary>
+            Assigne ou récupère le price a payé pour participé à l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.Premium">
+            <summary>
+            Assigne ou récupère l'attestation que l'évenement est premium
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.DateMiseEnAvant">
+            <summary>
+            Assigne ou récupère la date de mise en avant de l'évenement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.Public">
+            <summary>
+            Assigne ou récupère la visibilité de l'évènement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.Payant">
+            <summary>
+            Assigne ou récupère la visibilité de l'évènement
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.Topic_id">
+            <summary>
+            Assigne ou récupère l'id d'un topic
+            </summary>
         </member>
         <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.Id">
             <summary>
