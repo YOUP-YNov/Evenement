@@ -448,7 +448,7 @@ namespace Service.Evenement.Dal
         }
 
         /// <summary>
-        /// 
+        /// Récupère les évenements selon un état donné
         /// </summary>
         /// <param name="state"></param>
         /// <returns></returns>

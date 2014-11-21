@@ -556,6 +556,13 @@
             </summary>
             <returns>Liste d'événements</returns>
         </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetEventsByState(Service.Evenement.ExpositionAPI.Models.EventStateFront)">
+            <summary>
+            Retourne la liste des événements par état donné
+            </summary>
+            <param name="stateFront"></param>
+            <returns></returns>
+        </member>
         <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetEvenement(System.Int64)">
             <summary>
             Retourne le détail d'un événement
@@ -797,7 +804,7 @@
             <param name="id_evenement">id de l'evenement</param>
             <param name="id_etat">id de l'etat</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenementsEtats(System.Int32,System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenementsEtats(System.Int32)">
             <summary>
             Permet de lister l'ensemble de evenements suivant un etat (ADmin)
             </summary>

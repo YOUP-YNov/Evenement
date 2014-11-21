@@ -84,6 +84,7 @@ namespace Service.Evenement.Dal.Mappeur
             result.Price = EvenementRow.Prix;
             result.TitreEvenement = new StringBuilder(EvenementRow.TitreEvenement);
             result.Statut = EvenementRow.Statut;
+            result.Topic_id = EvenementRow.IsTopic_idNull() ? 0 : (int)EvenementRow.Topic_id;
             return result;
         }
 

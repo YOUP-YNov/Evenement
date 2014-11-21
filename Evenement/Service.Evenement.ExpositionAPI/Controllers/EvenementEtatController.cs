@@ -12,7 +12,7 @@ using System.Web.Http.Cors;
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     /// <summary>
-    /// controller pour les Etat de l'évènement
+    /// Contrôleur pour gérer les états des évènements
     /// </summary>
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EvenementEtatController : ApiController
@@ -20,7 +20,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         EvenementBllService bllService;
 
        /// <summary>
-       /// l'etat d'un evenement particulier 
+       /// Permet de récupérer l'etat d'un evenement particulier 
        /// </summary>
        /// <param name="id">id de l'evenement</param>
        /// <returns></returns>
@@ -30,20 +30,22 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// signaler un evenement
+        /// Permet de signaler un evenement
         /// </summary>
-        /// <param name="id">id de l'evenement</param>
-        /// <returns></returns>
+        /// <param name="id">Id de l'evenement</param>
+        [HttpPut]
+        [Route("api/EvenementEtat/Report/{id}")]
         public void SignalEvent(int id)
         {
             bllService.ModifyEventState(id, new Business.EventStateBll(Business.EventStateEnum.Signaler));
         }
 
         /// <summary>
-        /// desactiver un evenement
+        /// Permet de désactiver un evenement
         /// </summary>
         /// <param name="id">id de l'evenement</param>
-        /// <returns></returns>
+        [HttpPut]
+        [Route("api/EvenementEtat/Deactivate/{id}")]
         public void DesactivateEvent(int id)
         {
             bllService.ModifyEventState(id, new EventStateBll(Business.EventStateEnum.Desactiver));

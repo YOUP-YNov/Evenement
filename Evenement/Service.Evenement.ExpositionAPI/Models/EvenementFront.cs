@@ -129,6 +129,11 @@
         /// </summary>
         public bool  Payant { get; set; }
 
+        /// <summary>
+        /// Assigne ou récupère l'id d'un topic
+        /// </summary>
+        public int Topic_id { get; set; }
+
         public EvenementFront(long organisateur, DateTime end_inscription, DateTime date_event, 
             List<String> keys_words, List<object> friends, 
             int total_people, string description, string title,

@@ -18,7 +18,7 @@ using Service.Evenement.ExpositionAPI.Context;
 namespace Service.Evenement.ExpositionAPI.Controllers
 {
     /// <summary>
-    /// Controleur d'évènement.
+    /// Contrôleur pour gérer les évènements
     /// </summary>
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class EvenementController : ApiController
@@ -98,13 +98,13 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id">L'id de l'événement</param>
         /// <returns>Un événement</returns>
         [HttpGet]
-        [ResponseType(typeof(EvenementFront))]
+        [ResponseType(typeof(EvenementTimelineFront))]
         public HttpResponseMessage GetEvenement(long id)
         {
             ResponseObject result = EvenementContext.GetEvenement(id);
             if (result.Value!= null)
             {
-                result.Value = Mapper.Map<EvenementBll, EvenementFront>((EvenementBll)result.Value);
+                result.Value = Mapper.Map<EvenementBll, EvenementTimelineFront>((EvenementBll)result.Value);
             }
             return GenerateResponseMessage.initResponseMessage(result);
         }
@@ -181,41 +181,68 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             
         }
 
-        /// <summary>
-        /// méthode d'appel de l'api profil
-        /// </summary>
-        /// <param name="id_profil">id du profil admin</param>
-        /// <param name="nb_min_signalement">nb de signalement minimum</param>
-        /// <returns>liste d'evenement signalé</returns>
-        public IEnumerable<EvenementTimelineFront> GetEvenementsSignale(int id_profil, int nb_min_signalement = 1)
-        {
-            throw new NotImplementedException();
-            //TODO => appeler le profil
-            //GETINVITEVENT(int,int,int)
-            return null;
-        }
 
         /// <summary>
-        /// Permet de modifier l'etat d'un evenement (Admin)
+        /// Permet de lister l'ensemble des evenements suivant l'id d'un etat
         /// </summary>
-        /// <param name="id_profil">id de profil</param>
-        /// <param name="id_evenement">id de l'evenement</param>
-        /// <param name="id_etat">id de l'etat</param>
-        public void PutEvenemenntEtat(int id_profil, int id_evenement, int id_etat)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Permet de lister l'ensemble de evenements suivant un etat (ADmin)
-        /// </summary>
-        /// <param name="id_profil">Id du profil</param>
         /// <param name="id_etat">Id de l'etat</param>
         /// <returns></returns>
-        public IEnumerable<EvenementTimelineFront> GetEvenementsEtats(int id_profil, int id_etat)
+        public HttpResponseMessage GetEvenementsEtats(int id_etat)
         {
-            throw new NotImplementedException();
-            return new EvenementTimelineFront[] { new EvenementTimelineFront(), new EvenementTimelineFront() };
+            EventStateFront stateFront = new EventStateFront();
+
+            switch (id_etat)
+	        {
+		        case 11:
+                    stateFront.Nom=EventStateEnumFront.AValider;
+                    stateFront.Id = 11;
+                    break;
+                case 12:
+                    stateFront.Nom = EventStateEnumFront.Valide;
+                    stateFront.Id = 12;
+                    break;
+                case 13:
+                    stateFront.Nom = EventStateEnumFront.Annuler;
+                    stateFront.Id = 13;
+                    break;
+                case 14:
+                    stateFront.Nom = EventStateEnumFront.Signaler;
+                    stateFront.Id = 14;
+                    break;
+                case 15:
+                    stateFront.Nom = EventStateEnumFront.Reussi;
+                    stateFront.Id = 15;
+                    break;
+                case 16:
+                    stateFront.Nom = EventStateEnumFront.Desactiver;
+                    stateFront.Id = 16;
+                    break;
+	        }
+            ResponseObject result = EvenementContext.GetEventsByState(stateFront);
+            if (result.Value != null)
+            {
+                result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementFront>>((IEnumerable<EvenementBll>)result.Value);
+            }
+
+            return GenerateResponseMessage.initResponseMessage(result);
+        }
+
+        /// <summary>
+        /// Permet de lister l'ensemble des evenements suivant un etat
+        /// </summary>
+        /// <param name="stateFront">Evenement</param>
+        /// <returns>Liste d'événements</returns>
+        [ResponseType(typeof(IEnumerable<EvenementFront>))]
+        [Route("api/Evenement/State")]
+        public HttpResponseMessage GetEventsByState(EventStateFront stateFront)
+        {
+            ResponseObject result = EvenementContext.GetEventsByState(stateFront);
+            if (result.Value != null)
+            {
+                result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementFront>>((IEnumerable<EvenementBll>)result.Value);
+            }
+
+            return GenerateResponseMessage.initResponseMessage(result);
         }
 
         /// <summary>

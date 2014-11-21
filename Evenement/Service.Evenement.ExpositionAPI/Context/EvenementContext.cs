@@ -75,6 +75,17 @@ namespace Service.Evenement.ExpositionAPI.Context
             ResponseObject result = EventBusinessService.GetReportedEvents();
             return result;
         }
+        /// <summary>
+        /// Retourne la liste des événements par état donné
+        /// </summary>
+        /// <param name="stateFront"></param>
+        /// <returns></returns>
+        public static ResponseObject GetEventsByState(EventStateFront stateFront)
+        {
+            EventStateBll statebll = Mapper.Map<EventStateFront, EventStateBll>(stateFront);
+            ResponseObject result = EventBusinessService.GetEventsByState(statebll);
+            return result;
+        }
 
         /// <summary>
         /// Retourne le détail d'un événement
