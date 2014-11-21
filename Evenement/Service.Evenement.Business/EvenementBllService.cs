@@ -205,15 +205,22 @@ namespace Service.Evenement.Business
 
             foreach (EvenementBll e in bllEvent)
             {
-                string result = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/UserSmall/" + e.OrganisateurId);
-                if (!string.IsNullOrWhiteSpace(result))
+                try
                 {
-                    dynamic json = Json.Decode(result);
-                    if (json != null)
+                    string result = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/UserSmall/" + e.OrganisateurId);
+                    if (!string.IsNullOrWhiteSpace(result))
                     {
-                        e.OrganisateurPseudo = json.Pseudo;
-                        e.OrganisateurImageUrl = json.PhotoChemin;
+                        dynamic json = Json.Decode(result);
+                        if (json != null)
+                        {
+                            e.OrganisateurPseudo = json.Pseudo;
+                            e.OrganisateurImageUrl = json.PhotoChemin;
+                        }
                     }
+                }
+                catch
+                {
+
                 }
             }
 
@@ -596,12 +603,12 @@ namespace Service.Evenement.Business
                     if (eventActuel!=null)
                     {
                         int nbDispo = -1;
-                        if(eventActuel.Participants !=null)
-                        {
-                    EvenementDalRequest requestNombreMax = new EvenementDalRequest() { EvenementId = _evenementId };
-                            int nombreMax = EvenementDalService.getEvenementId(requestNombreMax).MaximumParticipant;
-                            nbDispo = nombreMax - eventActuel.Participants.Count();
-                        }
+                    //    if(eventActuel.Participants !=null)
+                    //    {
+                    //EvenementDalRequest requestNombreMax = new EvenementDalRequest() { EvenementId = _evenementId };
+                    //        int nombreMax = EvenementDalService.getEvenementId(requestNombreMax).MaximumParticipant;
+                    //        nbDispo = nombreMax - eventActuel.Participants.Count();
+                    //    }
 
                         if (nbDispo>0 || nbDispo == -1)
                     {
