@@ -617,7 +617,7 @@
             <param name="idEvenement">Id de l'evenement</param>
             <param name="idProfil">Id du profil</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.DesactivateEvenement(System.Int64,System.Int64)">
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.DesactivateEvenement(System.Int32,System.String)">
             <summary>
             Desactivation de l'evenement 
             c'est une mise en archive. L'évenement n'est plus consultable. 
@@ -824,7 +824,7 @@
             <param name="id">Id de l'evenement</param>
             <param name="idProfil">Id du profil</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DeleteEvenement(System.Int64,System.Int64)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DeleteEvenement(System.Int32,System.String)">
             <summary>
             Desactivation de l'evenement 
             c'est une mise en archive. L'évenement n'est plus consultable. 
@@ -876,12 +876,6 @@
             Permet de signaler un evenement
             </summary>
             <param name="id">Id de l'evenement</param>
-        </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementEtatController.DesactivateEvent(System.Int32,System.String)">
-            <summary>
-            Permet de désactiver un evenement
-            </summary>
-            <param name="id">id de l'evenement</param>
         </member>
         <member name="T:Service.Evenement.ExpositionAPI.Controllers.ImageController">
             <summary>
