@@ -588,11 +588,11 @@ namespace Service.Evenement.Dal
             try
             {
                 var result = EventDalService.CreateEvenement(
-                                request.UserId,
+                                Event.OrganisateurId,
                                 Event.Categorie.Id,
                                 Event.DateEvenement,
                                 DateTime.Now,
-                                null,
+                                DateTime.Now,
                                 Event.DateFinInscription,
                                 Event.TitreEvenement.ToString(),
                                 Event.DescriptionEvenement.ToString(),
