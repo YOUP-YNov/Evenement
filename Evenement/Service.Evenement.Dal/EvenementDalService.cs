@@ -61,7 +61,7 @@ namespace Service.Evenement.Dal
             get 
             { 
                 if(String.IsNullOrWhiteSpace(_LoggerUri))
-                    _LoggerUri = ConfigurationManager.ConnectionStrings["LoggerUri"].ToString();
+                    _LoggerUri = ConfigurationManager.AppSettings["LoggerUri"].ToString();
                 return _LoggerUri;
             }
             set
