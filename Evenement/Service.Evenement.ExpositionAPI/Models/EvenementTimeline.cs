@@ -22,5 +22,6 @@ namespace Service.Evenement.ExpositionAPI.Models
         public DateTime DateMiseEnAvant { get; set; }
         public string Etat { get; set; }
         public string ImageUrl { get; set; }
+        public int Topic_id { get; set; }
     }
 }
