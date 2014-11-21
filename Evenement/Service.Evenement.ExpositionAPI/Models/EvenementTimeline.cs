@@ -9,7 +9,7 @@ namespace Service.Evenement.ExpositionAPI.Models
     {
         public long Evenement_id { get; set; }
         public string DescriptionEvenement { get; set; }
-        public int Organisateur_id { get; set; }
+        public long Organisateur_id { get; set; }
         public string OrganisateurPseudo { get; set; }
         public string OrganisateurImageUrl { get; set; }
         public EventLocationFront Adresse { get; set; }
