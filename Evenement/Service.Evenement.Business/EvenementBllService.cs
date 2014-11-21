@@ -12,6 +12,7 @@ using Service.Evenement.Business.BusinessModels;
 using System.Net;
 using Newtonsoft.Json;
 using System.Web.Helpers;
+using System.Configuration;
 
 namespace Service.Evenement.Business
 {
@@ -84,23 +85,33 @@ namespace Service.Evenement.Business
             if (idProfil != -1)
             {
                 evenementBll.OrganisateurId = idProfil;
-                if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
+            if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
+            {
+                EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
+                IEnumerable<EvenementDao> result = EvenementDalService.CreateEvenement(new EvenementDalRequest(), daoEvent);
+                if (result.Count() > 0)
                 {
-                    EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
-                    IEnumerable<EvenementDao> result = EvenementDalService.CreateEvenement(new EvenementDalRequest(), daoEvent);
-                    if (result.Count() > 0)
+                    response.State = ResponseState.Created;
+                    WebClient client = new WebClient();
+                    try
                     {
-                        response.State = ResponseState.Created;
-                    }
-                    else
+                        // Appel de l'api de recherche pour indexer l'événement
+                        client.DownloadStringAsync(new Uri(ConfigurationManager.AppSettings["RechercheUri"].ToString() + string.Format("add/get_event/type?={0}&idP={1}&nameP={2}&town={3}&latitude={4}&longitude={5}&idE={6}&nameE={7}&date={8}&adresse={9}", evenementBll.EventAdresse.Id, evenementBll.EventAdresse.Nom, evenementBll.EventAdresse.Ville, evenementBll.EventAdresse.Latitude, evenementBll.EventAdresse.Longitude, evenementBll.Id, evenementBll.TitreEvenement, evenementBll.Categorie.Libelle, evenementBll.CreateDate, evenementBll.EventAdresse.Adresse)));
+                }
+                    catch
                     {
-                        response.State = ResponseState.NotModified;
+
                     }
                 }
                 else
                 {
-                    response.State = ResponseState.BadRequest;
+                    response.State = ResponseState.NotModified;
                 }
+            }
+            else
+            {
+                response.State = ResponseState.BadRequest;
+            }
             }
             else
                 response.State = ResponseState.Unauthorized;
@@ -116,7 +127,7 @@ namespace Service.Evenement.Business
         /// </summary>
         /// <param name="evenementBll">Evenement a mettre a jours</param>
         /// <returns>Objet de service, englobant l'évenement ainsi qu'un status d'opération</returns>
-        public ResponseObject PutEvenement(EvenementBll evenementBll, string token)
+        public ResponseObject PutEvenement(EvenementBll evenementBll, Guid token)
         {
             EvenementBll evenement = (EvenementBll)(this.GetEvenementById(evenementBll.Id)).Value;
             ResponseObject response = new ResponseObject();
@@ -127,11 +138,11 @@ namespace Service.Evenement.Business
                 string resultJson = null;
                 try
                 {
-                    resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" +Guid.Parse(token).ToString());
+                    resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + token);
                 }
                 catch (Exception e)
                 {
-                    response.State = ResponseState.Unauthorized;
+                   
                 }
                 
                 if (!string.IsNullOrWhiteSpace(resultJson))
@@ -175,7 +186,6 @@ namespace Service.Evenement.Business
             }
             return response;
         }
-        
         /// <summary>
         /// retourne la liste des évènements en fonction d'une date, d'une catégorie, de son statut, de son nom.
         /// </summary>
@@ -460,66 +470,14 @@ namespace Service.Evenement.Business
         /// Permet de désactiver un événement
         /// </summary>
         /// <param name="eventId">id de l'événement à désactiver</param>
-        public ResponseObject DeactivateEvent(int eventId, Guid token)
-        {
-            ResponseObject response = new ResponseObject();
-            WebClient client = new WebClient();
-            int idProfil = -1;
-                string resultJson = null;
-                try
-                {
-                    resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + token);
-                }
-                catch (Exception e)
-                {
-                   
-                }
-                
-                if (!string.IsNullOrWhiteSpace(resultJson))
-                {
-                    dynamic json = Json.Decode(resultJson);
-                    if (json != null)
+        public void DeactivateEvent(int eventId)
                     {
-                        idProfil = json.Utilisateur_Id;
-                    }
-                }
-
-                if (idProfil != -1)
-                {
-                    ResponseObject responseEvt = this.GetEvenementById(eventId);
-                    EvenementBll eventDelete = null;
-                    if (responseEvt != null)
-                    {
-                        eventDelete = (EvenementBll)responseEvt.Value;
-                    }
-                    else
-                    {
-                        response.State = ResponseState.NotFound;
-                    }
-
-                    if (eventDelete != null)
-                    {
-                        if (idProfil == eventDelete.OrganisateurId)
-        {
             EvenementDao eventDao = new EvenementDao();
             eventDao.Id = eventId;
             eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
             eventDao.DateModification = DateTime.Now;
 
             EvenementDalService.UpdateStateEvenement(eventDao);
-                            response.State = ResponseState.Ok;
-                        }
-                        else
-                        {
-                            response.State = ResponseState.Unauthorized;
-                        }
-                    }
-                }
-                else
-                {
-                    response.State = ResponseState.Unauthorized;
-                }
-                return response;
         }
 
         /// <summary>
@@ -550,35 +508,11 @@ namespace Service.Evenement.Business
         /// <param name="UserId">Id de l'utilisateur</param>
         /// <param name="EvenementId">Id de l'evenement</param>
         /// <returns>L'inscription de l'utilisateur à l'évènement</returns>
-        public ResponseObject SubscribeEvenement(string token, int _evenementId)
-        {
-            ResponseObject response = new ResponseObject();
-            WebClient client = new WebClient();
-            int idProfil = -1;
-            string resultJson = null;
-            try
+        public EvenementSubscriberBll SubscribeEvenement(int UserId, int _evenementId)
             {
-                resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + Guid.Parse(token).ToString());
-            }
-            catch (Exception e)
-            {
-                response.State = ResponseState.Unauthorized;
-                return response;
-            }
-
-            if (!string.IsNullOrWhiteSpace(resultJson))
-            {
-                dynamic json = Json.Decode(resultJson);
-                if (json != null)
-                {
-                    idProfil = json.Utilisateur_Id;
-                }
-
-                if (idProfil != -1)
-                {
                     EvenementDalRequest request = new EvenementDalRequest()
                     {
-                        UserId = idProfil,
+                UserId = UserId,
                         EvenementId = _evenementId
                     };
                     //On récupère le nombre d'utilisateurs déjà inscrits et le nombre d'utilsateurs
@@ -592,23 +526,14 @@ namespace Service.Evenement.Business
                     {
                         var daoResult = EvenementDalService.SubscribeEvenement(request).FirstOrDefault();
                         if (daoResult == null)
-                        {
-                            response.State = ResponseState.NotFound;
-                        }
-                            
+                    return null;
                         EvenementSubscriberBll result = Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(daoResult);
-                        response.State = ResponseState.Ok;
-                        response.Value = result;
-                        return response;
+                return result;
                     }
                     else
                     {
-                        response.State = ResponseState.BadRequest;
                         throw new System.InvalidOperationException("Le nombre d'utilisateurs maximum est déjà atteint");
                     }
-                }
-            }
-            return response;
 
         }
 

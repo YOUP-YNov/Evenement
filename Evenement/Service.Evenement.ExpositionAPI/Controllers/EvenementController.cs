@@ -147,9 +147,10 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="id">Id de l'evenement</param>
         /// <param name="idProfil">Id du profil</param>
         [HttpPost]
-        public void PostInscriptionDeinscription(long id, long idProfil)
+        public HttpResponseMessage PostInscriptionDeinscription(int id, string token)
         {
-            EvenementContext.PostInscriptionDeinscription(id, idProfil);
+            ResponseObject response = EvenementContext.PostInscriptionDeinscription(id, token);
+            return GenerateResponseMessage.initResponseMessage(response);
         }
 
         /// <summary>
