@@ -478,7 +478,7 @@ namespace Service.Evenement.Business
                 }
                 catch (Exception e)
                 {
-                   
+                    response.State = ResponseState.Unauthorized;
                 }
                 
                 if (!string.IsNullOrWhiteSpace(resultJson))
