@@ -680,7 +680,8 @@ namespace Service.Evenement.Dal
 
             try
             {
-                 SubscriptionDalService.SubscribeOrUnsubscribe(request.EvenementId, request.UserId);
+
+                EventDalService.SubscribeOrUnsubscribe(request.EvenementId, request.UserId);
                 var result = SubscriptionDalService.GetParticipantByEvent(request.EvenementId);
                 return result.ToSubscriberDao();
             }

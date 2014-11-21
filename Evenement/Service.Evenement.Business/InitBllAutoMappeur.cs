@@ -19,7 +19,8 @@ namespace Service.Evenement.Business
             Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
             Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieDao>();
 
-            Mapper.CreateMap<EvenementDao, EvenementBll>();
+            Mapper.CreateMap<EvenementDao, EvenementBll>()/*.ForMember(
+                e => e.NdParticipant, d => d.MapFrom(src => src.Participants.Count()))*/;
             Mapper.CreateMap<EvenementBll, EvenementDao>();
 
             Mapper.CreateMap<EventLocationDao, EventLocationBll>();

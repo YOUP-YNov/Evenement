@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using AutoMapper;
 using Service.Evenement.Business;
 using Service.Evenement.Business.Response;
@@ -159,6 +160,8 @@ namespace Service.Evenement.ExpositionAPI.Context
         public static ResponseObject Create ( CustomEvenementCreate evt, string token )
         {
             EvenementBll bllEvent = Mapper.Map<EvenementCreate, EvenementBll>(evt.evenement);
+
+            bllEvent.Statut = evt.evenement.Public ? "Public" : "Privée";
 
             WebClient client = new WebClient();
             client.Headers[HttpRequestHeader.ContentType] = "application/json";
