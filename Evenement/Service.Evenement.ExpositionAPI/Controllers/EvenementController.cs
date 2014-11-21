@@ -92,18 +92,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             return GenerateResponseMessage.initResponseMessage(result);
         }
 
-        [ResponseType(typeof(IEnumerable<EvenementFront>))]
-        public HttpResponseMessage GetEventsByState(EventStateFront stateFront)
-        {
-            ResponseObject result = EvenementContext.GetEventsByState(stateFront);
-            if (result.Value != null)
-            {
-                result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementFront>>((IEnumerable<EvenementBll>)result.Value);
-            }
-
-            return GenerateResponseMessage.initResponseMessage(result);
-        }
-
         /// <summary>
         /// Retourne le détail d'un événement
         /// </summary>
@@ -219,9 +207,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// Permet de lister l'ensemble de evenements suivant un etat (ADmin)
+        /// Permet de lister l'ensemble des evenements suivant l'id d'un etat
         /// </summary>
-        /// <param name="id_profil">Id du profil</param>
         /// <param name="id_etat">Id de l'etat</param>
         /// <returns></returns>
         public HttpResponseMessage GetEvenementsEtats(int id_etat)
@@ -255,6 +242,24 @@ namespace Service.Evenement.ExpositionAPI.Controllers
                     stateFront.Id = 16;
                     break;
 	        }
+            ResponseObject result = EvenementContext.GetEventsByState(stateFront);
+            if (result.Value != null)
+            {
+                result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementFront>>((IEnumerable<EvenementBll>)result.Value);
+            }
+
+            return GenerateResponseMessage.initResponseMessage(result);
+        }
+
+        /// <summary>
+        /// Permet de lister l'ensemble des evenements suivant un etat
+        /// </summary>
+        /// <param name="stateFront">Evenement</param>
+        /// <returns>Liste d'événements</returns>
+        [ResponseType(typeof(IEnumerable<EvenementFront>))]
+        [Route("api/Evenement/State")]
+        public HttpResponseMessage GetEventsByState(EventStateFront stateFront)
+        {
             ResponseObject result = EvenementContext.GetEventsByState(stateFront);
             if (result.Value != null)
             {
