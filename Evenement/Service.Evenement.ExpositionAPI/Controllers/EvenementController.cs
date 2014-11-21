@@ -116,7 +116,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <returns>Liste d'évènements</returns>
         [HttpGet]
         [ResponseType(typeof(EvenementTimelineFront))]
-        public HttpResponseMessage GetEvenement(int dept)
+        public HttpResponseMessage GetEvenement(int[] dept)
         {
             ResponseObject result = EvenementContext.GetEvenement(dept);
             if (result.Value != null)
