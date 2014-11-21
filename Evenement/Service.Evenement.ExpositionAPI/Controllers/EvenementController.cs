@@ -133,7 +133,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <param name="token">Token de l'utilisateur courant</param>
         /// <param name="evenement">Evènement</param>
         [HttpPut]
-        public HttpResponseMessage Put(Guid token, [FromBody]EvenementUpdate evenement)
+        public HttpResponseMessage Put(string token, [FromBody]EvenementUpdate evenement)
         {
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
             ResponseObject response = EvenementContext.Put(token, evenement);

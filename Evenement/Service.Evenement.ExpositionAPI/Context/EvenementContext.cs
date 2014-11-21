@@ -114,7 +114,7 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// </summary>
         /// <param name="id">Id de l'évènement à modifier</param>
         /// <param name="evenement">Evènement</param>
-        public static ResponseObject Put (Guid token, EvenementUpdate evenement )
+        public static ResponseObject Put (string token, EvenementUpdate evenement )
         {
             EvenementBll bllEvent = Mapper.Map<EvenementUpdate, EvenementBll>(evenement);
             ResponseObject response = EventBusinessService.PutEvenement(bllEvent, token);
