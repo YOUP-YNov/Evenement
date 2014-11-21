@@ -181,19 +181,6 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             
         }
 
-        /// <summary>
-        /// méthode d'appel de l'api profil
-        /// </summary>
-        /// <param name="id_profil">id du profil admin</param>
-        /// <param name="nb_min_signalement">nb de signalement minimum</param>
-        /// <returns>liste d'evenement signalé</returns>
-        public IEnumerable<EvenementTimelineFront> GetEvenementsSignale(int id_profil, int nb_min_signalement = 1)
-        {
-            throw new NotImplementedException();
-            //TODO => appeler le profil
-            //GETINVITEVENT(int,int,int)
-            return null;
-        }
 
         /// <summary>
         /// Permet de lister l'ensemble des evenements suivant l'id d'un etat
