@@ -107,9 +107,9 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// </summary>
         /// <param name="dept"></param>
         /// <returns>Liste d'évènements</returns>
-        public static ResponseObject GetEvenement ( int[] dept )
+        public static ResponseObject GetEvenement ( int[] dept , DateTime? startDate, DateTime? endDate)
         {
-            ResponseObject result = EventBusinessService.GetEvenementByDept(dept);
+            ResponseObject result = EventBusinessService.GetEvenementByDept(dept,null,null);
             return result;
         }
 

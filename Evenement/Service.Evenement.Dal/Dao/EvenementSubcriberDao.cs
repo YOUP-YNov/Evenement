@@ -16,7 +16,7 @@ namespace Service.Evenement.Dal.Dao
 
         public DateTime DateInscription { get; set; }
 
-        public DateTime DateAnnulation { get; set; }
+        public Nullable<DateTime> DateAnnulation { get; set; }
 
         public bool Annulation { get; set; }
     }
