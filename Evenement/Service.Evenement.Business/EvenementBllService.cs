@@ -291,6 +291,7 @@ namespace Service.Evenement.Business
                         }
                     }
 
+<<<<<<< HEAD
                     foreach (var participant in evtBLL.Participants)
                     {
                         string res = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "UserSmall/" + participant.UtilisateurId);
@@ -304,6 +305,24 @@ namespace Service.Evenement.Business
                             }
                         }
                     }
+=======
+                    var subscribers = EvenementDalService.GetSubscribersByEvent(new EvenementDalRequest() { EvenementId = evtBLL.Id });
+                    List<EvenementSubscriberBll> mySubscribers = null;
+
+                    if ( subscribers != null && subscribers.Count() > 0 )
+                    {
+                        mySubscribers = new List<EvenementSubscriberBll>();
+
+                        foreach ( var sub in subscribers )
+                        {
+                            mySubscribers.Add(Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(sub));
+                        }
+                    }
+
+
+                    evtBLL.Subscribers = mySubscribers;
+
+>>>>>>> 501fc6fb75c9cfab27507e1feb9103c26e703e08
                     response.State = ResponseState.Ok;
                     response.Value = evtBLL;
                 }
@@ -321,7 +340,7 @@ namespace Service.Evenement.Business
         /// </summary>
         /// <param name="dept"></param>
         /// <returns>liste d'évènements</returns>
-        public ResponseObject GetEvenementByDept(int[] dept)
+        public ResponseObject GetEvenementByDept(int[] dept, DateTime? startTime, DateTime? endTime)
         {
             ResponseObject response = new ResponseObject();
             if (dept == null)
@@ -334,6 +353,24 @@ namespace Service.Evenement.Business
                 {
                     response.State = ResponseState.Ok;
                     response.Value = evtBLL;
+
+                    foreach ( var Ev in evtBLL )
+                    {
+                        var subscribers = EvenementDalService.GetSubscribersByEvent(new EvenementDalRequest() { EvenementId = Ev.Id });
+                        List<EvenementSubscriberBll> mySubscribers = null;
+
+                        if ( subscribers != null && subscribers.Count() > 0 )
+                        {
+                            mySubscribers = new List<EvenementSubscriberBll>();
+
+                            foreach ( var sub in subscribers )
+                            {
+                                mySubscribers.Add(Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(sub));
+                            }
+                        }
+
+                        Ev.Subscribers = mySubscribers;
+                    }
                 }
                 else response.State = ResponseState.NoContent;
             }
