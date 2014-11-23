@@ -19,12 +19,15 @@ namespace Service.Evenement.Business
             Mapper.CreateMap<EvenementCategorieDao, EvenementCategorieBll>();
             Mapper.CreateMap<EvenementCategorieBll, EvenementCategorieDao>();
 
-            Mapper.CreateMap<EvenementDao, EvenementBll>()/*.ForMember(
-                e => e.NdParticipant, d => d.MapFrom(src => src.Participants.Count()))*/;
+            Mapper.CreateMap<EvenementDao, EvenementBll>().ForMember(
+                e => e.NbParticipant, d => d.MapFrom(src => src.Participants != null ? Convert.ToDouble(src.Participants.Count()) : 0));
             Mapper.CreateMap<EvenementBll, EvenementDao>();
 
             Mapper.CreateMap<EventLocationDao, EventLocationBll>();
             Mapper.CreateMap<EventLocationBll, EventLocationDao>();
+
+            Mapper.CreateMap<EvenementSubcriberDao, EvenementSubscriberBll>();
+            Mapper.CreateMap<EvenementSubscriberBll, EvenementSubcriberDao>();
 
             Mapper.CreateMap<EventStateDao, EventStateBll>();
             Mapper.CreateMap<EventStateBll, EventStateDao>();

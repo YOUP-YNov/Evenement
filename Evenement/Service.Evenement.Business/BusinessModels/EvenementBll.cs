@@ -86,7 +86,11 @@
         /// <summary>
         /// Récupère le nombre de participants enregistrés à l'évènement
         /// </summary>
-        //public int NdParticipant { get; set; }
+        public double NbParticipant { get; set; }
+        ///// <summary>
+        ///// Assigne ou récupère la liste des participants de l'evenementss
+        ///// </summary>
+        public IEnumerable<EvenementSubscriberBll> Participants { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le nombre de participant maximum à l'évenement

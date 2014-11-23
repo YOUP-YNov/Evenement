@@ -110,7 +110,7 @@
         ///// <summary>
         ///// Assigne ou récupère la liste des participants de l'evenementss
         ///// </summary>
-        //public IEnumerable<EvenementSubcriberDao> Participants { get; set; }
+        public IEnumerable<EvenementSubcriberDao> Participants { get; set; }
 
         /// <summary>
         /// Assigne ou récupère l'id d'un topic

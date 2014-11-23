@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using Service.Evenement.ExpositionAPI.Models.ModelCreate;
+using Service.Evenement.Business.BusinessModels;
 
 namespace Service.Evenement.ExpositionAPI.App_Start
 {
@@ -41,6 +42,9 @@ namespace Service.Evenement.ExpositionAPI.App_Start
 
             Mapper.CreateMap<EvenementBll, EvenementFront>();
             Mapper.CreateMap<EvenementFront, EvenementBll>();
+
+            Mapper.CreateMap<EvenementSubscriberBll, Subscriber>();
+            Mapper.CreateMap<Subscriber, EvenementSubscriberBll>();
 
             Mapper.CreateMap<EvenementBll, EvenementTimelineFront>().ForMember(
                 e => e.Evenement_id, d => d.MapFrom(src => src.Id)).ForMember(
