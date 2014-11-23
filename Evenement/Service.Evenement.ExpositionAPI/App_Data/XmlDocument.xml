@@ -817,9 +817,16 @@
             <param name="token">Token de l'utilisateur courant</param>
             <param name="evenement">Evènement</param>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostInscriptionDeinscription(System.Int32,System.String)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostInscription(System.Int32,System.String)">
             <summary>
-            Permet l'inscription et la desincription
+            Permet l'inscription 
+            </summary>
+            <param name="id">Id de l'evenement</param>
+            <param name="idProfil">Id du profil</param>
+        </member>
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostDesinscription(System.Int32,System.String)">
+            <summary>
+            Permet la desincription
             </summary>
             <param name="id">Id de l'evenement</param>
             <param name="idProfil">Id du profil</param>

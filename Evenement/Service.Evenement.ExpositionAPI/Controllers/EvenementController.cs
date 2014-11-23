@@ -120,7 +120,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [ResponseType(typeof(EvenementTimelineFront))]
         public HttpResponseMessage GetEvenement([FromBody] int[] dept)
         {
-            ResponseObject result = EvenementContext.GetEvenement(dept);
+            ResponseObject result = EvenementContext.GetEvenement(dept,null,null);
             if (result.Value != null)
             {
                 result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementTimelineFront>>((IEnumerable<EvenementBll>)result.Value);

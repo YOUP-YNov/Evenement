@@ -127,6 +127,16 @@
         /// Assigne ou récupère l'id d'un topic
         /// </summary>
         public int Topic_id { get; set; }
+
+        /// <summary>
+        /// Assigne ou récupère la liste des participants à l'évènements
+        /// </summary>
+        public IEnumerable<EvenementSubscriberBll> Subscribers { get; set; }
+
+        /// <summary>
+        /// assigne ou récupère le nombre de participants
+        /// </summary>
+        public int ParticipantNumbers { get; set; }
     
 
         public bool evenementUpdateIsValid()
