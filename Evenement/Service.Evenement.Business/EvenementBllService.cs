@@ -291,21 +291,6 @@ namespace Service.Evenement.Business
                         }
                     }
 
-<<<<<<< HEAD
-                    foreach (var participant in evtBLL.Participants)
-                    {
-                        string res = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "UserSmall/" + participant.UtilisateurId);
-                        if (!string.IsNullOrWhiteSpace(res))
-                        {
-                            dynamic json = Json.Decode(res);
-                            if (json != null)
-                            {
-                                participant.Pseudo = json.Pseudo;
-                                participant.ImageUrl = json.PhotoChemin;
-                            }
-                        }
-                    }
-=======
                     var subscribers = EvenementDalService.GetSubscribersByEvent(new EvenementDalRequest() { EvenementId = evtBLL.Id });
                     List<EvenementSubscriberBll> mySubscribers = null;
 
@@ -322,7 +307,6 @@ namespace Service.Evenement.Business
 
                     evtBLL.Subscribers = mySubscribers;
 
->>>>>>> 501fc6fb75c9cfab27507e1feb9103c26e703e08
                     response.State = ResponseState.Ok;
                     response.Value = evtBLL;
                 }
