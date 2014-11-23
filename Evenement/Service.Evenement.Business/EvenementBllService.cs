@@ -61,7 +61,7 @@ namespace Service.Evenement.Business
             string resultJson = null;
             try
             {
-                resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + Guid.Parse(token).ToString());
+                resultJson = client.DownloadString(ConfigurationManager.AppSettings["Profil"]+"Auth/" + Guid.Parse(token).ToString());
             }
             catch (Exception e)
             {
@@ -96,7 +96,7 @@ namespace Service.Evenement.Business
                     try
                     {
                         // Appel de l'api de recherche pour indexer l'événement
-                        client.DownloadStringAsync(new Uri(ConfigurationManager.AppSettings["RechercheUri"].ToString() + string.Format("add/get_event/type?={0}&idP={1}&nameP={2}&town={3}&latitude={4}&longitude={5}&idE={6}&nameE={7}&date={8}&adresse={9}", evenementBll.EventAdresse.Id, evenementBll.EventAdresse.Nom, evenementBll.EventAdresse.Ville, evenementBll.EventAdresse.Latitude, evenementBll.EventAdresse.Longitude, evenementBll.Id, evenementBll.TitreEvenement, evenementBll.Categorie.Libelle, evenementBll.CreateDate, evenementBll.EventAdresse.Adresse)));
+                        client.DownloadStringAsync(new Uri(ConfigurationManager.AppSettings["RechercheUri"]+"UserSmall/"+string.Format("add/get_event/type?={0}&idP={1}&nameP={2}&town={3}&latitude={4}&longitude={5}&idE={6}&nameE={7}&date={8}&adresse={9}", evenementBll.EventAdresse.Id, evenementBll.EventAdresse.Nom, evenementBll.EventAdresse.Ville, evenementBll.EventAdresse.Latitude, evenementBll.EventAdresse.Longitude, evenementBll.Id, evenementBll.TitreEvenement, evenementBll.Categorie.Libelle, evenementBll.CreateDate, evenementBll.EventAdresse.Adresse)));
                 }
                     catch
                     {
@@ -138,7 +138,7 @@ namespace Service.Evenement.Business
                 string resultJson = null;
                 try
                 {
-                    resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" +Guid.Parse(token).ToString());
+                    resultJson = client.DownloadString(ConfigurationManager.AppSettings["Profil"]+"Auth/" +Guid.Parse(token).ToString());
                 }
                 catch (Exception e)
                 {
@@ -207,7 +207,7 @@ namespace Service.Evenement.Business
             {
                 try
                 {
-                string result = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/UserSmall/" + e.OrganisateurId);
+                string result = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"]+"UserSmall/"+ e.OrganisateurId);
                 if (!string.IsNullOrWhiteSpace(result))
                 {
                     dynamic json = Json.Decode(result);
@@ -265,7 +265,7 @@ namespace Service.Evenement.Business
                 if (evtBLL != null)
                 {
                     WebClient client = new WebClient();
-                    string result = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/UserSmall/" + evtBLL.OrganisateurId);
+                    string result = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "UserSmall/" +evtBLL.OrganisateurId);
                     if (!string.IsNullOrWhiteSpace(result))
                     {
                         dynamic json = Json.Decode(result);
@@ -481,7 +481,7 @@ namespace Service.Evenement.Business
                 string resultJson = null;
                 try
                 {
-                    resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + Guid.Parse(token).ToString());
+                    resultJson = client.DownloadString(ConfigurationManager.AppSettings["Profil"]+"Auth/" + Guid.Parse(token).ToString());
                 }
                 catch (Exception e)
                 {
@@ -573,7 +573,7 @@ namespace Service.Evenement.Business
             string resultJson = null;
             try
             {
-                resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + Guid.Parse(token).ToString());
+                resultJson = client.DownloadString(ConfigurationManager.AppSettings["Profil"]+"Auth/" + Guid.Parse(token).ToString());
             }
             catch (Exception e)
             {
