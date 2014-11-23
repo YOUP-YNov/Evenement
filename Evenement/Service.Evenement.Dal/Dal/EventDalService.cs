@@ -47,7 +47,8 @@ namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters
     }
 }
 
-namespace Service.Evenement.Dal.EventDalServiceTableAdapters {
+namespace Service.Evenement.Dal.Dal.EventDalServiceTableAdapters
+{
     
     
     public partial class SubscriptionEventTableAdapter {

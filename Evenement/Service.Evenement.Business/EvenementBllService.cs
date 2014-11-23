@@ -207,7 +207,6 @@ namespace Service.Evenement.Business
             {
                 try
                 {
-                    e.Participants = GetSubscribersByEvent(Convert.ToInt32(e.Id));
                     string result = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"]+"UserSmall/"+ e.OrganisateurId);
                     if (!string.IsNullOrWhiteSpace(result))
                     {
@@ -218,19 +217,7 @@ namespace Service.Evenement.Business
                             e.OrganisateurImageUrl = json.PhotoChemin;
                         }
                     }
-                    foreach(EvenementSubscriberBll s in e.Participants)
-                    {
-                        string res = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "UserSmall/" + s.UtilisateurId);
-                        if (!string.IsNullOrWhiteSpace(res))
-                        {
-                            dynamic json = Json.Decode(res);
-                            if (json != null)
-                            {
-                                s.Pseudo = json.Pseudo;
-                                s.ImageUrl = json.PhotoChemin;
-                            }
-                        }
-                    }
+                    e.NbParticipant = tmp.First(x => x.Id == e.Id).Participants != null ? tmp.First(x => x.Id == e.Id).Participants.Count() : 0;
                 }
                 catch
                 {
@@ -290,23 +277,20 @@ namespace Service.Evenement.Business
                             evtBLL.OrganisateurImageUrl = json.PhotoChemin;
                         }
                     }
-
-                    var subscribers = EvenementDalService.GetSubscribersByEvent(new EvenementDalRequest() { EvenementId = evtBLL.Id });
-                    List<EvenementSubscriberBll> mySubscribers = null;
-
-                    if ( subscribers != null && subscribers.Count() > 0 )
+                    foreach (EvenementSubscriberBll s in evtBLL.Participants)
                     {
-                        mySubscribers = new List<EvenementSubscriberBll>();
-
-                        foreach ( var sub in subscribers )
+                        string res = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "UserSmall/" + s.UtilisateurId);
+                        if (!string.IsNullOrWhiteSpace(res))
                         {
-                            mySubscribers.Add(Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(sub));
+                            dynamic json = Json.Decode(res);
+                            if (json != null)
+                            {
+                                s.Pseudo = json.Pseudo;
+                                s.ImageUrl = json.PhotoChemin;
+                            }
                         }
                     }
-
-
-                    evtBLL.Subscribers = mySubscribers;
-
+                    evtBLL.NbParticipant = evtBLL.Participants.Count();
                     response.State = ResponseState.Ok;
                     response.Value = evtBLL;
                 }
@@ -353,7 +337,8 @@ namespace Service.Evenement.Business
                             }
                         }
 
-                        Ev.Subscribers = mySubscribers;
+                        Ev.Participants = mySubscribers;
+                        Ev.NbParticipant = mySubscribers != null ? mySubscribers.Count() : 0;
                     }
                 }
                 else response.State = ResponseState.NoContent;

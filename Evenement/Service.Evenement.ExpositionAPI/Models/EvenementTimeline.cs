@@ -16,8 +16,8 @@ namespace Service.Evenement.ExpositionAPI.Models
         public string Categorie_Libelle { get; set; }
         public DateTime DateEvenement { get; set; }
         public string TitreEvenement { get; set; }
-        public int NbParticipant { get; set; }
-        public List<Subscriber> Particpants { get; set; }
+        public double NbParticipant { get; set; }
+        public List<Subscriber> Participants { get; set; }
         public int MaximumParticipant { get; set; }
         public string Statut { get; set; }
         public int Prix { get; set; }
