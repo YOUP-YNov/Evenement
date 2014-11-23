@@ -207,15 +207,28 @@ namespace Service.Evenement.Business
             {
                 try
                 {
-                string result = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"]+"UserSmall/"+ e.OrganisateurId);
-                if (!string.IsNullOrWhiteSpace(result))
-                {
-                    dynamic json = Json.Decode(result);
-                    if (json != null)
+                    string result = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"]+"UserSmall/"+ e.OrganisateurId);
+                    if (!string.IsNullOrWhiteSpace(result))
                     {
-                        e.OrganisateurPseudo = json.Pseudo;
-                        e.OrganisateurImageUrl = json.PhotoChemin;
+                        dynamic json = Json.Decode(result);
+                        if (json != null)
+                        {
+                            e.OrganisateurPseudo = json.Pseudo;
+                            e.OrganisateurImageUrl = json.PhotoChemin;
+                        }
                     }
+                    foreach(EvenementSubscriberBll s in e.Participants)
+                    {
+                        string res = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "UserSmall/" + s.UtilisateurId);
+                        if (!string.IsNullOrWhiteSpace(res))
+                        {
+                            dynamic json = Json.Decode(res);
+                            if (json != null)
+                            {
+                                s.Pseudo = json.Pseudo;
+                                s.ImageUrl = json.PhotoChemin;
+                            }
+                        }
                     }
                 }
                 catch

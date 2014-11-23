@@ -24,6 +24,16 @@ namespace Service.Evenement.Business.BusinessModels
         public long UtilisateurId { get; set; }
 
         /// <summary>
+        /// Récupère le pseudo du participant
+        /// </summary>
+        public string Pseudo { get; set; }
+
+        /// <summary>
+        /// Récupère l'image de profil du participant
+        /// </summary>
+        public string ImageUrl { get; set; }
+
+        /// <summary>
         /// Récupère ou assigne la date d'inscription de l'utilisateur
         /// </summary>
         public DateTime DateInscription { get; set; }

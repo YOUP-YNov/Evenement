@@ -13,6 +13,16 @@ namespace Service.Evenement.ExpositionAPI.Models
         public long UtilisateurId { get; set; }
 
         /// <summary>
+        /// Récupère le pseudo de l'utilisateur inscrit
+        /// </summary>
+        public string Pseudo { get; set; }
+
+        /// <summary>
+        /// Récûpère l'image de profil de l'utilisateur inscrit
+        /// </summary>
+        public string ImageUrl { get; set; }
+
+        /// <summary>
         /// Récupère ou assigne la date d'inscription de l'utilisateur
         /// </summary>
         public DateTime DateInscription { get; set; }
