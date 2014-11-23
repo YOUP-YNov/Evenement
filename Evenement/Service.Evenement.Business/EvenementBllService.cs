@@ -207,6 +207,7 @@ namespace Service.Evenement.Business
             {
                 try
                 {
+                    e.Participants = GetSubscribersByEvent(Convert.ToInt32(e.Id));
                     string result = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"]+"UserSmall/"+ e.OrganisateurId);
                     if (!string.IsNullOrWhiteSpace(result))
                     {
@@ -275,6 +276,7 @@ namespace Service.Evenement.Business
                 request.EvenementId = id;
                 var evt = EvenementDalService.getEvenementId(request);
                 EvenementBll evtBLL = Mapper.Map<EvenementDao, EvenementBll>(evt);
+                evtBLL.Participants = GetSubscribersByEvent(Convert.ToInt32(id));
                 if (evtBLL != null)
                 {
                     WebClient client = new WebClient();
@@ -286,6 +288,20 @@ namespace Service.Evenement.Business
                         {
                             evtBLL.OrganisateurPseudo = json.Pseudo;
                             evtBLL.OrganisateurImageUrl = json.PhotoChemin;
+                        }
+                    }
+
+                    foreach (var participant in evtBLL.Participants)
+                    {
+                        string res = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "UserSmall/" + participant.UtilisateurId);
+                        if (!string.IsNullOrWhiteSpace(res))
+                        {
+                            dynamic json = Json.Decode(res);
+                            if (json != null)
+                            {
+                                participant.Pseudo = json.Pseudo;
+                                participant.ImageUrl = json.PhotoChemin;
+                            }
                         }
                     }
                     response.State = ResponseState.Ok;
