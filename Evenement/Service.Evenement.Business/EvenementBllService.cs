@@ -265,15 +265,22 @@ namespace Service.Evenement.Business
                 if (evtBLL != null)
                 {
                     WebClient client = new WebClient();
-                    string result = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/UserSmall/" + evtBLL.OrganisateurId);
-                    if (!string.IsNullOrWhiteSpace(result))
+                    try
                     {
-                        dynamic json = Json.Decode(result);
-                        if (json != null)
+                        string result = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/UserSmall/" + evtBLL.OrganisateurId);
+                        if (!string.IsNullOrWhiteSpace(result))
                         {
-                            evtBLL.OrganisateurPseudo = json.Pseudo;
-                            evtBLL.OrganisateurImageUrl = json.PhotoChemin;
+                            dynamic json = Json.Decode(result);
+                            if (json != null)
+                            {
+                                evtBLL.OrganisateurPseudo = json.Pseudo;
+                                evtBLL.OrganisateurImageUrl = json.PhotoChemin;
+                            }
                         }
+                    }
+                    catch
+                    {
+
                     }
                     response.State = ResponseState.Ok;
                     response.Value = evtBLL;
