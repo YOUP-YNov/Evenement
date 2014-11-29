@@ -85,6 +85,27 @@ namespace Service.Evenement.Business
             if (idProfil != -1)
             {
                 evenementBll.OrganisateurId = idProfil;
+
+                client.Headers[HttpRequestHeader.ContentType] = "application/json";
+                string id_string_topic = null;
+                try
+                {
+                    id_string_topic = client.UploadString(ConfigurationManager.AppSettings["ForumUri"] + "api/Topic",
+                    "{\"Nom\": \"" + evenementBll.TitreEvenement + "\",\"DescriptifTopic\": \"" + evenementBll.DescriptionEvenement +
+                    "\",\"DateCreation\": " + DateTime.Now +
+                    ",\"Utilisateur_id\": " + evenementBll.OrganisateurId + " }");
+                }
+                catch (Exception e)
+                {
+                }
+
+                int valeur;
+                if (int.TryParse(id_string_topic, out valeur))
+                {
+                    int id_topic = valeur;
+                    evenementBll.Topic_id = id_topic;
+                }
+
                 if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
                 {
                     EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
@@ -97,11 +118,10 @@ namespace Service.Evenement.Business
                         try
                         {
                             // Appel de l'api de recherche pour indexer l'événement
-                            client.DownloadString(new Uri(ConfigurationManager.AppSettings["RechercheUri"] + "UserSmall/" + string.Format("add/get_event/type?={0}&idP={1}&nameP={2}&town={3}&latitude={4}&longitude={5}&idE={6}&nameE={7}&date={8}&adresse={9}", evenementBll.EventAdresse.Id, evenementBll.EventAdresse.Nom, evenementBll.EventAdresse.Ville, evenementBll.EventAdresse.Latitude, evenementBll.EventAdresse.Longitude, evenementBll.Id, evenementBll.TitreEvenement, evenementBll.Categorie.Libelle, evenementBll.CreateDate, evenementBll.EventAdresse.Adresse)));
+                            client.DownloadString(new Uri(ConfigurationManager.AppSettings["RechercheUri"] + string.Format("add/get_event/type?={0}&idP={1}&nameP={2}&town={3}&latitude={4}&longitude={5}&idE={6}&nameE={7}&date={8}&adresse={9}", evenementBll.EventAdresse.Id, evenementBll.EventAdresse.Nom, evenementBll.EventAdresse.Ville, evenementBll.EventAdresse.Latitude, evenementBll.EventAdresse.Longitude, evenementBll.Id, evenementBll.TitreEvenement, evenementBll.Categorie.Libelle, evenementBll.CreateDate, evenementBll.EventAdresse.Adresse)));
                         }
                         catch
                         {
-
                         }
                     }
                     else
