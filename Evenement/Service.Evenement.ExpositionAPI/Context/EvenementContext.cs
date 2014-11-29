@@ -10,6 +10,7 @@ using Service.Evenement.Business.Response;
 using Service.Evenement.ExpositionAPI.Controllers;
 using Service.Evenement.ExpositionAPI.Models;
 using Service.Evenement.ExpositionAPI.Models.ModelCreate;
+using System.Configuration;
 
 namespace Service.Evenement.ExpositionAPI.Context
 {
@@ -170,7 +171,7 @@ namespace Service.Evenement.ExpositionAPI.Context
             string id_string_topic = null;
             try
             {
-                id_string_topic = client.UploadString("http://forumyoup.apphb.com/api/Topic",
+                id_string_topic = client.UploadString(ConfigurationManager.AppSettings["ForumUri"] + "api/Topic",
                 "{Nom:" + bllEvent.TitreEvenement + ",DescriptifTopic:" + bllEvent.DescriptionEvenement +
                 ",DateCreation:" + DateTime.Now +
                 ",Utilisateur_id:" + bllEvent.OrganisateurId + " }");
@@ -187,6 +188,10 @@ namespace Service.Evenement.ExpositionAPI.Context
                 int id_topic = valeur;
                 bllEvent.Topic_id = id_topic;
             }
+
+            bllEvent.DateFinInscription = bllEvent.DateEvenement;
+            bllEvent.DateMiseEnAvant = null;
+
 
             ResponseObject response = EventBusinessService.CreateEvenement(bllEvent, token);
             return response;

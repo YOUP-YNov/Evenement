@@ -112,7 +112,7 @@
         /// <summary>
         /// Assigne ou récupère la date de mise en avant de l'évenement
         /// </summary>
-        public DateTime DateMiseEnAvant { get; set; }
+        public DateTime? DateMiseEnAvant { get; set; }
 
         /// <summary>
         /// Assigne ou récupère le statut d'un evenement

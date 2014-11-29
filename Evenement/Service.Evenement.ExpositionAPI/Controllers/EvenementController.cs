@@ -188,7 +188,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         public HttpResponseMessage Create(string token, [FromBody] CustomEvenementCreate evt)
         {
             ResponseObject response = EvenementContext.Create(evt, token);
-            return GenerateResponseMessage.initResponseMessage(response);
+            HttpResponseMessage result = GenerateResponseMessage.initResponseMessage(response);
+            return result;
         }
 
         private void InviteFriends(InviteFriends invitations)
