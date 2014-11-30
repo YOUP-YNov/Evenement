@@ -75,6 +75,28 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             return GenerateResponseMessage.initResponseMessage(result);
         }
 
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
+        [Route("api/Profil/{id_profil}/Evenement/{id_evenement}")]
+        public bool GetByProfilEvenement(int id_profil, int id_evenement)
+        {
+            ResponseObject result = EvenementContext.GetEvenement(id_evenement);
+            if (result.Value != null)
+            {
+                EvenementTimelineFront ev = Mapper.Map<EvenementBll, EvenementTimelineFront>((EvenementBll)result.Value);
+                foreach (Subscriber s in ev.Participants)
+                {
+                    if (s.UtilisateurId == id_profil)
+                        return true;
+
+                }
+
+            }
+            return false;
+
+
+
+        }
         /// <summary>
         /// Retourne la liste des événements signalés
         /// </summary>
