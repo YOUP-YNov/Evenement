@@ -142,14 +142,27 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         /// <summary>
-        /// Permet l'inscription et la desincription
+        /// Permet l'inscription 
         /// </summary>
         /// <param name="id">Id de l'evenement</param>
         /// <param name="idProfil">Id du profil</param>
         [HttpPost]
-        public HttpResponseMessage PostInscriptionDeinscription(int id, string token)
+        [Route("api/Evenement/{id_evenement}/Inscription")]
+        public HttpResponseMessage PostInscription(int id_evenement, string token)
         {
-            ResponseObject response = EvenementContext.PostInscriptionDeinscription(id, token);
+            ResponseObject response = EvenementContext.PostInscriptionDeinscription(id_evenement, token);
+            return GenerateResponseMessage.initResponseMessage(response);
+        }
+        /// <summary>
+        /// Permet la desincription
+        /// </summary>
+        /// <param name="id">Id de l'evenement</param>
+        /// <param name="idProfil">Id du profil</param>
+        [HttpPost]
+        [Route("api/Evenement/{id_evenement}/Desinscription")]
+        public HttpResponseMessage PostDesinscription(int id_evenement, string token)
+        {
+            ResponseObject response = EvenementContext.PostInscriptionDeinscription(id_evenement, token);
             return GenerateResponseMessage.initResponseMessage(response);
         }
 

@@ -588,11 +588,11 @@ namespace Service.Evenement.Dal
             try
             {
                 var result = EventDalService.CreateEvenement(
-                                request.UserId,
+                                Event.OrganisateurId,
                                 Event.Categorie.Id,
                                 Event.DateEvenement,
                                 DateTime.Now,
-                                null,
+                                DateTime.Now,
                                 Event.DateFinInscription,
                                 Event.TitreEvenement.ToString(),
                                 Event.DescriptionEvenement.ToString(),
@@ -677,7 +677,8 @@ namespace Service.Evenement.Dal
 
             try
             {
-                 SubscriptionDalService.SubscribeOrUnsubscribe(request.EvenementId, request.UserId);
+
+                EventDalService.SubscribeOrUnsubscribe(request.EvenementId, request.UserId);
                 var result = SubscriptionDalService.GetParticipantByEvent(request.EvenementId);
                 return result.ToSubscriberDao();
             }

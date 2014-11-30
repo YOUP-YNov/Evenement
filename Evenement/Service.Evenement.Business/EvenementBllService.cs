@@ -200,7 +200,15 @@ namespace Service.Evenement.Business
         public ResponseObject GetEvenements(DateTime? date_search = null, int max_result = 10, long? categorie = -1, long? max_id = null, bool? premium = null, string text_search = null, string orderby = null, DateTime? startRange = null, DateTime? endRange = null)
         {
             IEnumerable<Dal.Dao.EvenementDao> tmp = EvenementDalService.GetAllEvenement(date_search, premium, max_result, categorie, max_id, text_search, orderby, startRange, endRange);
-            IEnumerable<EvenementBll> bllEvent = Mapper.Map<IEnumerable<EvenementDao>, IEnumerable<EvenementBll>>(tmp);
+            IEnumerable<EvenementBll> bllEvent = null;
+            try
+            {
+                bllEvent = Mapper.Map<IEnumerable<EvenementDao>, IEnumerable<EvenementBll>>(tmp);
+            }
+            catch (Exception e)
+            {
+                int t = 0;
+            }
             WebClient client = new WebClient();
 
             foreach (EvenementBll e in bllEvent)
@@ -592,11 +600,18 @@ namespace Service.Evenement.Business
                     //On récupère le nombre d'utilisateurs déjà inscrits et le nombre d'utilsateurs
                     //max pour vérifier s'il reste de la place sur l'événement
                     EvenementDalRequest requestNombreUtilisateurs = new EvenementDalRequest() { EvenementId = _evenementId };
-                    var nombreUtilisateurs = EvenementDalService.getEvenementId(requestNombreUtilisateurs).Participants.Count();
+                    EvenementDao eventActuel = EvenementDalService.getEvenementId(requestNombreUtilisateurs);
+                    if (eventActuel!=null)
+                    {
+                        int nbDispo = -1;
+                        if(eventActuel.Participants !=null)
+                        {
                     EvenementDalRequest requestNombreMax = new EvenementDalRequest() { EvenementId = _evenementId };
-                    var nombreMax = EvenementDalService.getEvenementId(requestNombreMax).MaximumParticipant;
+                            int nombreMax = EvenementDalService.getEvenementId(requestNombreMax).MaximumParticipant;
+                            nbDispo = nombreMax - eventActuel.Participants.Count();
+                        }
 
-                    if (nombreUtilisateurs < nombreMax)
+                        if (nbDispo>0 || nbDispo == -1)
                     {
                         var daoResult = EvenementDalService.SubscribeEvenement(request).FirstOrDefault();
                         if (daoResult == null)
@@ -614,6 +629,11 @@ namespace Service.Evenement.Business
                         response.State = ResponseState.BadRequest;
                         throw new System.InvalidOperationException("Le nombre d'utilisateurs maximum est déjà atteint");
                     }
+                    }
+                    
+
+                   
+                   
                 }
             }
             return response;
