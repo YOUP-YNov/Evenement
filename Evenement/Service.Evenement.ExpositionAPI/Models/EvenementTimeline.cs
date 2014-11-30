@@ -26,5 +26,6 @@ namespace Service.Evenement.ExpositionAPI.Models
         public string Etat { get; set; }
         public string ImageUrl { get; set; }
         public int Topic_id { get; set; }
+        public DateTime DateFinInscription { get; set; }
     }
 }
