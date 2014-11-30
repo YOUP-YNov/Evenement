@@ -145,8 +145,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <summary>
         /// Permet l'inscription 
         /// </summary>
-        /// <param name="id">Id de l'evenement</param>
-        /// <param name="idProfil">Id du profil</param>
+        /// <param name="id_evenement">Id de l'evenement</param>
+        /// <param name="token">token du profil</param>
         [HttpPost]
         [Route("api/Evenement/{id_evenement}/Inscription")]
         public HttpResponseMessage PostInscription(int id_evenement, string token)
@@ -157,8 +157,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// <summary>
         /// Permet la desincription
         /// </summary>
-        /// <param name="id">Id de l'evenement</param>
-        /// <param name="idProfil">Id du profil</param>
+        /// <param name="id_evenement">Id de l'evenement</param>
+        /// <param name="token">token du profil</param>
         [HttpPost]
         [Route("api/Evenement/{id_evenement}/Desinscription")]
         public HttpResponseMessage PostDesinscription(int id_evenement, string token)
@@ -172,7 +172,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// c'est une mise en archive. L'évenement n'est plus consultable. 
         /// </summary>
         /// <param name="id">Id de l'évenement</param>
-        /// <param name="id_profil">Id du profil</param>
+        /// <param name="token">token du profil</param>
         [HttpDelete]
         public HttpResponseMessage DeleteEvenement(int id, string token)
         {
