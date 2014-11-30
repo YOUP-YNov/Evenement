@@ -596,7 +596,7 @@
             <param name="id">L'id de l'événement</param>
             <returns>Un événement</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetEvenement(System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Context.EvenementContext.GetEvenement(System.Int32[],System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
             <summary>
             Retourne les évènements d'un département 
             </summary>
@@ -803,7 +803,7 @@
             <param name="id">L'id de l'événement</param>
             <returns>Un événement</returns>
         </member>
-        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenement(System.Int32)">
+        <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.GetEvenement(System.Int32[])">
             <summary>
             Retourne les évènements d'un département 
             </summary>
@@ -981,11 +981,6 @@
             Assigne ou récupère l'attestation que l'évenement est premium
             </summary>
         </member>
-        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.DateMiseEnAvant">
-            <summary>
-            Assigne ou récupère la date de mise en avant de l'évenement
-            </summary>
-        </member>
         <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.Public">
             <summary>
             Assigne ou récupère la visibilité de l'évènement
@@ -994,11 +989,6 @@
         <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.Payant">
             <summary>
             Assigne ou récupère la visibilité de l'évènement
-            </summary>
-        </member>
-        <member name="P:Service.Evenement.ExpositionAPI.Models.ModelCreate.EvenementCreate.Topic_id">
-            <summary>
-            Assigne ou récupère l'id d'un topic
             </summary>
         </member>
         <member name="P:Service.Evenement.ExpositionAPI.Controllers.EvenementUpdate.Id">
@@ -1276,6 +1266,36 @@
         <member name="F:Service.Evenement.ExpositionAPI.Models.InviteFriends.idFriends">
             <summary>
             ids amis à inviter
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.Subscriber.UtilisateurId">
+            <summary>
+            Récupère ou assigne l'id de l'utilisateur inscrit
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.Subscriber.Pseudo">
+            <summary>
+            Récupère le pseudo de l'utilisateur inscrit
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.Subscriber.ImageUrl">
+            <summary>
+            Récûpère l'image de profil de l'utilisateur inscrit
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.Subscriber.DateInscription">
+            <summary>
+            Récupère ou assigne la date d'inscription de l'utilisateur
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.Subscriber.DateAnnulation">
+            <summary>
+            Récupère ou assigne la date d'annulation de l'utilisateur
+            </summary>
+        </member>
+        <member name="P:Service.Evenement.ExpositionAPI.Models.Subscriber.Annulation">
+            <summary>
+            Récupère ou assigne si oui ou non sa participation est annulé
             </summary>
         </member>
     </members>

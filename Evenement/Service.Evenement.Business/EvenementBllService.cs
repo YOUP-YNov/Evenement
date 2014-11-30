@@ -61,7 +61,7 @@ namespace Service.Evenement.Business
             string resultJson = null;
             try
             {
-                resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + Guid.Parse(token).ToString());
+                resultJson = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "api/Auth/" + Guid.Parse(token).ToString());
             }
             catch (Exception e)
             {
@@ -85,6 +85,27 @@ namespace Service.Evenement.Business
             if (idProfil != -1)
             {
                 evenementBll.OrganisateurId = idProfil;
+
+                client.Headers[HttpRequestHeader.ContentType] = "application/json";
+                string id_string_topic = null;
+                try
+                {
+                    id_string_topic = client.UploadString(ConfigurationManager.AppSettings["ForumUri"] + "api/Topic",
+                    "{\"Nom\": \"" + evenementBll.TitreEvenement + "\",\"DescriptifTopic\": \"" + evenementBll.DescriptionEvenement +
+                    "\",\"DateCreation\": " + DateTime.Now +
+                    ",\"Utilisateur_id\": " + evenementBll.OrganisateurId + " }");
+                }
+                catch (Exception e)
+                {
+                }
+
+                int valeur;
+                if (int.TryParse(id_string_topic, out valeur))
+                {
+                    int id_topic = valeur;
+                    evenementBll.Topic_id = id_topic;
+                }
+
             if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
             {
                 EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
@@ -92,15 +113,15 @@ namespace Service.Evenement.Business
                 if (result.Count() > 0)
                 {
                     response.State = ResponseState.Created;
+                        response.Value = result;
                    
                     try
                     {
                         // Appel de l'api de recherche pour indexer l'événement
-                        client.DownloadStringAsync(new Uri(ConfigurationManager.AppSettings["RechercheUri"].ToString() + string.Format("add/get_event/type?={0}&idP={1}&nameP={2}&town={3}&latitude={4}&longitude={5}&idE={6}&nameE={7}&date={8}&adresse={9}", evenementBll.EventAdresse.Id, evenementBll.EventAdresse.Nom, evenementBll.EventAdresse.Ville, evenementBll.EventAdresse.Latitude, evenementBll.EventAdresse.Longitude, evenementBll.Id, evenementBll.TitreEvenement, evenementBll.Categorie.Libelle, evenementBll.CreateDate, evenementBll.EventAdresse.Adresse)));
+                            client.DownloadString(new Uri(ConfigurationManager.AppSettings["RechercheUri"] + string.Format("add/get_event/type?={0}&idP={1}&nameP={2}&town={3}&latitude={4}&longitude={5}&idE={6}&nameE={7}&date={8}&adresse={9}", evenementBll.EventAdresse.Id, evenementBll.EventAdresse.Nom, evenementBll.EventAdresse.Ville, evenementBll.EventAdresse.Latitude, evenementBll.EventAdresse.Longitude, evenementBll.Id, evenementBll.TitreEvenement, evenementBll.Categorie.Libelle, evenementBll.CreateDate, evenementBll.EventAdresse.Adresse)));
                 }
                     catch
                     {
-
                     }
                 }
                 else
@@ -138,7 +159,7 @@ namespace Service.Evenement.Business
                 string resultJson = null;
                 try
                 {
-                    resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" +Guid.Parse(token).ToString());
+                    resultJson = client.DownloadString(ConfigurationManager.AppSettings["Profil"] + "Auth/" + Guid.Parse(token).ToString());
                 }
                 catch (Exception e)
                 {
@@ -213,7 +234,9 @@ namespace Service.Evenement.Business
 
             foreach (EvenementBll e in bllEvent)
             {
-                string result = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/UserSmall/" + e.OrganisateurId);
+                try
+                {
+                    string result = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "api/UserSmall/" + e.OrganisateurId);
                 if (!string.IsNullOrWhiteSpace(result))
                 {
                     dynamic json = Json.Decode(result);
@@ -222,6 +245,12 @@ namespace Service.Evenement.Business
                         e.OrganisateurPseudo = json.Pseudo;
                         e.OrganisateurImageUrl = json.PhotoChemin;
                     }
+                    }
+                    e.NbParticipant = tmp.First(x => x.Id == e.Id).Participants != null ? tmp.First(x => x.Id == e.Id).Participants.Count() : 0;
+                }
+                catch
+                {
+
                 }
             }
 
@@ -263,10 +292,13 @@ namespace Service.Evenement.Business
                 request.EvenementId = id;
                 var evt = EvenementDalService.getEvenementId(request);
                 EvenementBll evtBLL = Mapper.Map<EvenementDao, EvenementBll>(evt);
+                evtBLL.Participants = GetSubscribersByEvent(Convert.ToInt32(id));
                 if (evtBLL != null)
                 {
                     WebClient client = new WebClient();
-                    string result = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/UserSmall/" + evtBLL.OrganisateurId);
+                    try
+                    {
+                        string result = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "api/UserSmall/" + evtBLL.OrganisateurId);
                     if (!string.IsNullOrWhiteSpace(result))
                     {
                         dynamic json = Json.Decode(result);
@@ -276,6 +308,25 @@ namespace Service.Evenement.Business
                             evtBLL.OrganisateurImageUrl = json.PhotoChemin;
                         }
                     }
+                    }
+                    catch
+                    {
+
+                    }
+                    foreach (EvenementSubscriberBll s in evtBLL.Participants)
+                    {
+                        string res = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "api/UserSmall/" + s.UtilisateurId);
+                        if (!string.IsNullOrWhiteSpace(res))
+                        {
+                            dynamic json = Json.Decode(res);
+                            if (json != null)
+                            {
+                                s.Pseudo = json.Pseudo;
+                                s.ImageUrl = json.PhotoChemin;
+                            }
+                        }
+                    }
+                    evtBLL.NbParticipant = evtBLL.Participants.Count();
                     response.State = ResponseState.Ok;
                     response.Value = evtBLL;
                 }
@@ -293,10 +344,10 @@ namespace Service.Evenement.Business
         /// </summary>
         /// <param name="dept"></param>
         /// <returns>liste d'évènements</returns>
-        public ResponseObject GetEvenementByDept(int dept)
+        public ResponseObject GetEvenementByDept(int[] dept, DateTime? startTime, DateTime? endTime)
         {
             ResponseObject response = new ResponseObject();
-            if (dept == default(int))
+            if (dept == null)
                 response.State = ResponseState.BadRequest;
             else
             {
@@ -306,6 +357,25 @@ namespace Service.Evenement.Business
                 {
                     response.State = ResponseState.Ok;
                     response.Value = evtBLL;
+
+                    foreach (var Ev in evtBLL)
+                    {
+                        var subscribers = EvenementDalService.GetSubscribersByEvent(new EvenementDalRequest() { EvenementId = Ev.Id });
+                        List<EvenementSubscriberBll> mySubscribers = null;
+
+                        if (subscribers != null && subscribers.Count() > 0)
+                        {
+                            mySubscribers = new List<EvenementSubscriberBll>();
+
+                            foreach (var sub in subscribers)
+                            {
+                                mySubscribers.Add(Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(sub));
+                            }
+                        }
+
+                        Ev.Participants = mySubscribers;
+                        Ev.NbParticipant = mySubscribers != null ? mySubscribers.Count() : 0;
+                }
                 }
                 else response.State = ResponseState.NoContent;
             }
@@ -482,7 +552,7 @@ namespace Service.Evenement.Business
                 string resultJson = null;
                 try
                 {
-                    resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + Guid.Parse(token).ToString());
+                resultJson = client.DownloadString(ConfigurationManager.AppSettings["Profil"] + "Auth/" + Guid.Parse(token).ToString());
                 }
                 catch (Exception e)
                 {
@@ -514,13 +584,13 @@ namespace Service.Evenement.Business
                     if (eventDelete != null)
                     {
                         if (idProfil == eventDelete.OrganisateurId)
-                        {
-                            EvenementDao eventDao = new EvenementDao();
-                            eventDao.Id = eventId;
-                            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
-                            eventDao.DateModification = DateTime.Now;
+        {
+            EvenementDao eventDao = new EvenementDao();
+            eventDao.Id = eventId;
+            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
+            eventDao.DateModification = DateTime.Now;
 
-                            EvenementDalService.UpdateStateEvenement(eventDao);
+            EvenementDalService.UpdateStateEvenement(eventDao);
                             response.State = ResponseState.Ok;
                         }
                         else
@@ -574,7 +644,7 @@ namespace Service.Evenement.Business
             string resultJson = null;
             try
             {
-                resultJson = client.DownloadString("http://aspmoduleprofil.azurewebsites.net/api/Auth/" + Guid.Parse(token).ToString());
+                resultJson = client.DownloadString(ConfigurationManager.AppSettings["Profil"] + "Auth/" + Guid.Parse(token).ToString());
             }
             catch (Exception e)
             {
@@ -601,24 +671,24 @@ namespace Service.Evenement.Business
                     //max pour vérifier s'il reste de la place sur l'événement
                     EvenementDalRequest requestNombreUtilisateurs = new EvenementDalRequest() { EvenementId = _evenementId };
                     EvenementDao eventActuel = EvenementDalService.getEvenementId(requestNombreUtilisateurs);
-                    if (eventActuel!=null)
+                    if (eventActuel != null)
                     {
                         int nbDispo = -1;
-                        if(eventActuel.Participants !=null)
-                        {
-                    EvenementDalRequest requestNombreMax = new EvenementDalRequest() { EvenementId = _evenementId };
-                            int nombreMax = EvenementDalService.getEvenementId(requestNombreMax).MaximumParticipant;
-                            nbDispo = nombreMax - eventActuel.Participants.Count();
-                        }
+                        //    if(eventActuel.Participants !=null)
+                        //    {
+                        //EvenementDalRequest requestNombreMax = new EvenementDalRequest() { EvenementId = _evenementId };
+                        //        int nombreMax = EvenementDalService.getEvenementId(requestNombreMax).MaximumParticipant;
+                        //        nbDispo = nombreMax - eventActuel.Participants.Count();
+                        //    }
 
-                        if (nbDispo>0 || nbDispo == -1)
+                        if (nbDispo > 0 || nbDispo == -1)
                     {
                         var daoResult = EvenementDalService.SubscribeEvenement(request).FirstOrDefault();
                         if (daoResult == null)
                         {
                             response.State = ResponseState.NotFound;
                         }
-
+                            
                         EvenementSubscriberBll result = Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(daoResult);
                         response.State = ResponseState.Ok;
                         response.Value = result;
@@ -630,14 +700,10 @@ namespace Service.Evenement.Business
                         throw new System.InvalidOperationException("Le nombre d'utilisateurs maximum est déjà atteint");
                     }
                     }
-                    
-
-                   
-                   
                 }
-            }
+                    
+                }
             return response;
-
         }
 
         /// <summary>

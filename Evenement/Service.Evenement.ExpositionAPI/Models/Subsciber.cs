@@ -1,35 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Service.Evenement.Business.BusinessModels
+namespace Service.Evenement.ExpositionAPI.Models
 {
-    public class EvenementSubscriberBll
+    public class Subscriber
     {
-        /// <summary>
-        /// Récupère ou assigne l'id de la participation
-        /// </summary>
-        public long ParticipationId { get; set; }
-
-        /// <summary>
-        /// Récupère ou assigne l'id de l'évenement 
-        /// </summary>
-        public long EvenementId { get; set; }
-
         /// <summary>
         /// Récupère ou assigne l'id de l'utilisateur inscrit
         /// </summary>
         public long UtilisateurId { get; set; }
 
         /// <summary>
-        /// Récupère le pseudo du participant
+        /// Récupère le pseudo de l'utilisateur inscrit
         /// </summary>
         public string Pseudo { get; set; }
 
         /// <summary>
-        /// Récupère l'image de profil du participant
+        /// Récûpère l'image de profil de l'utilisateur inscrit
         /// </summary>
         public string ImageUrl { get; set; }
 

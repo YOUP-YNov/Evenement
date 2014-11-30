@@ -115,11 +115,12 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         /// </summary>
         /// <param name="dept"></param>
         /// <returns>Liste d'évènements</returns>
-        [HttpGet]
+        [HttpPost]
+        [Route("api/Evenement/Dept")]
         [ResponseType(typeof(EvenementTimelineFront))]
-        public HttpResponseMessage GetEvenement(int dept)
+        public HttpResponseMessage GetEvenement([FromBody] int[] dept)
         {
-            ResponseObject result = EvenementContext.GetEvenement(dept);
+            ResponseObject result = EvenementContext.GetEvenement(dept,null,null);
             if (result.Value != null)
             {
                 result.Value = Mapper.Map<IEnumerable<EvenementBll>, IEnumerable<EvenementTimelineFront>>((IEnumerable<EvenementBll>)result.Value);
@@ -187,7 +188,8 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         public HttpResponseMessage Create(string token, [FromBody] CustomEvenementCreate evt)
         {
             ResponseObject response = EvenementContext.Create(evt, token);
-            return GenerateResponseMessage.initResponseMessage(response);
+            HttpResponseMessage result = GenerateResponseMessage.initResponseMessage(response);
+            return result;
         }
 
         private void InviteFriends(InviteFriends invitations)

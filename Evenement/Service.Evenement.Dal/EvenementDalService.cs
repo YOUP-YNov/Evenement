@@ -412,13 +412,16 @@ namespace Service.Evenement.Dal
         /// </summary>
         /// <param name="dept"></param>
         /// <returns></returns>
-        public IEnumerable<EvenementDao> GetEvenementByDept(int dept)
+        public IEnumerable<EvenementDao> GetEvenementByDept(int[] dept)
         {
             try
             {
-                var result = EventDalService.GetEvenementByDept(dept.ToString());
-
-                return result.ToEvenementDao();
+                List<EvenementDao> result = new List<EvenementDao>();
+                foreach (var item in dept)
+                {
+                    result.AddRange(EventDalService.GetEvenementByDept(item.ToString()).ToEvenementDao());
+                }
+                return result;
             }
             catch ( Exception e )
             {

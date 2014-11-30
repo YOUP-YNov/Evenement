@@ -10,6 +10,7 @@ using Service.Evenement.Business.Response;
 using Service.Evenement.ExpositionAPI.Controllers;
 using Service.Evenement.ExpositionAPI.Models;
 using Service.Evenement.ExpositionAPI.Models.ModelCreate;
+using System.Configuration;
 
 namespace Service.Evenement.ExpositionAPI.Context
 {
@@ -107,9 +108,9 @@ namespace Service.Evenement.ExpositionAPI.Context
         /// </summary>
         /// <param name="dept"></param>
         /// <returns>Liste d'évènements</returns>
-        public static ResponseObject GetEvenement ( int dept )
+        public static ResponseObject GetEvenement ( int[] dept , DateTime? startDate, DateTime? endDate)
         {
-            ResponseObject result = EventBusinessService.GetEvenementByDept(dept);
+            ResponseObject result = EventBusinessService.GetEvenementByDept(dept,null,null);
             return result;
         }
 
@@ -162,31 +163,9 @@ namespace Service.Evenement.ExpositionAPI.Context
             EvenementBll bllEvent = Mapper.Map<EvenementCreate, EvenementBll>(evt.evenement);
 
             bllEvent.Statut = evt.evenement.Public ? "Public" : "Privée";
+            bllEvent.DateFinInscription = bllEvent.DateEvenement;
+            bllEvent.DateMiseEnAvant = null;
 
-            WebClient client = new WebClient();
-            client.Headers[HttpRequestHeader.ContentType] = "application/json";
-            //la création de topic est censé retourner un entier, l'id du topic
-            //En l'état actuel ce n'est pas le cas, mais ils travaillent dessus
-            string id_string_topic = null;
-            try
-            {
-                id_string_topic = client.UploadString("http://forumyoup.apphb.com/api/Topic",
-                "{Nom:" + bllEvent.TitreEvenement + ",DescriptifTopic:" + bllEvent.DescriptionEvenement +
-                ",DateCreation:" + DateTime.Now +
-                ",Utilisateur_id:" + bllEvent.OrganisateurId + " }");
-            }
-            catch (Exception e)
-            {
-
-            }
-            
-
-            int valeur;
-            if ( int.TryParse(id_string_topic, out valeur) )
-            {
-                int id_topic = valeur;
-                bllEvent.Topic_id = id_topic;
-            }
 
             ResponseObject response = EventBusinessService.CreateEvenement(bllEvent, token);
             return response;

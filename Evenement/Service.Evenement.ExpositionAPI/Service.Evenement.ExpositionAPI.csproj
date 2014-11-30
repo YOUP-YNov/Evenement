@@ -189,6 +189,7 @@
     <Compile Include="Models\EventStateFront.cs" />
     <Compile Include="Models\InviteFriends.cs" />
     <Compile Include="Models\Search.cs" />
+    <Compile Include="Models\Subsciber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

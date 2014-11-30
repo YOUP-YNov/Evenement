@@ -320,7 +320,7 @@ namespace Service.Evenement.Dal.Mappeur
             EvenementSubcriberDao result = new EvenementSubcriberDao();
 
             result.DateAnnulation = SubcriptionUser.IsDateAnnulationNull() ? new DateTime() : SubcriptionUser.DateAnnulation;
-            result.DateInscription = SubcriptionUser.DateAnnulation;
+            result.DateInscription = SubcriptionUser.DateInscription;
             result.Annulation = SubcriptionUser.Annulation;
             result.ParticipationId = SubcriptionUser.Participe_id;
             result.EvenementId = SubcriptionUser.Evenement_id;
