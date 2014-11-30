@@ -167,7 +167,7 @@ namespace Service.Evenement.Business
                 string resultJson = null;
                 try
                 {
-                    resultJson = client.DownloadString(ConfigurationManager.AppSettings["Profil"] + "Auth/" + Guid.Parse(token).ToString());
+                    resultJson = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "api/Auth/" + Guid.Parse(token).ToString());
                 }
                 catch (Exception e)
                 {
@@ -560,7 +560,7 @@ namespace Service.Evenement.Business
                 string resultJson = null;
                 try
                 {
-                resultJson = client.DownloadString(ConfigurationManager.AppSettings["Profil"] + "Auth/" + Guid.Parse(token).ToString());
+                    resultJson = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "api/Auth/" + Guid.Parse(token).ToString());
                 }
                 catch (Exception e)
                 {
@@ -652,7 +652,7 @@ namespace Service.Evenement.Business
             string resultJson = null;
             try
             {
-                resultJson = client.DownloadString(ConfigurationManager.AppSettings["Profil"] + "Auth/" + Guid.Parse(token).ToString());
+                resultJson = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "api/Auth/" + Guid.Parse(token).ToString());
             }
             catch (Exception e)
             {
