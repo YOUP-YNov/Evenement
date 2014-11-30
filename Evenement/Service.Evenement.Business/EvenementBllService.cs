@@ -110,16 +110,24 @@ namespace Service.Evenement.Business
             {
                 EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
                 IEnumerable<EvenementDao> result = EvenementDalService.CreateEvenement(new EvenementDalRequest(), daoEvent);
-                if (result.Count() > 0)
+                if ( result != null && result.Count() > 0 )
                 {
+                    List<EventImageDao> eventImage = new List<EventImageDao>();
                     response.State = ResponseState.Created;
-                        response.Value = result;
-                   
+                    foreach ( var image in evenementBll.Galleries )
+                    {
+                        var ImageDao = Mapper.Map<EventImageBll, EventImageDao>(image);
+                        ImageDao.EvenementId = result.FirstOrDefault().Id;
+                        eventImage.Add(EvenementDalService.CreateImage(ImageDao).FirstOrDefault());
+                    }
+
+                    daoEvent.Galleries = eventImage;
+                    response.Value = daoEvent;
                     try
                     {
                         // Appel de l'api de recherche pour indexer l'événement
                             client.DownloadString(new Uri(ConfigurationManager.AppSettings["RechercheUri"] + string.Format("add/get_event/type?={0}&idP={1}&nameP={2}&town={3}&latitude={4}&longitude={5}&idE={6}&nameE={7}&date={8}&adresse={9}", evenementBll.EventAdresse.Id, evenementBll.EventAdresse.Nom, evenementBll.EventAdresse.Ville, evenementBll.EventAdresse.Latitude, evenementBll.EventAdresse.Longitude, evenementBll.Id, evenementBll.TitreEvenement, evenementBll.Categorie.Libelle, evenementBll.CreateDate, evenementBll.EventAdresse.Adresse)));
-                }
+                    }
                     catch
                     {
                     }

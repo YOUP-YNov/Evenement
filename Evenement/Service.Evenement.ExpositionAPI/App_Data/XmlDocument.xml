@@ -821,15 +821,15 @@
             <summary>
             Permet l'inscription 
             </summary>
-            <param name="id">Id de l'evenement</param>
-            <param name="idProfil">Id du profil</param>
+            <param name="id_evenement">Id de l'evenement</param>
+            <param name="token">token du profil</param>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.PostDesinscription(System.Int32,System.String)">
             <summary>
             Permet la desincription
             </summary>
-            <param name="id">Id de l'evenement</param>
-            <param name="idProfil">Id du profil</param>
+            <param name="id_evenement">Id de l'evenement</param>
+            <param name="token">token du profil</param>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.DeleteEvenement(System.Int32,System.String)">
             <summary>
@@ -837,7 +837,7 @@
             c'est une mise en archive. L'évenement n'est plus consultable. 
             </summary>
             <param name="id">Id de l'évenement</param>
-            <param name="id_profil">Id du profil</param>
+            <param name="token">token du profil</param>
         </member>
         <member name="M:Service.Evenement.ExpositionAPI.Controllers.EvenementController.Create(System.String,Service.Evenement.ExpositionAPI.Models.ModelCreate.CustomEvenementCreate)">
             <summary>
