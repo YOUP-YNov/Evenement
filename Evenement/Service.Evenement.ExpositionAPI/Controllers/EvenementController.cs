@@ -78,7 +78,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         [HttpGet]
         [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
         [Route("api/Profil/{id_profil}/Evenement/{id_evenement}")]
-        public bool GetByProfilEvenement(int id_profil, int id_evenement)
+        public bool GetByProfilEvenement(long id_profil, long id_evenement)
         {
             ResponseObject result = EvenementContext.GetEvenement(id_evenement);
             if (result.Value != null)

@@ -300,9 +300,10 @@ namespace Service.Evenement.Business
                 request.EvenementId = id;
                 var evt = EvenementDalService.getEvenementId(request);
                 EvenementBll evtBLL = Mapper.Map<EvenementDao, EvenementBll>(evt);
-                evtBLL.Participants = GetSubscribersByEvent(Convert.ToInt32(id));
+               
                 if (evtBLL != null)
                 {
+                    evtBLL.Participants = GetSubscribersByEvent(Convert.ToInt32(id));
                     WebClient client = new WebClient();
                     try
                     {
