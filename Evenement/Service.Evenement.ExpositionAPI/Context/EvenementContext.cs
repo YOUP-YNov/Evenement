@@ -163,7 +163,6 @@ namespace Service.Evenement.ExpositionAPI.Context
             EvenementBll bllEvent = Mapper.Map<EvenementCreate, EvenementBll>(evt.evenement);
 
             bllEvent.Statut = evt.evenement.Public ? "Public" : "Privée";
-            bllEvent.DateFinInscription = bllEvent.DateEvenement;
             bllEvent.DateMiseEnAvant = null;
 
 

@@ -8,12 +8,12 @@ namespace Service.Evenement.Business
 {
     public enum EventStateEnum
     {
-        AValider = 11,
-        Valide = 12,
-        Annuler = 13,
-        Signaler = 14,
-        Reussi = 15,
-        Desactiver = 16,
+        AValider = 17,
+        Valide = 18,
+        Annuler = 19,
+        Signaler = 20,
+        Reussi = 21,
+        Desactiver = 22,
         Unspecified
     }
 }
