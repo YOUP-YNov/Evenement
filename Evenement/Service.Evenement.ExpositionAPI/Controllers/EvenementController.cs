@@ -76,9 +76,9 @@ namespace Service.Evenement.ExpositionAPI.Controllers
         }
 
         [HttpGet]
-        [ResponseType(typeof(IEnumerable<EvenementTimelineFront>))]
+        [ResponseType(typeof(bool))]
         [Route("api/Profil/{id_profil}/Evenement/{id_evenement}")]
-        public bool GetByProfilEvenement(long id_profil, long id_evenement)
+        public bool IsRegistered(long id_profil, long id_evenement)
         {
             ResponseObject result = EvenementContext.GetEvenement(id_evenement);
             if (result.Value != null)
@@ -88,15 +88,11 @@ namespace Service.Evenement.ExpositionAPI.Controllers
                 {
                     if (s.UtilisateurId == id_profil)
                         return true;
-
                 }
-
             }
             return false;
-
-
-
         }
+
         /// <summary>
         /// Retourne la liste des événements signalés
         /// </summary>
