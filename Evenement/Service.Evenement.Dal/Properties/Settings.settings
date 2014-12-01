@@ -2,14 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Service.Evenement.Dal.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="YoupDEVConnectionString" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=avip9np4yy.database.windows.net,1433;Initial Catalog=YoupDEV;Persist Security Info=True;User ID=youpDEV;Password=youpD3VASP*&lt;/ConnectionString&gt;
-  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=avip9np4yy.database.windows.net,1433;Initial Catalog=YoupDEV;Persist Security Info=True;User ID=youpDEV;Password=youpD3VASP*</Value>
-    </Setting>
     <Setting Name="YoupDEVConnectionStringLucas" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
@@ -17,14 +9,6 @@
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=v7v25fm5ta.database.windows.net;Initial Catalog=YoupDEV;Persist Security Info=True;User ID=youpDEV;Password=youpD3VASP*</Value>
-    </Setting>
-    <Setting Name="ConnectionString" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=v7v25fm5ta.database.windows.net;Persist Security Info=True;User ID=youpDEV;Password=youpD3VASP*&lt;/ConnectionString&gt;
-  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=v7v25fm5ta.database.windows.net;Persist Security Info=True;User ID=youpDEV;Password=youpD3VASP*</Value>
     </Setting>
   </Settings>
 </SettingsFile>

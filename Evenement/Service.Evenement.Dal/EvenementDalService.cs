@@ -12,6 +12,7 @@ using Service.Evenement.Dal.Dal;
 using Service.Evenement.Dal.Dao.Request;
 using System.Configuration;
 using Logger;
+using Service.Evenement.Dal.Properties;
 
 namespace Service.Evenement.Dal
 {
@@ -158,6 +159,11 @@ namespace Service.Evenement.Dal
         #endregion
 
         #region Méthode Public
+
+        public EvenementDalService()
+        {
+            Settings.Default["YoupDEVConnectionStringLucas"] = ConfigurationManager.ConnectionStrings["Service.Evenement.Dal.Properties.Settings.ConnectionString"].ConnectionString;
+        }
 
         /// <summary>
         /// Récupère toutes les catégories d'évènement

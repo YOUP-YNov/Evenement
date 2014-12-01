@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Service.Evenement.Dal.Mappeur;
+using Service.Evenement.Dal.Properties;
+using System.Configuration;
 
 namespace Service.Evenement.Dal
 {
@@ -29,6 +31,11 @@ namespace Service.Evenement.Dal
             {
                 _cateDalService = value;
             }
+        }
+
+        public CategorieDalService()
+        {
+            Settings.Default["YoupDEVConnectionStringLucas"] = ConfigurationManager.ConnectionStrings["Service.Evenement.Dal.Properties.Settings.ConnectionString"].ConnectionString;
         }
 
         public IEnumerable<EvenementCategorieDao> UpdateCategorie(EvenementCategorieDao categorieDao)
