@@ -303,6 +303,7 @@ namespace Service.Evenement.Business
                
                 if (evtBLL != null)
                 {
+                    evtBLL.Galleries = Mapper.Map<IEnumerable<EventImageDao>, IEnumerable<EventImageBll>>(EvenementDalService.GetImageByEventId(request));
                     evtBLL.Participants = GetSubscribersByEvent(Convert.ToInt32(id));
                     WebClient client = new WebClient();
                     try
