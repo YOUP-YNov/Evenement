@@ -381,6 +381,7 @@ namespace Service.Evenement.Business
                 {
                     response.State = ResponseState.Ok;
                     response.Value = evtBLL;
+                    WebClient client = new WebClient();
 
                     foreach (var Ev in evtBLL)
                     {
@@ -399,6 +400,36 @@ namespace Service.Evenement.Business
 
                         Ev.Participants = mySubscribers;
                         Ev.NbParticipant = mySubscribers != null ? mySubscribers.Count() : 0;
+
+                        try
+                        {
+                            string result = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "api/UserSmall/" + Ev.OrganisateurId);
+                            if (!string.IsNullOrWhiteSpace(result))
+                            {
+                                dynamic json = Json.Decode(result);
+                                if (json != null)
+                                {
+                                    Ev.OrganisateurPseudo = json.Pseudo;
+                                    Ev.OrganisateurImageUrl = json.PhotoChemin;
+                                }
+                            }
+
+                            EvenementDalRequest request = new EvenementDalRequest();
+                            request.EvenementId = Ev.Id;
+                            Ev.Galleries = Mapper.Map<IEnumerable<EventImageDao>, IEnumerable<EventImageBll>>(EvenementDalService.GetImageByEventId(request));
+                            Ev.Participants = GetSubscribersByEvent(Convert.ToInt32(Ev.Id));
+                            if (Ev.Participants != null && Ev.Participants.Count() > 0)
+                            {
+                                var count = Ev.Participants.Where(p => p.Annulation == false);
+                                if (count != null)
+                                    Ev.NbParticipant = count.Count();
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+                        
                     }
                 }
                 else response.State = ResponseState.NoContent;
