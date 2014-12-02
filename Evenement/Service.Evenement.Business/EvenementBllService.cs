@@ -65,8 +65,8 @@ namespace Service.Evenement.Business
             }
             catch (Exception e)
             {
-                 response.State = ResponseState.Unauthorized;
-                 return response;
+                response.State = ResponseState.Unauthorized;
+                return response;
             }
 
             if (!string.IsNullOrWhiteSpace(resultJson))
@@ -92,8 +92,7 @@ namespace Service.Evenement.Business
                 {
                     id_string_topic = client.UploadString(ConfigurationManager.AppSettings["ForumUri"] + "api/Topic",
                     "{\"Nom\": \"" + evenementBll.TitreEvenement + "\",\"DescriptifTopic\": \"" + evenementBll.DescriptionEvenement +
-                    "\",\"DateCreation\": " + DateTime.Now +
-                    ",\"Utilisateur_id\": " + evenementBll.OrganisateurId + " }");
+                    "\",\"DateCreation\": \"" + DateTime.Now + "\",\"Sujet_id\":26,\"Resolu\":false,\"Utilisateur_id\": " + evenementBll.OrganisateurId + " }");
                 }
                 catch (Exception e)
                 {
@@ -106,48 +105,48 @@ namespace Service.Evenement.Business
                     evenementBll.Topic_id = id_topic;
                 }
 
-            if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
-            {
-                EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
-                IEnumerable<EvenementDao> result = EvenementDalService.CreateEvenement(new EvenementDalRequest(), daoEvent);
-                if ( result != null && result.Count() > 0 )
+                if (evenementBll.EventAdresse.IsValid() && evenementBll.evenementUpdateIsValid())
                 {
-                    List<EventImageDao> eventImage = new List<EventImageDao>();
-                    response.State = ResponseState.Created;
-                    foreach ( var image in evenementBll.Galleries )
+                    EvenementDao daoEvent = Mapper.Map<EvenementBll, EvenementDao>(evenementBll);
+                    IEnumerable<EvenementDao> result = EvenementDalService.CreateEvenement(new EvenementDalRequest(), daoEvent);
+                    if (result != null && result.Count() > 0)
                     {
-                        var ImageDao = Mapper.Map<EventImageBll, EventImageDao>(image);
-                        ImageDao.EvenementId = result.FirstOrDefault().Id;
-                        eventImage.Add(EvenementDalService.CreateImage(ImageDao).FirstOrDefault());
-                    }
+                        List<EventImageDao> eventImage = new List<EventImageDao>();
+                        response.State = ResponseState.Created;
+                        foreach (var image in evenementBll.Galleries)
+                        {
+                            var ImageDao = Mapper.Map<EventImageBll, EventImageDao>(image);
+                            ImageDao.EvenementId = result.FirstOrDefault().Id;
+                            eventImage.Add(EvenementDalService.CreateImage(ImageDao).FirstOrDefault());
+                        }
 
-                    daoEvent.Galleries = eventImage;
-                    response.Value = daoEvent;
-                    try
-                    {
-                        // Appel de l'api de recherche pour indexer l'événement
+                        daoEvent.Galleries = eventImage;
+                        response.Value = daoEvent;
+                        try
+                        {
+                            // Appel de l'api de recherche pour indexer l'événement
                             client.DownloadString(new Uri(ConfigurationManager.AppSettings["RechercheUri"] + string.Format("add/get_event/type?={0}&idP={1}&nameP={2}&town={3}&latitude={4}&longitude={5}&idE={6}&nameE={7}&date={8}&adresse={9}", evenementBll.EventAdresse.Id, evenementBll.EventAdresse.Nom, evenementBll.EventAdresse.Ville, evenementBll.EventAdresse.Latitude, evenementBll.EventAdresse.Longitude, evenementBll.Id, evenementBll.TitreEvenement, evenementBll.Categorie.Libelle, evenementBll.CreateDate, evenementBll.EventAdresse.Adresse)));
+                        }
+                        catch
+                        {
+                        }
                     }
-                    catch
+                    else
                     {
+                        response.State = ResponseState.NotModified;
                     }
                 }
                 else
                 {
-                    response.State = ResponseState.NotModified;
+                    response.State = ResponseState.BadRequest;
                 }
-            }
-            else
-            {
-                response.State = ResponseState.BadRequest;
-            }
             }
             else
                 response.State = ResponseState.Unauthorized;
 
 
 
-            
+
             return response;
         }
 
@@ -171,9 +170,9 @@ namespace Service.Evenement.Business
                 }
                 catch (Exception e)
                 {
-                   
+
                 }
-                
+
                 if (!string.IsNullOrWhiteSpace(resultJson))
                 {
                     dynamic json = Json.Decode(resultJson);
@@ -245,16 +244,26 @@ namespace Service.Evenement.Business
                 try
                 {
                     string result = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "api/UserSmall/" + e.OrganisateurId);
-                if (!string.IsNullOrWhiteSpace(result))
-                {
-                    dynamic json = Json.Decode(result);
-                    if (json != null)
+                    if (!string.IsNullOrWhiteSpace(result))
                     {
-                        e.OrganisateurPseudo = json.Pseudo;
-                        e.OrganisateurImageUrl = json.PhotoChemin;
+                        dynamic json = Json.Decode(result);
+                        if (json != null)
+                        {
+                            e.OrganisateurPseudo = json.Pseudo;
+                            e.OrganisateurImageUrl = json.PhotoChemin;
+                        }
                     }
+
+                    EvenementDalRequest request = new EvenementDalRequest();
+                    request.EvenementId = e.Id;
+                    e.Galleries = Mapper.Map<IEnumerable<EventImageDao>, IEnumerable<EventImageBll>>(EvenementDalService.GetImageByEventId(request));
+                    e.Participants = GetSubscribersByEvent(Convert.ToInt32(e.Id));
+                    if (e.Participants != null && e.Participants.Count() > 0)
+                    {
+                        var count = e.Participants.Where(p => p.Annulation == false);
+                        if (count != null)
+                            e.NbParticipant = count.Count();
                     }
-                    e.NbParticipant = tmp.First(x => x.Id == e.Id).Participants != null ? tmp.First(x => x.Id == e.Id).Participants.Count() : 0;
                 }
                 catch
                 {
@@ -300,7 +309,7 @@ namespace Service.Evenement.Business
                 request.EvenementId = id;
                 var evt = EvenementDalService.getEvenementId(request);
                 EvenementBll evtBLL = Mapper.Map<EvenementDao, EvenementBll>(evt);
-               
+
                 if (evtBLL != null)
                 {
                     evtBLL.Galleries = Mapper.Map<IEnumerable<EventImageDao>, IEnumerable<EventImageBll>>(EvenementDalService.GetImageByEventId(request));
@@ -309,15 +318,15 @@ namespace Service.Evenement.Business
                     try
                     {
                         string result = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "api/UserSmall/" + evtBLL.OrganisateurId);
-                    if (!string.IsNullOrWhiteSpace(result))
-                    {
-                        dynamic json = Json.Decode(result);
-                        if (json != null)
+                        if (!string.IsNullOrWhiteSpace(result))
                         {
-                            evtBLL.OrganisateurPseudo = json.Pseudo;
-                            evtBLL.OrganisateurImageUrl = json.PhotoChemin;
+                            dynamic json = Json.Decode(result);
+                            if (json != null)
+                            {
+                                evtBLL.OrganisateurPseudo = json.Pseudo;
+                                evtBLL.OrganisateurImageUrl = json.PhotoChemin;
+                            }
                         }
-                    }
                     }
                     catch
                     {
@@ -339,7 +348,7 @@ namespace Service.Evenement.Business
                     if (evt.Participants != null && evt.Participants.Count() > 0)
                     {
                         var count = evt.Participants.Where(p => p.Annulation == false);
-                        if(count != null)
+                        if (count != null)
                             evtBLL.NbParticipant = count.Count();
                     }
                     response.State = ResponseState.Ok;
@@ -390,7 +399,7 @@ namespace Service.Evenement.Business
 
                         Ev.Participants = mySubscribers;
                         Ev.NbParticipant = mySubscribers != null ? mySubscribers.Count() : 0;
-                }
+                    }
                 }
                 else response.State = ResponseState.NoContent;
             }
@@ -459,9 +468,9 @@ namespace Service.Evenement.Business
             else
             {
                 response.State = ResponseState.NotFound;
-             }
+            }
             return response;
-        
+
         }
         /// <summary>
         /// récupère tous les événements selon un état
@@ -559,69 +568,69 @@ namespace Service.Evenement.Business
             return 0;
         }
 
-         public ResponseObject DeactivateEvent(int eventId, string token)
+        public ResponseObject DeactivateEvent(int eventId, string token)
         {
             ResponseObject response = new ResponseObject();
             WebClient client = new WebClient();
             int idProfil = -1;
-                string resultJson = null;
-                try
-                {
-                    resultJson = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "api/Auth/" + Guid.Parse(token).ToString());
-                }
-                catch (Exception e)
-                {
-                    response.State = ResponseState.Unauthorized;
-                }
-                
-                if (!string.IsNullOrWhiteSpace(resultJson))
-                {
-                    dynamic json = Json.Decode(resultJson);
-                    if (json != null)
-                    {
-                        idProfil = json.Utilisateur_Id;
-                    }
-                }
+            string resultJson = null;
+            try
+            {
+                resultJson = client.DownloadString(ConfigurationManager.AppSettings["ProfilUri"] + "api/Auth/" + Guid.Parse(token).ToString());
+            }
+            catch (Exception e)
+            {
+                response.State = ResponseState.Unauthorized;
+            }
 
-                if (idProfil != -1)
+            if (!string.IsNullOrWhiteSpace(resultJson))
+            {
+                dynamic json = Json.Decode(resultJson);
+                if (json != null)
                 {
-                    ResponseObject responseEvt = this.GetEvenementById(eventId);
-                    EvenementBll eventDelete = null;
-                    if (responseEvt != null)
-                    {
-                        eventDelete = (EvenementBll)responseEvt.Value;
-                    }
-                    else
-                    {
-                        response.State = ResponseState.NotFound;
-                    }
+                    idProfil = json.Utilisateur_Id;
+                }
+            }
 
-                    if (eventDelete != null)
-                    {
-                        if (idProfil == eventDelete.OrganisateurId)
-        {
-            EvenementDao eventDao = new EvenementDao();
-            eventDao.Id = eventId;
-            eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
-            eventDao.DateModification = DateTime.Now;
-
-            EvenementDalService.UpdateStateEvenement(eventDao);
-                            response.State = ResponseState.Ok;
-                        }
-                        else
-                        {
-                            response.State = ResponseState.Unauthorized;
-                        }
-                    }
+            if (idProfil != -1)
+            {
+                ResponseObject responseEvt = this.GetEvenementById(eventId);
+                EvenementBll eventDelete = null;
+                if (responseEvt != null)
+                {
+                    eventDelete = (EvenementBll)responseEvt.Value;
                 }
                 else
                 {
-                    response.State = ResponseState.Unauthorized;
+                    response.State = ResponseState.NotFound;
                 }
-                return response;
+
+                if (eventDelete != null)
+                {
+                    if (idProfil == eventDelete.OrganisateurId)
+                    {
+                        EvenementDao eventDao = new EvenementDao();
+                        eventDao.Id = eventId;
+                        eventDao.EtatEvenement = new EventStateDao(Service.Evenement.Dal.Dao.EventStateEnum.Desactiver);
+                        eventDao.DateModification = DateTime.Now;
+
+                        EvenementDalService.UpdateStateEvenement(eventDao);
+                        response.State = ResponseState.Ok;
+                    }
+                    else
+                    {
+                        response.State = ResponseState.Unauthorized;
+                    }
+                }
+            }
+            else
+            {
+                response.State = ResponseState.Unauthorized;
+            }
+            return response;
         }
 
-     
+
         /// <summary>
         /// Permet de récupèrer la liste de toutes les inscriptions d'un utilisateur
         /// </summary>
@@ -697,27 +706,27 @@ namespace Service.Evenement.Business
                         //    }
 
                         if (nbDispo > 0 || nbDispo == -1)
-                    {
-                        var daoResult = EvenementDalService.SubscribeEvenement(request).FirstOrDefault();
-                        if (daoResult == null)
                         {
-                            response.State = ResponseState.NotFound;
+                            var daoResult = EvenementDalService.SubscribeEvenement(request).FirstOrDefault();
+                            if (daoResult == null)
+                            {
+                                response.State = ResponseState.NotFound;
+                            }
+
+                            EvenementSubscriberBll result = Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(daoResult);
+                            response.State = ResponseState.Ok;
+                            response.Value = result;
+                            return response;
                         }
-                            
-                        EvenementSubscriberBll result = Mapper.Map<EvenementSubcriberDao, EvenementSubscriberBll>(daoResult);
-                        response.State = ResponseState.Ok;
-                        response.Value = result;
-                        return response;
-                    }
-                    else
-                    {
-                        response.State = ResponseState.BadRequest;
-                        throw new System.InvalidOperationException("Le nombre d'utilisateurs maximum est déjà atteint");
-                    }
+                        else
+                        {
+                            response.State = ResponseState.BadRequest;
+                            throw new System.InvalidOperationException("Le nombre d'utilisateurs maximum est déjà atteint");
+                        }
                     }
                 }
-                    
-                }
+
+            }
             return response;
         }
 
