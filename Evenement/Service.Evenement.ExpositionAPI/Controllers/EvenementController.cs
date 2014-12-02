@@ -75,6 +75,12 @@ namespace Service.Evenement.ExpositionAPI.Controllers
             return GenerateResponseMessage.initResponseMessage(result);
         }
 
+        /// <summary>
+        /// Permet de savoir si un utilisateur est inscrit à un événement
+        /// </summary>
+        /// <param name="id_profil">Id de l'utilisateur</param>
+        /// <param name="id_evenement">Id de l'événement</param>
+        /// <returns>booléen</returns>
         [HttpGet]
         [ResponseType(typeof(bool))]
         [Route("api/Profil/{id_profil}/Evenement/{id_evenement}")]
@@ -86,7 +92,7 @@ namespace Service.Evenement.ExpositionAPI.Controllers
                 EvenementTimelineFront ev = Mapper.Map<EvenementBll, EvenementTimelineFront>((EvenementBll)result.Value);
                 foreach (Subscriber s in ev.Participants)
                 {
-                    if (s.UtilisateurId == id_profil)
+                    if (s.UtilisateurId == id_profil && s.Annulation == false)
                         return true;
                 }
             }
