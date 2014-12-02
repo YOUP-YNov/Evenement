@@ -336,7 +336,12 @@ namespace Service.Evenement.Business
                             }
                         }
                     }
-                    evtBLL.NbParticipant = evtBLL.Participants.Count();
+                    if (evt.Participants != null && evt.Participants.Count() > 0)
+                    {
+                        var count = evt.Participants.Where(p => p.Annulation == false);
+                        if(count != null)
+                            evtBLL.NbParticipant = count.Count();
+                    }
                     response.State = ResponseState.Ok;
                     response.Value = evtBLL;
                 }
